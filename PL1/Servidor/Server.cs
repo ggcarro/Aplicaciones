@@ -29,6 +29,9 @@ namespace Servidor
             {
                 TcpClient client = null;
                 NetworkStream netStream = null;
+                BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
+                EchoMessage receiveMsg;
+                byte[] responseBuffer;
 
                 try
                 {
@@ -36,7 +39,7 @@ namespace Servidor
                     netStream = client.GetStream();
 
                     // Usar netStream para intercambiar información
-
+                    receiveMsg = codec.Decode(netStream);
                     netStream.Close();
                     client.Close();
                 }
