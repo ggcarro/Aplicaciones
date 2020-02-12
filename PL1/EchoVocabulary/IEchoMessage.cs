@@ -6,5 +6,9 @@ namespace EchoVocabulary
 {
     interface IEchoMessage
     {
+
+        byte[] Encode(EchoMessage message);
+        EchoMessage Decode(Stream source);
+
     }
 }
