@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EchoVocabulary
 {
-    class BinaryEchoMessageCodec
+    public class BinaryEchoMessageCodec
     {
     }
 }
