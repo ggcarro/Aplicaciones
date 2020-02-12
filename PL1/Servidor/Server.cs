@@ -40,7 +40,7 @@ namespace Servidor
                     netStream = client.GetStream();
 
                     // Usar netStream para intercambiar información
-                    receiveMsg = codec.Decode(netStream);
+                    //receiveMsg = codec.Decode(netStream);
                     netStream.Close();
                     client.Close();
                 }
