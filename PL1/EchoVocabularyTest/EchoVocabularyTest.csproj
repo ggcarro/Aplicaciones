@@ -15,5 +15,8 @@
   <ItemGroup>
     <ProjectReference Include="..\EchoVocabulary\EchoVocabulary.csproj" />
   </ItemGroup>
+<<<<<<< HEAD
 
+=======
+>>>>>>> efe69f6... Unity Test completados (ya hay 10) y comprobados
 </Project>

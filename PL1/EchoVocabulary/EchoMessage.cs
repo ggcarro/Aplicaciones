@@ -25,6 +25,5 @@ namespace EchoVocabulary
             _message = new_message;
         }
 
-
     }
 }

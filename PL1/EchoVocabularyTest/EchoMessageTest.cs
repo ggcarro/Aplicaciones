@@ -77,6 +77,76 @@ namespace UnityTest1
 
             Assert.IsTrue(data.Message.CompareTo(decoded.Message) == 0);
         }
+
+        [TestMethod]
+        public void TestMethod6()   // Prueba con fecha vacia
+        {
+            EchoMessage data = new EchoMessage("", "Another one");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Message.CompareTo(decoded.Message) == 0);
+        }
+
+        [TestMethod]
+        public void TestMethod7()   // Prueba con fecha y mensaje vacios
+        {
+            EchoMessage data = new EchoMessage("", "");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Message.CompareTo(decoded.Message) == 0);
+        }
+
+        [TestMethod]
+        public void TestMethod8()   // Prueba con fecha con formato distinto
+        {
+            EchoMessage data = new EchoMessage("4:38:14.624 09/28/1996 ", "Test number 8");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Date.CompareTo(decoded.Date) == 0);
+        }
+
+        [TestMethod]
+        public void TestMethod9()   // Prueba con fecha = texto
+        {
+            EchoMessage data = new EchoMessage("Test 9", "Test 9");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(decoded.Date.CompareTo(decoded.Message) == 0);
+        }
+
+        [TestMethod]
+        public void TestMetho10()   // Prueba con fecha de formato distinto
+        {
+            EchoMessage data = new EchoMessage("asdfasdf", "Last text");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Date.CompareTo(decoded.Date) == 0);
+        }
     }
 }
 
