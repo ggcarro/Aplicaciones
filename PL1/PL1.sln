@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cliente", "Cliente\Cliente.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoVocabulary", "EchoVocabulary\EchoVocabulary.csproj", "{F6603651-9F09-47EE-B31B-EE5367B24F82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityTests", "UnityTests\UnityTests.csproj", "{5D51E5A5-124A-4F64-A0C5-153E8205C9D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoVocabulary_test", "UnityTests\EchoVocabulary_test.csproj", "{5D51E5A5-124A-4F64-A0C5-153E8205C9D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
