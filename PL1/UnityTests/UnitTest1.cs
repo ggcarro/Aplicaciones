@@ -91,5 +91,19 @@ namespace UnityTest1
 
             Assert.IsTrue(data.Message.CompareTo(decoded.Message) == 0);
         }
+
+        [TestMethod]
+        public void TestMethod7()   // Prueba con un EchoMessage vacio
+        {
+            EchoMessage data = new EchoMessage();
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Message.CompareTo(decoded.Message) == 0);
+        }
     }
 }
