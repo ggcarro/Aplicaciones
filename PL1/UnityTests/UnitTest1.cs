@@ -67,7 +67,7 @@ namespace UnityTest1
         [TestMethod]
         public void TestMethod5()   // Prueba con mensaje de caracteres especiales
         {
-            EchoMessage data = new EchoMessage("09/28/1996 4:38:14.624", "ñÓá#@€÷¬");
+            EchoMessage data = new EchoMessage("09/28/1996 4:38:14.624", "ñÓáBüÄé");
             BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
 
             byte[] test1 = codification.Encode(data);
@@ -93,9 +93,51 @@ namespace UnityTest1
         }
 
         [TestMethod]
-        public void TestMethod7()   // Prueba con un EchoMessage vacio
+        public void TestMethod7()   // Prueba con una fecha vacia
         {
-            EchoMessage data = new EchoMessage();
+            EchoMessage data = new EchoMessage("", "No hay fecha");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Date.CompareTo(decoded.Date) == 0);
+        }
+
+        [TestMethod]
+        public void TestMethod8()   // Prueba con un mensaje con simbolos
+        {
+            EchoMessage data = new EchoMessage("06 / 05 / 1998 4:38:14.624", "//_.;?¿!#€");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Message.CompareTo(decoded.Message) == 0);
+        }
+
+        [TestMethod]
+        public void TestMethod9()   // Prueba con un mensaje con 1 letra
+        {
+            EchoMessage data = new EchoMessage("06 / 05 / 1998 4:38:14.624", "a");
+            BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
+
+            byte[] test1 = codification.Encode(data);
+            MemoryStream ms = new MemoryStream(test1);
+
+            EchoMessage decoded = codification.Decode(ms);
+
+            Assert.IsTrue(data.Message.CompareTo(decoded.Message) == 0);
+        }
+
+        [TestMethod]
+        public void TestMethod10()   // Prueba con el mensaje igual a la fecha
+        {
+            EchoMessage data = new EchoMessage("06 / 05 / 1998 4:38:14.624", "06 / 05 / 1998 4:38:14.624");
             BinaryEchoMessageCodec codification = new BinaryEchoMessageCodec();
 
             byte[] test1 = codification.Encode(data);
