@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using System.Threading;
 
 namespace Cliente
@@ -8,7 +9,26 @@ namespace Cliente
     {
         public void Run()
         {
-            // Hilo cliente
+            TcpClient client = null;
+            NetworkStream netStream = null;
+            try
+            {
+                client = new TcpClient("127.0.0.1", 23456);
+
+                netStream = client.GetStream();
+
+                // Usar netStream para intercambiar información
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: {0}", e.Message);
+            }
+            finally
+            {
+                netStream.Close();
+                client.Close();
+            }
         }
     }
 

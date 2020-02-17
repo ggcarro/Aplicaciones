@@ -5,9 +5,6 @@ using EchoVocabulary;
 
 namespace Servidor
 {
-
-
-
     class Server
     {
         static void Main (string[] args)
