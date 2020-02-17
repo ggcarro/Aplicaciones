@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servidor", "Servidor\Servidor.csproj", "{C3882D60-CA7C-4188-BEDF-5B0C76845359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Servidor\Server.csproj", "{C3882D60-CA7C-4188-BEDF-5B0C76845359}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cliente", "Cliente\Cliente.csproj", "{B1E68A81-12C9-43E5-BCA3-B744437F0572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Cliente\Client.csproj", "{B1E68A81-12C9-43E5-BCA3-B744437F0572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoVocabulary", "EchoVocabulary\EchoVocabulary.csproj", "{5A8AFC18-E404-4FF9-A754-5B7905B00D03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchoVocabulary", "EchoVocabulary\EchoVocabulary.csproj", "{5A8AFC18-E404-4FF9-A754-5B7905B00D03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoVocabulary_test", "UnityTests\EchoVocabulary_test.csproj", "{BC28A14E-9D45-4236-ABC5-84066AA70D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchoVocabulary_test", "UnityTests\EchoVocabulary_test.csproj", "{BC28A14E-9D45-4236-ABC5-84066AA70D4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

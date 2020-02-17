@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using EchoVocabulary;
 
-namespace Cliente
+namespace Client
 {
 
     class Client
@@ -13,13 +13,14 @@ namespace Cliente
             TcpClient client = null;
             NetworkStream netStream = null;
             string message = "Echo Message";
-            EchoMessage sentMessage = new EchoMessage(message, DateTime.Now.ToString("MM/dd/yyyy h:mm:ss.fff"));
+            EchoMessage sentMessage = new EchoMessage(DateTime.Now.ToString("MM/dd/yyyy h:mm:ss.fff"), message);
 
-            client.Client.ReceiveTimeout = 1000;
 
+            
             try
             {
                 client = new TcpClient("127.0.0.1", 23456);
+                client.ReceiveTimeout = 1000;   // Iniciacion del timeout del socket
                 netStream = client.GetStream(); //Usar netStream para intercambiar información
                 DateTime T1 = DateTime.Now; //T inicio
 
@@ -32,12 +33,17 @@ namespace Cliente
                 netStream = client.GetStream();
                 EchoMessage receivedMessage = codec.Decode(netStream);
 
-                Console.WriteLine("Echo received: ", receivedMessage.Message);
+                // Comprobar que el mensaje de retorno coincide con el de ida
+                if (receivedMessage.Message == sentMessage.Message)
+                    Console.WriteLine("The echo works!");
 
-                DateTime T2 = Convert.ToDateTime(receivedMessage.Date); //T cuando el servidor envia el mensaje respuesta
+                //Console.WriteLine("Echo received: {0}, Date: {1}", receivedMessage.Message, receivedMessage.Date);
+
+                
+                DateTime T2 = DateTime.ParseExact(receivedMessage.Date, "MM/dd/yyyy h:mm:ss.fff", null); //T cuando el servidor envia el mensaje respuesta
                 DateTime T3 = DateTime.Now; //T cuando el cliente recive el mensaje respuesta
 
-                //Comprobacion de si el servidor tarda mas de 1s en responder (usamos ms)
+                // Muestra de los tiempos que tarda el servidor
                 int responseTime = (3600000 * T3.Hour + 60000 * T3.Minute + 1000 * T3.Second + T3.Millisecond) - (3600000 * T1.Hour + 60000 * T1.Minute + 1000 * T1.Second + T1.Millisecond);
                 int askTime = (3600000 * T2.Hour + 60000 * T2.Minute + 1000 * T2.Second + T2.Millisecond) - (3600000 * T1.Hour + 60000 * T1.Minute + 1000 * T1.Second + T1.Millisecond);
                 int answerTime = (3600000 * T3.Hour + 60000 * T3.Minute + 1000 * T3.Second + T3.Millisecond) - (3600000 * T2.Hour + 60000 * T2.Minute + 1000 * T2.Second + T2.Millisecond);
@@ -76,6 +82,7 @@ namespace Cliente
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Client Started");
             const int N = 100;
 
             // Se crean los hilos

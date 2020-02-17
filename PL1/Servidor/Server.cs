@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using EchoVocabulary;
 
-namespace Servidor
+namespace Server
 {
     class Server
     {
         static void Main (string[] args)
         {
             TcpListener listener = null;
-
+            
             try
             {
                 listener = new TcpListener(IPAddress.Any, 23456);
@@ -21,7 +22,7 @@ namespace Servidor
                 Console.WriteLine("Exception: {0}", se.Message);
                 return;
             }
-
+            Console.WriteLine("Server started");
             // El servidor se ejecuta infinitamente
             for (; ; )
             {
@@ -38,15 +39,17 @@ namespace Servidor
 
                     // Usar netStream para intercambiar información
                     receiveMsg = codec.Decode(netStream);
+                    // Console.WriteLine("Receive Message: {0}, Date: {1}", receiveMsg.Message, receiveMsg.Date);
 
+                    // Para comprbar el funcionamiento del TimeOut
+                    // Thread.Sleep(2000);
+                    
                     // Enviar el eco
-                    EchoMessage responseMessage = new EchoMessage(receiveMsg.Message, DateTime.Now.ToString("MM/dd/yyyy h:mm:ss.fff"));
+                    EchoMessage responseMessage = new EchoMessage(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff"), receiveMsg.Message);
+                    
                     responseBuffer = codec.Encode(responseMessage);
                     netStream.Write(responseBuffer, 0, responseBuffer.Length);
-
-                    // Comprobar que el mensaje de retorno coincide con el de ida
-                    if (receiveMsg.Message == responseMessage.Message)
-                        Console.WriteLine("The echo works!");
+                    
 
                     netStream.Close();
                     client.Close();
