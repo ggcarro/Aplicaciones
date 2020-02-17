@@ -39,9 +39,15 @@ namespace Servidor
                     // Usar netStream para intercambiar información
                     receiveMsg = codec.Decode(netStream);
 
+                    // Enviar el eco
+                    EchoMessage responseMessage = new EchoMessage(receiveMsg.Message, DateTime.Now.ToString("MM/dd/yyyy h:mm:ss.fff"));
+                    responseBuffer = codec.Encode(responseMessage);
+                    netStream.Write(responseBuffer, 0, responseBuffer.Length);
+
                     // Comprobar que el mensaje de retorno coincide con el de ida
-                    //if (receiveMsg.Message == )
-                   
+                    if (receiveMsg.Message == responseMessage.Message)
+                        Console.WriteLine("The echo works!");
+
                     netStream.Close();
                     client.Close();
                 }
