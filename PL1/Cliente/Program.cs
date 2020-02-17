@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Threading;
+using EchoVocabulary;
 
 namespace Cliente
 {
@@ -11,6 +12,9 @@ namespace Cliente
         {
             TcpClient client = null;
             NetworkStream netStream = null;
+            string message = "Echo Message";
+            EchoMessage sentMessage = new EchoMessage(message, DateTime.Now.ToString("MM/dd/yyyy h:mm:ss.fff"));
+
             try
             {
                 client = new TcpClient("127.0.0.1", 23456);

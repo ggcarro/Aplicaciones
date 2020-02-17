@@ -37,7 +37,11 @@ namespace Servidor
                     netStream = client.GetStream();
 
                     // Usar netStream para intercambiar información
-                    //receiveMsg = codec.Decode(netStream);
+                    receiveMsg = codec.Decode(netStream);
+
+                    // Comprobar que el mensaje de retorno coincide con el de ida
+                    //if (receiveMsg.Message == )
+                   
                     netStream.Close();
                     client.Close();
                 }
