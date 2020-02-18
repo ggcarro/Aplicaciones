@@ -23,10 +23,10 @@ namespace Client
                 client.ReceiveTimeout = 1000;   // Iniciacion del timeout del socket
                 netStream = client.GetStream(); //Usar netStream para intercambiar información
                 DateTime T1 = DateTime.Now; //T inicio
-
+                
                 //Envio de mensaje
-                //BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
-                ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
+                BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
+                //ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
 
                 byte[] responseBuffer = codec.Encode(sentMessage);
                 netStream.Write(responseBuffer, 0, responseBuffer.Length);
@@ -37,21 +37,23 @@ namespace Client
 
                 // Comprobar que el mensaje de retorno coincide con el de ida
                 if (receivedMessage.Message == sentMessage.Message)
+                {
                     Console.WriteLine("The echo works!");
-
-                //Console.WriteLine("Echo received: {0}, Date: {1}", receivedMessage.Message, receivedMessage.Date);
-
+                }
+                
                 
                 DateTime T2 = DateTime.ParseExact(receivedMessage.Date, "MM/dd/yyyy h:mm:ss.fff", null); //T cuando el servidor envia el mensaje respuesta
                 DateTime T3 = DateTime.Now; //T cuando el cliente recive el mensaje respuesta
 
+                TimeSpan responseT = T3.Subtract(T1);
+                TimeSpan askT = T2.Subtract(T1);
+                TimeSpan answerT = T3.Subtract(T2);
+
                 // Muestra de los tiempos que tarda el servidor
-                int responseTime = (3600000 * T3.Hour + 60000 * T3.Minute + 1000 * T3.Second + T3.Millisecond) - (3600000 * T1.Hour + 60000 * T1.Minute + 1000 * T1.Second + T1.Millisecond);
-                int askTime = (3600000 * T2.Hour + 60000 * T2.Minute + 1000 * T2.Second + T2.Millisecond) - (3600000 * T1.Hour + 60000 * T1.Minute + 1000 * T1.Second + T1.Millisecond);
-                int answerTime = (3600000 * T3.Hour + 60000 * T3.Minute + 1000 * T3.Second + T3.Millisecond) - (3600000 * T2.Hour + 60000 * T2.Minute + 1000 * T2.Second + T2.Millisecond);
-                Console.WriteLine("Sending question time was: {0} miliseconds", askTime);
-                Console.WriteLine("Sending answer time was: {0} miliseconds", answerTime);
-                Console.WriteLine("Total response time was: {0} miliseconds", responseTime);
+                Console.WriteLine("Sending question time was: {0} miliseconds", askT.TotalMilliseconds);
+                Console.WriteLine("Sending answer time was: {0} miliseconds", answerT.TotalMilliseconds);
+                Console.WriteLine("Total response time was: {0} miliseconds", responseT.TotalMilliseconds);
+            
             }
 
 

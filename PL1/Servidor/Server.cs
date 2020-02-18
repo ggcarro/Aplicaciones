@@ -28,8 +28,8 @@ namespace Server
             {
                 TcpClient client = null;
                 NetworkStream netStream = null;
-                //BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
-                ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
+                BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
+                //ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
 
                 EchoMessage receiveMsg;
                 byte[] responseBuffer;
@@ -41,10 +41,10 @@ namespace Server
 
                     // Usar netStream para intercambiar información
                     receiveMsg = codec.Decode(netStream);
-                    // Console.WriteLine("Receive Message: {0}, Date: {1}", receiveMsg.Message, receiveMsg.Date);
+                    
 
                     // Para comprbar el funcionamiento del TimeOut
-                    // Thread.Sleep(2000);
+                    //Thread.Sleep(2000);
                     
                     // Enviar el eco
                     EchoMessage responseMessage = new EchoMessage(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff"), receiveMsg.Message);

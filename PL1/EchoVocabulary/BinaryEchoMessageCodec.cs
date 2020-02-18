@@ -37,5 +37,12 @@ namespace EchoVocabulary
             EchoMessage decoded_message = new EchoMessage(read_date, read_message);
             return decoded_message;
         }
+
+        public EchoMessage UPDdecode (byte[] buffer)
+        {
+            MemoryStream ms = new MemoryStream(buffer);
+            return Decode(ms);
+
+        }
     }
 }
