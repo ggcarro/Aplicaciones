@@ -26,8 +26,10 @@ namespace EchoVocabulary
             byte[] recvData = new byte[256];
             int bytes = source.Read(recvData, 0, recvData.Length);
             string msg = System.Text.Encoding.ASCII.GetString(recvData, 0, bytes);
-
-            string[] msgfields = new string[] { "/a/b/a" };
+            //Console.WriteLine(msg);
+            string[] msgfields = msg.Split(new String[] { "/a/b/a" }, StringSplitOptions.None);
+            //Console.WriteLine("Parte 1: {0}",msgfields[0]);
+            //Console.WriteLine("Parte 2: {0}",msgfields[1]);
 
             string read_date = msgfields[0];
             string read_message = msgfields[1];

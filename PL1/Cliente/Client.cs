@@ -25,8 +25,8 @@ namespace Client
                 DateTime T1 = DateTime.Now; //T inicio
 
                 //Envio de mensaje
-                BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
-                //ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
+                //BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
+                ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
 
                 byte[] responseBuffer = codec.Encode(sentMessage);
                 netStream.Write(responseBuffer, 0, responseBuffer.Length);
