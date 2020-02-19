@@ -12,7 +12,7 @@ namespace Client
         {
             TcpClient client = null;
             NetworkStream netStream = null;
-            string message = "Echo Message";
+            string message = "Echo Méssage";
             EchoMessage sentMessage = new EchoMessage(DateTime.Now.ToString("MM/dd/yyyy h:mm:ss.fff"), message);
 
 
@@ -20,13 +20,13 @@ namespace Client
             try
             {
                 client = new TcpClient("192.168.222.42", 23456);
-                client.ReceiveTimeout = 1000;   // Iniciacion del timeout del socket
+                client.ReceiveTimeout = 100;   // Iniciacion del timeout del socket
                 netStream = client.GetStream(); //Usar netStream para intercambiar información
                 DateTime T1 = DateTime.Now; //T inicio
                 
                 //Envio de mensaje
-                BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
-                //ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
+                //BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
+                ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
 
                 byte[] responseBuffer = codec.Encode(sentMessage);
                 netStream.Write(responseBuffer, 0, responseBuffer.Length);

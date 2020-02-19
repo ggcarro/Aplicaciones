@@ -20,7 +20,7 @@ namespace ClientUDP
                 BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
                 EchoMessage sentMessage = new EchoMessage(DateTime.Now.ToString("MM/dd/yyyy h:mm:ss.fff"), "Echo Message");
                 sendPacket = codec.Encode(sentMessage);
-                client.Send(sendPacket, sendPacket.Length, "127.0.0.1", 23456);
+                client.Send(sendPacket, sendPacket.Length, "192.168.222.42", 23456);
                 DateTime T1 = DateTime.Now; //T inicio
 
 
