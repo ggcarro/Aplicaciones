@@ -27,7 +27,7 @@ namespace EchoVocabulary
             return byteBuffer;
         }
 
-        public EchoMessage Decode(Stream source)   //¿Deberiamos usar try/catch para lanzar una excepcion por si no codifica bien?
+        public EchoMessage Decode(Stream source)   
         {
             BinaryReader reader = new BinaryReader(source);
 

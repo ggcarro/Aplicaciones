@@ -51,8 +51,7 @@ namespace ClientUDP
                 {
                     // Muestra de los tiempos que tarda el servidor
                     Console.WriteLine("Sending Time: {0} ms, Answer Time: {1} ms, Total Response: {2} ms", askT.TotalMilliseconds, answerT.TotalMilliseconds, responseT.TotalMilliseconds);
-                    //Console.WriteLine("Sending answer time was: {0} miliseconds", answerT.TotalMilliseconds);
-                    //Console.WriteLine("Total response time was: {0} miliseconds", responseT.TotalMilliseconds);
+                   
                 }
             }
             catch (SocketException se)

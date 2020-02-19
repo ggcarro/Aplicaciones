@@ -19,7 +19,7 @@ namespace Client
             
             try
             {
-                client = new TcpClient("127.0.0.1", 23456);
+                client = new TcpClient("192.168.222.42", 23456);
                 client.ReceiveTimeout = 1000;   // Iniciacion del timeout del socket
                 netStream = client.GetStream(); //Usar netStream para intercambiar información
                 DateTime T1 = DateTime.Now; //T inicio
@@ -51,8 +51,7 @@ namespace Client
 
                 // Muestra de los tiempos que tarda el servidor
                 Console.WriteLine("Sending Time: {0} ms, Answer Time: {1} ms, Total Response: {2} ms", askT.TotalMilliseconds, answerT.TotalMilliseconds, responseT.TotalMilliseconds);
-                //Console.WriteLine("Sending answer time was: {0} miliseconds", answerT.TotalMilliseconds);
-                //Console.WriteLine("Total response time was: {0} miliseconds", responseT.TotalMilliseconds);
+                
             
             }
 
