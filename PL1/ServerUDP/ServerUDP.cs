@@ -24,8 +24,8 @@ namespace ServerUDP
                 return;
             }
 
-            // Dirección desde donde recibir.
-            // Se modificará tras la recepción
+            // Dirección desde donde recibir (cualquier direccion)
+            // Se modificará tras la recepción (info Paquete)
             IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             Console.WriteLine("Server Started");
             // El servidor se ejecuta infinitamente
@@ -37,10 +37,11 @@ namespace ServerUDP
                     byte[] rcvBuffer = client.Receive(ref remoteIPEndPoint);
                     BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
                     //ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
-                    receiveMsg = codec.UPDdecode(rcvBuffer);
+                    receiveMsg = codec.UPDdecode(rcvBuffer); //
 
                     EchoMessage responseMsg = new EchoMessage(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff"), receiveMsg.Message);
                     byte[] sendBuffer = codec.Encode(responseMsg);
+
                     // Enviar
                     client.Send(sendBuffer, sendBuffer.Length, remoteIPEndPoint);
                 }
