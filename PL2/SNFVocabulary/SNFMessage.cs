@@ -7,6 +7,7 @@ namespace SNFVocabulary
         private int _seq;
         private int _ack;
         private byte[] _data; // Usar en caso de que el haya que mandar el fichero en sí.
+       
 
         public int Seq
         {

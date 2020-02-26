@@ -10,4 +10,6 @@ namespace SNFVocabulary
         byte[] Encode(SNFMessage message);
         SNFMessage Decode(byte[] buffer);
     }
+
+   
 }
