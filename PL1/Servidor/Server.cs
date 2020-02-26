@@ -28,8 +28,8 @@ namespace Server
             {
                 TcpClient client = null;
                 NetworkStream netStream = null;
-                BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
-                //ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
+                //BinaryEchoMessageCodec codec = new BinaryEchoMessageCodec();
+                ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
 
                 EchoMessage receiveMsg;
                 byte[] responseBuffer;
