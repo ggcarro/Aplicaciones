@@ -7,112 +7,132 @@ namespace PL2
 {
     class Client
     {
-        private string ipServer = "192.168.222.42";
+        private int N = 100;
+        private string ipServer = "127.0.0.1";
         private int portServer = 23456;
+
         private byte[] sendPacket;
-        public BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
+        private SNFMessage sendMessage;
+        private SNFMessage receiveMessage;
+        private BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
+         
 
         public static void Main(string[] args)
         {
-
-            BinarySNFMessageCodec binaryCodec = new BinarySNFMessageCodec();
-            UdpClient udpClient = new UdpClient();
-            
             Client client = new Client();
             
+            UdpClient udpClient = new UdpClient();
             Console.WriteLine("Client Started");
-            const int N = 100000; // Suponemos que se quiere enviar este cantidad de números
+            
 
-                
-            SNFMessage sendMessage = null;
-
-
-
-            for (int i = 1; i < N; i++)
+            // Enviamos el primer mensaje    
+            try
             {
-                // Envio información
+                client.send(1, 0, udpClient);
+                Console.WriteLine("Send: SS {0}, AS{1}", client.sendMessage.Seq, client.sendMessage.Ack);
 
-                sendMessage = new SNFMessage(i, i - 1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: {0}", e.Message); // Otro tipo de error
+            }
+            int i = 1;
+            int nTimeOut = 0;
+            bool timeOut;
 
-                try
+            while(i<client.N && nTimeOut<10)
+            {
+                
+                //Recibo
+                timeOut=client.receive(udpClient);
+
+                // Si hay timeOut vuelvo a enviar
+                if (timeOut == false)
                 {
-                    client.send(sendMessage, udpClient);
+                    nTimeOut++;
+                    client.send(i, i-1, udpClient);
+                    Console.WriteLine("TimeOut {0} SS {1}, SA {2}", nTimeOut, client.sendMessage.Seq, client.sendMessage.Ack);
                 }
-                catch (Exception e)
+                if(timeOut== true)
                 {
-                    Console.WriteLine("Exception: {0}", e.Message); // Otro tipo de error
-                }
-
-                bool t;
-                int n = 0;
-                // Recibo información
-                Console.WriteLine("recibo info");
-                do
-                {
-                    Console.WriteLine("Intendo recibir");
-                    t = false;
-                    var timeToWait = TimeSpan.FromSeconds(2);
-                    var asyncResult = udpClient.BeginReceive(null, null);
-                    asyncResult.AsyncWaitHandle.WaitOne(timeToWait);
-                    if (asyncResult.IsCompleted)
+                    nTimeOut = 0;
+                    // compruebo
+                    if (client.checkMessage())
                     {
-                        try
+                        Console.WriteLine("OK SS {0} AS {1} SR {2} AR {3}", client.sendMessage.Seq, client.sendMessage.Ack, client.receiveMessage.Seq, client.receiveMessage.Ack);
+                        i++;
+                        Random rd = new Random();
+                        if (rd.Next(0, 10) > 5)
                         {
-                            IPEndPoint remoteEP = null;
-                            byte[] receivedData = udpClient.EndReceive(asyncResult, ref remoteEP);
-
-
-                            SNFMessage receiveMessage = binaryCodec.Decode(receivedData);
-                            Console.WriteLine("Ack received {0}", receiveMessage.Ack);
-                            if (receiveMessage.Ack == i)
-                            {
-                                Console.WriteLine("OK");
-                                t = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Incorrect ACK");
-                                Console.WriteLine("Try to send again the packet");
-                                Console.WriteLine("Seq sent: {0} Ack sent: {1} Seq receive: {2} Ack receive: {3}", sendMessage.Seq, sendMessage.Ack, receiveMessage.Seq, receiveMessage.Ack);
-                                n++;
-                                client.send(sendMessage, udpClient);
-                            }
-                            // EndReceive worked and we have received data and remote endpoint
+                            client.send(i, i - 1, udpClient);
+                            Console.WriteLine("Send: SS {0}, AS {1}", client.sendMessage.Seq, client.sendMessage.Ack);
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            // EndReceive failed and we ended up here
-                            Console.WriteLine(ex.Message);
-                            client.send(sendMessage, udpClient);
+                            Console.WriteLine("Lost Packet SS: {0}, AS {1}", client.sendMessage.Seq, client.sendMessage.Ack);
                         }
                     }
                     else
                     {
-                        // The operation wasn't completed before the timeout and we're off the hook
-                        Console.WriteLine("Timeout");
-                        Console.WriteLine("Try to send again the packet");
-                        n++;
-                        client.send(sendMessage, udpClient);
+                        Console.WriteLine("Packet not Expected:  SS {0} AS {1} SR {2} AR {3}", client.sendMessage.Seq, client.sendMessage.Ack, client.receiveMessage.Seq, client.receiveMessage.Ack);
+
                     }
-                }while (t == false || n > 20) ;
-
-                if (n > 20)
-                {
-                    Console.WriteLine("Number max of timeouts");
                 }
-
             }
-        
+
+            
         }
 
-        public void send(SNFMessage message, UdpClient client)
+        private void send(int seq, int ack, UdpClient udpClient)
         {
-            sendPacket = codec.Encode(message);
-            client.Send(sendPacket, sendPacket.Length, ipServer, portServer);
-            Console.WriteLine("Seq sent {0}", message.Seq);
+            sendMessage = new SNFMessage(seq, ack);
+            sendPacket = codec.Encode(sendMessage);
+            udpClient.Send(sendPacket, sendPacket.Length, ipServer, portServer);
         }
 
-       
+        private bool receive(UdpClient udpClient)
+        {
+            var timeToWait = TimeSpan.FromSeconds(5);
+            var asyncResult = udpClient.BeginReceive(null, null);
+            asyncResult.AsyncWaitHandle.WaitOne(timeToWait);
+            if (asyncResult.IsCompleted)
+            {
+                try
+                {
+                    IPEndPoint remoteEP = null;
+                    byte[] receivedData = udpClient.EndReceive(asyncResult, ref remoteEP);
+                    receiveMessage = codec.Decode(receivedData);
+                    return true;
+                    
+                }
+                catch (Exception ex)
+                {
+                    // EndReceive failed and we ended up here
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+            }
+            else
+            {
+                // The operation wasn't completed before the timeout and we're off the hook
+                // Console.WriteLine("Timeout");
+                return false;
+            }
+        }
+
+        
+        private bool checkMessage()
+        {
+            if(sendMessage.Seq==receiveMessage.Seq && sendMessage.Ack + 1 == receiveMessage.Ack)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
 
 
     }
