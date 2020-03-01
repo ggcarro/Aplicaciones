@@ -29,12 +29,13 @@ namespace PL2
             udpClient.Client.ReceiveTimeout = 5000;
 
             Console.WriteLine("Client Started");
-            
 
-            // Enviamos el primer mensaje    
+
+            // Enviamos el primer mensaje   
+            int seq = 0;
             try
             {
-                client.send(1, 0, udpClient);
+                client.send(seq, seq-1, udpClient);
                 Console.WriteLine("Send: Seq {0}, Ack {1}", client.sendMessage.Seq, client.sendMessage.Ack);
 
             }
@@ -45,12 +46,11 @@ namespace PL2
                 Environment.Exit(0); // Finalizamos el programa
             }
 
-            int i = 1;
+           
             int nTimeOut = 0;
             possibleStates state;
-            bool timeOut;
 
-            while(i<client.N && nTimeOut<10)
+            while(seq<client.N && nTimeOut<10)
             {
                 
                 //Recibo
@@ -60,7 +60,7 @@ namespace PL2
                 if (state == possibleStates.TimeOut)
                 {
                     nTimeOut++;
-                    client.send(i, i-1, udpClient);
+                    client.send(seq, seq-1, udpClient);
                     Console.WriteLine("TimeOut {0} SS {1}, SA {2}", nTimeOut, client.sendMessage.Seq, client.sendMessage.Ack);
                 }
 
@@ -73,13 +73,13 @@ namespace PL2
                     if (client.checkMessage())
                     {
                         // Aumentamos numero de seq
-                        i++;
+                        seq++;
 
                         // Generamos numero aleatorio para simular posible pérdida
                         Random rd = new Random();
                         if (rd.Next(0, 10) > 2)
                         {
-                            client.send(i, i - 1, udpClient);
+                            client.send(seq, seq - 1, udpClient);
                             Console.WriteLine("Send: SS {0}, AS {1}", client.sendMessage.Seq, client.sendMessage.Ack);
                         }
                         else
