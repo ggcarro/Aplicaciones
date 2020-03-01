@@ -8,15 +8,15 @@ namespace ServerUDP
 {
     class Server
     {
-        private SNFMessage receiveMessage;
+        private const string Path = "C:\\Users\\maria\\Desktop\\Test.txt"; //Depende de dónde se ejecute el servidor
+        //private SNFMessage receiveMessage;
         private SNFMessage sendMessage;
         BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
         IPEndPoint remoteIPEndPoint;
         private int ack;
         private int seq;
         private UdpClient udpClient;
-        StreamWriter sw = new StreamWriter("C:\\Test.txt");
-
+        StreamWriter sw = new StreamWriter(Path);
 
         static void Main(string[] args)
         {
@@ -116,3 +116,4 @@ namespace ServerUDP
         }
     }
 }
+ 
