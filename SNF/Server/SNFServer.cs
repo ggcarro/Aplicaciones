@@ -80,19 +80,21 @@ namespace Server
             {
                 ack++;
                 send();
+                seq++;
                 
+            }
+            else if (receiveMessage.Seq == -1)
+            {
+                Console.WriteLine("The communication is over. Client off.");
+                ack=-1;
+                seq = -1;
+                send();
+                ack = 0;
+                seq = 1;
             }
             else
             {
                 Console.WriteLine("Packet unexpected");
-                send();
-            }
-
-            if (receiveMessage.Seq == -1)
-            {
-                Console.WriteLine("The communication is over. Client off.");
-                ack=0;
-                seq = 1;
                 send();
             }
         }

@@ -46,12 +46,12 @@ namespace Client
         {
             Console.WriteLine("Client started");
 
-            while (nTimeOut<10 && seq!=-1)
+            while (nTimeOut<10 && seq!=0)
             {
                 
                 // Generamos numero aleatorio para simular pérdida
                 Random rd = new Random();
-                if (rd.Next(0, 100) > 5 || seq==0 || seq==-1)
+                if (rd.Next(0, 100) > 5 || seq==-1 || seq == 0)
                 {
                     send();
                     Console.WriteLine("SS {0} SA {1}", sendMessage.Seq, sendMessage.Ack);
