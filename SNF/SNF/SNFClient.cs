@@ -29,8 +29,8 @@ namespace Client
             udpClient = new UdpClient();
             codec = new BinarySNFMessageCodec();
 
-            seq = 0;
-            ack = -1;
+            seq = 1;
+            ack = 0;
             nTimeOut = 0;
 
 
@@ -94,6 +94,19 @@ namespace Client
                     }
                 }
             }
+
+            if (nTimeOut >= 10)
+            {
+                Console.WriteLine("Max number of TimeOuts");
+            }
+            else
+            {
+                Console.WriteLine("Everything was successfully delivered");
+            }
+
+            udpClient.Close();
+            Console.WriteLine("Client finish");
+            Environment.Exit(0);
 
         }
 

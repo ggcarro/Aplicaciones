@@ -9,7 +9,7 @@ namespace ServerUDP
     class Server
     {
         private const string Path = "C:\\Users\\maria\\Desktop\\Test.txt"; //Depende de dónde se ejecute el servidor
-        //private SNFMessage receiveMessage;
+        private SNFMessage receiveMessage;
         private SNFMessage sendMessage;
         BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
         IPEndPoint remoteIPEndPoint;

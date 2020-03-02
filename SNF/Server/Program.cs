@@ -6,7 +6,9 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            SNFServer server = new SNFServer();
+            server.Run();
+
         }
     }
 }
