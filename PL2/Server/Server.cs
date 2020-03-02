@@ -2,24 +2,26 @@
 using System.Net;
 using System.Net.Sockets;
 using SNFVocabulary;
+using System.IO;
 
 namespace ServerUDP
 {
     class Server
     {
-        private SNFMessage receiveMessage;
+        private const string Path = "C:\\Users\\maria\\Desktop\\Test.txt"; //Depende de dónde se ejecute el servidor
+        //private SNFMessage receiveMessage;
         private SNFMessage sendMessage;
         BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
         IPEndPoint remoteIPEndPoint;
         private int ack;
         private int seq;
         private UdpClient udpClient;
-
+        StreamWriter sw = new StreamWriter(Path);
 
         static void Main(string[] args)
         {
             Server server = new Server();
-            
+
             server.ack = 0;
             server.seq = 1;
             server.sendMessage = new SNFMessage(0, 0);
@@ -39,7 +41,7 @@ namespace ServerUDP
             // Se modificará tras la recepción (info Paquete)
             server.remoteIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             Console.WriteLine("Server Started");
-            // El servidor se ejecuta infinitamente
+            // El servidor se ejecuta
 
             for (; ; )
             {
@@ -53,12 +55,11 @@ namespace ServerUDP
                     //Comprobacion de que es el mensaje esperado y envio
                     server.check();
 
-                    
-                 }
-                 catch (SocketException se)
-                 {
-                     Console.WriteLine(se.ErrorCode + ": " + se.Message);
-                     return;
+                }
+                catch (SocketException se)
+                {
+                    Console.WriteLine(se.ErrorCode + ": " + se.Message);
+                    return;
                 }
             }
         }
@@ -79,6 +80,7 @@ namespace ServerUDP
                 send();
                 Console.WriteLine("SS {0} AS {1} SR {2} AR {3}", sendMessage.Seq, sendMessage.Ack, receiveMessage.Seq, receiveMessage.Ack);
                 seq++;
+                write(receiveMessage.Data);
             }
             else
             {
@@ -86,6 +88,14 @@ namespace ServerUDP
                 send();
                 Console.WriteLine("SS {0} AS {1} SR {2} AR {3}", sendMessage.Seq, sendMessage.Ack, receiveMessage.Seq, receiveMessage.Ack);
 
+            }
+
+            if (receiveMessage.Seq == -1 && receiveMessage.Ack == -2)
+            {
+                Console.WriteLine("The communication is over. Client off.");
+                ack++;
+                send();
+                close();
             }
         }
 
@@ -95,5 +105,15 @@ namespace ServerUDP
             udpClient.Send(sendBuffer, sendBuffer.Length, remoteIPEndPoint);
 
         }
+
+        private void write(byte[] data){
+            sw.WriteLine(data);
+        }
+
+        private void close()
+        {
+            sw.Close();
+        }
     }
 }
+ 
