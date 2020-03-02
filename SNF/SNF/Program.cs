@@ -1,12 +1,15 @@
 ﻿using System;
+using SNFVocabulary;
 
-namespace SNF
+namespace Client
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            SNFClient client = new SNFClient();
+            client.Run();
+            
         }
     }
 }
