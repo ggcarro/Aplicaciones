@@ -17,6 +17,7 @@ namespace ServerUDP
         private int seq;
         private UdpClient udpClient;
         StreamWriter sw = new StreamWriter(Path);
+        private SNFMessage receiveMessage;
 
         static void Main(string[] args)
         {
