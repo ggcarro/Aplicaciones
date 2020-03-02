@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FileClient": {
+      "commandName": "Project",
+      "commandLineArgs": "\"Z:\\DJI+Assistant+2+1.2.5.exe\""
+    }
+  }
+}
