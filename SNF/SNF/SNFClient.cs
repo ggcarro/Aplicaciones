@@ -16,7 +16,7 @@ namespace Client
         int nTimeOut;
         readonly string ipServer = "127.0.0.1";
         readonly int portServer = 23456;
-        readonly string filePath = "C:/Users/UO258767/Desktop/FaviconAz.png";
+        readonly string filePath = "C:/Users/UO258767/Desktop/Moto.mov";
         string fileName;
 
         byte[] sendPacket;
@@ -28,13 +28,12 @@ namespace Client
 
         FileStream file;
         byte[] data;
-
-        FileStream sw;
+        
         
 
         public SNFClient()
         {
-            // Inicializamos varibales
+            // Inicializamos variables
             udpClient = new UdpClient();
             codec = new BinarySNFMessageCodec();
             
@@ -46,8 +45,7 @@ namespace Client
             data = new byte[8192];
             nTimeOut = 0;
 
-            sw= new FileStream("C://Users//UO258767//Desktop//favicon3.png", FileMode.Create);
-
+            
             // Asignamos TimeOut
             udpClient.Client.ReceiveTimeout = 5000;
 
@@ -66,7 +64,6 @@ namespace Client
                 if (b == true)
                 {
                     c = file.Read(data, 0, data.Length);
-                    sw.Write(data);
                 }
                 
                 // Generamos numero aleatorio para simular pérdida
