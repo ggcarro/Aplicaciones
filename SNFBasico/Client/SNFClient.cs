@@ -14,10 +14,9 @@ namespace Client
         int ack;
         int N = 100;
         int nTimeOut;
-        readonly string ipServer = "192.168.222.42";
+        readonly string ipServer = "127.0.0.1";
         readonly int portServer = 23456;
-        readonly string filePath = "C:/Users/UO258767/Desktop/prueba.txt";
-        string fileName;
+        
 
         byte[] sendPacket;
         SNFMessage sendMessage;
@@ -26,9 +25,7 @@ namespace Client
         UdpClient udpClient;
         states state;
 
-        FileStream file;
-        byte[] data;
-        
+        int[] vector;
         
 
         public SNFClient()
@@ -36,13 +33,11 @@ namespace Client
             // Inicializamos variables
             udpClient = new UdpClient();
             codec = new BinarySNFMessageCodec();
-            
-            file = new FileStream(filePath, FileMode.Open);
-            String[] path = filePath.Split('/');
-            fileName = path[path.Length - 1];
+
+            vector =new int[10]{9,8,7,6,5,4,3,2,1,0};
+            Console.WriteLine(vector.Length);
             seq = 1;
             ack = 0;
-            data = new byte[8];
             nTimeOut = 0;
 
             
@@ -57,14 +52,10 @@ namespace Client
         public void Run()
         {
             Console.WriteLine("Client started");
-            int c=0;
-            bool b = true;
+
             while (seq!=0 && nTimeOut<10)
             {
-                if (b == true)
-                {
-                    c = file.Read(data, 0, data.Length);
-                }
+               
                 
                 // Generamos numero aleatorio para simular pérdida
                 Random rd = new Random();
@@ -83,23 +74,23 @@ namespace Client
 
                 if (state == states.TimeOut)
                 {
-                    b = false;
+                    
                     nTimeOut++;
                 }
                 if (state == states.Ok)
                 {
                     if (checkMessage())
                     {
+                        Console.WriteLine("Ack {0} Seq {0}",ack,seq);
+
                         // Aumentamos Seq
-                        if (c>0 || seq == -1)
+                        if (ack<(vector.Length-1) || seq == -1)
                         {
                             seq++;
                             ack++;
-                            b = true;
                         }
                         else
                         {
-                            b = false;
                             seq = -1;
                             ack = -2;
                         }
@@ -133,7 +124,12 @@ namespace Client
 
         void send()
         {
-            sendMessage = new SNFMessage(seq, ack, data, fileName);
+            int a = ack;
+            if (ack == -2)
+            {
+                a = vector.Length - 1;
+            }
+            sendMessage = new SNFMessage(seq, ack, vector[a]);
             sendPacket = codec.EncodeFull(sendMessage);
             udpClient.Send(sendPacket, sendPacket.Length, ipServer, portServer);
         }

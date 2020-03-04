@@ -14,7 +14,7 @@ namespace Client
         int ack;
         int N = 100;
         int nTimeOut;
-        readonly string ipServer = "192.168.222.42";
+        readonly string ipServer = "127.0.0.1";
         readonly int portServer = 23456;
         readonly string filePath = "C:/Users/UO258767/Desktop/prueba.txt";
         string fileName;

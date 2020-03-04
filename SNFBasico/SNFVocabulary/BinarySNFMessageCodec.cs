@@ -13,8 +13,6 @@ namespace SNFVocabulary
 
             int _seq = message.Seq;
             int _ack = message.Ack;
-            byte[] _data = message.Data;
-            string _fileName = message.FileName;
 
             MemoryStream ms = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(ms);
@@ -33,17 +31,15 @@ namespace SNFVocabulary
 
             int _seq = message.Seq;
             int _ack = message.Ack;
-            byte[] _data = message.Data;
-            string _fileName = message.FileName;
+            int _num = message.Num;
 
             MemoryStream ms = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(ms);
 
             writer.Write(_seq);
             writer.Write(_ack);
-            writer.Write(_data);
-            writer.Write(_fileName);
-            
+            writer.Write(_num);
+
 
             writer.Flush();
             byteBuffer = ms.ToArray();
@@ -71,10 +67,9 @@ namespace SNFVocabulary
 
             int read_seq = reader.ReadInt32();
             int read_ack = reader.ReadInt32();
-            byte[] read_data = reader.ReadBytes(8);
-            string read_fileName = reader.ReadString();
+            int read_num = reader.ReadInt32();
 
-            SNFMessage decoded_message = new SNFMessage(read_seq, read_ack, read_data, read_fileName);
+            SNFMessage decoded_message = new SNFMessage(read_seq, read_ack, read_num);
             return decoded_message;
 
         }

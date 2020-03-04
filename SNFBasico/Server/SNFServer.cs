@@ -19,9 +19,7 @@ namespace Server
         IPEndPoint remoteIPEndPoint;
         UdpClient udpClient;
         FileStream fs;
-
-        string pathFile;
-        string dirWork= "C:\\Users\\UO258342\\Desktop\\Server\\";
+        StreamWriter sw;
 
         public SNFServer()
         {
@@ -40,6 +38,9 @@ namespace Server
 
             remoteIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             Console.WriteLine("Server Started");
+
+            fs = new FileStream("C:\\Users\\UO258767\\Desktop\\Server\\vector.txt", FileMode.Create);
+            sw = new StreamWriter(fs);
 
         }
 
@@ -80,12 +81,7 @@ namespace Server
 
         void check()
         {
-            if (receiveMessage.Seq==1)
-            {
-                pathFile = dirWork + receiveMessage.FileName;
-                
-                fs = new FileStream(pathFile, FileMode.Create);
-            }
+
             if (receiveMessage.Ack == ack && receiveMessage.Seq == seq)
             {
                 ack++;
@@ -97,6 +93,8 @@ namespace Server
             else if (receiveMessage.Seq == -1)
             {
                 Console.WriteLine("The communication is over. Client off.");
+                sw.Flush();
+                sw.Close();
                 fs.Close();
                 ack=-1;
                 seq = -1;
@@ -115,7 +113,7 @@ namespace Server
 
         void write()
         {
-            fs.Write(receiveMessage.Data);
+            sw.Write(receiveMessage.Num);
         }
 
     }
