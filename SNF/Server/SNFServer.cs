@@ -21,7 +21,7 @@ namespace Server
         FileStream fs;
 
         string pathFile;
-        string dirWork= "C:\\Users\\UO258767\\Desktop\\Server\\";
+        string dirWork= "C:\\Users\\UO258342\\Desktop\\Server\\";
 
         public SNFServer()
         {
