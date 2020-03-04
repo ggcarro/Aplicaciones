@@ -16,7 +16,7 @@ namespace Client
         int nTimeOut;
         readonly string ipServer = "127.0.0.1";
         readonly int portServer = 23456;
-        readonly string filePath = "C:/Users/UO258767/Desktop/Moto.mov";
+        readonly string filePath = "C:/Users/UO258767/Desktop/FaviconAz.png";
         string fileName;
 
         byte[] sendPacket;
@@ -43,7 +43,7 @@ namespace Client
             fileName = path[path.Length - 1];
             seq = 1;
             ack = 0;
-            data = new byte[1024];
+            data = new byte[8192];
             nTimeOut = 0;
 
             sw= new FileStream("C://Users//UO258767//Desktop//favicon3.png", FileMode.Create);

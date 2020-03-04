@@ -71,7 +71,7 @@ namespace SNFVocabulary
 
             int read_seq = reader.ReadInt32();
             int read_ack = reader.ReadInt32();
-            byte[] read_data = reader.ReadBytes(1024);
+            byte[] read_data = reader.ReadBytes(8192);
             string read_fileName = reader.ReadString();
 
             SNFMessage decoded_message = new SNFMessage(read_seq, read_ack, read_data, read_fileName);
