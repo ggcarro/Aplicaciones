@@ -16,6 +16,8 @@ namespace Client
         int nTimeOut;
         readonly string ipServer = "127.0.0.1";
         readonly int portServer = 23456;
+        readonly string filePath = "C:/Users/UO258767/Desktop/Moto.mov";
+        string fileName;
 
         byte[] sendPacket;
         SNFMessage sendMessage;
@@ -26,23 +28,25 @@ namespace Client
 
         FileStream file;
         byte[] data;
+
+        FileStream sw;
         
 
-        public SNFClient(string filename)
+        public SNFClient()
         {
             // Inicializamos varibales
             udpClient = new UdpClient();
             codec = new BinarySNFMessageCodec();
-
-            Console.WriteLine("Filename: {0}", filename);
-
-            file = new FileStream("C:/Users/UO258767/Desktop/cc.bin", FileMode.Open);
-            Console.WriteLine("Filename: {0}", filename);
+            
+            file = new FileStream(filePath, FileMode.Open);
+            String[] path = filePath.Split('/');
+            fileName = path[path.Length - 1];
             seq = 1;
             ack = 0;
             data = new byte[1024];
             nTimeOut = 0;
 
+            sw= new FileStream("C://Users//UO258767//Desktop//favicon3.png", FileMode.Create);
 
             // Asignamos TimeOut
             udpClient.Client.ReceiveTimeout = 5000;
@@ -62,25 +66,27 @@ namespace Client
                 if (b == true)
                 {
                     c = file.Read(data, 0, data.Length);
+                    sw.Write(data);
                 }
                 
                 // Generamos numero aleatorio para simular pérdida
                 Random rd = new Random();
-                if (rd.Next(0, 100) > -5 || seq==-1 || seq == 0)
+                if (rd.Next(0, 100) > - 1 || seq==-1 || seq == 0)
                 {
+                    
                     send();
                     Console.WriteLine("SS {0} SA {1}", sendMessage.Seq, sendMessage.Ack);
                 }
                 else
                 {
-                    Console.WriteLine("Packet Lost SS {0} SA{1}", sendMessage.Seq, sendMessage.Ack);
+                    Console.WriteLine("Packet Lost SS {0} SA {1}", sendMessage.Seq, sendMessage.Ack);
                 }
 
                 state = receive();
 
                 if (state == states.TimeOut)
                 {
-
+                    b = false;
                 }
                 if (state == states.Ok)
                 {
@@ -91,6 +97,7 @@ namespace Client
                         {
                             seq++;
                             ack++;
+                            b = true;
                         }
                         else
                         {
@@ -128,8 +135,8 @@ namespace Client
 
         void send()
         {
-            sendMessage = new SNFMessage(seq, ack, data);
-            sendPacket = codec.Encode(sendMessage);
+            sendMessage = new SNFMessage(seq, ack, data, fileName);
+            sendPacket = codec.EncodeFull(sendMessage);
             udpClient.Send(sendPacket, sendPacket.Length, ipServer, portServer);
         }
 
@@ -156,7 +163,9 @@ namespace Client
                 {
                     // Otro error
                     Console.WriteLine("Server seems to be disconnected");
+                    Environment.Exit(0);
                     return states.Error;
+                    
                 }
 
             }

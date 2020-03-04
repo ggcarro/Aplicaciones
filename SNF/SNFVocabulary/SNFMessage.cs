@@ -7,6 +7,7 @@ namespace SNFVocabulary
         private int _seq;
         private int _ack;
         private byte[] _data; // Usar en caso de que el haya que mandar el fichero en sí.
+        private string _filename;
 
 
         public int Seq
@@ -27,6 +28,12 @@ namespace SNFVocabulary
             set { _data = value; }
         }
 
+        public string FileName
+        {
+            get { return _filename; }
+            set { _filename = value; }
+        }
+
         public SNFMessage(int new_seq, int new_ack)
         {
             _seq = new_seq;
@@ -38,6 +45,13 @@ namespace SNFVocabulary
             _seq = new_seq;
             _ack = new_ack;
             _data = new_data;
+        }
+        public SNFMessage(int new_seq, int new_ack, byte[] new_data, string fileName)
+        {
+            _seq = new_seq;
+            _ack = new_ack;
+            _data = new_data;
+            _filename = fileName;
         }
     }
 }

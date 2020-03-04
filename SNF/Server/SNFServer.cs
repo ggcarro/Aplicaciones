@@ -18,7 +18,11 @@ namespace Server
         BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
         IPEndPoint remoteIPEndPoint;
         UdpClient udpClient;
-        
+        FileStream fs;
+
+        string pathFile;
+        string dirWork= "C:\\Users\\UO258767\\Desktop\\Server\\";
+
         public SNFServer()
         {
             ack = 0;
@@ -64,7 +68,7 @@ namespace Server
         void receive()
         {
             byte[] rcvBuffer = udpClient.Receive(ref remoteIPEndPoint);
-            receiveMessage = codec.Decode(rcvBuffer);
+            receiveMessage = codec.DecodeFull(rcvBuffer);
         }
         
         void send()
@@ -76,16 +80,24 @@ namespace Server
 
         void check()
         {
+            if (receiveMessage.Seq==1)
+            {
+                pathFile = dirWork + receiveMessage.FileName;
+                
+                fs = new FileStream(pathFile, FileMode.Create);
+            }
             if (receiveMessage.Ack == ack && receiveMessage.Seq == seq)
             {
                 ack++;
                 send();
+                write();
                 seq++;
                 
             }
             else if (receiveMessage.Seq == -1)
             {
                 Console.WriteLine("The communication is over. Client off.");
+                fs.Close();
                 ack=-1;
                 seq = -1;
                 send();
@@ -97,6 +109,13 @@ namespace Server
                 Console.WriteLine("Packet unexpected");
                 send();
             }
+
+
+        }
+
+        void write()
+        {
+            fs.Write(receiveMessage.Data);
         }
 
     }

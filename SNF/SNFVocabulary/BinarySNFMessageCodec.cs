@@ -13,22 +13,43 @@ namespace SNFVocabulary
 
             int _seq = message.Seq;
             int _ack = message.Ack;
-            //byte[] _data = message.Data;
+            byte[] _data = message.Data;
+            string _fileName = message.FileName;
 
             MemoryStream ms = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(ms);
 
             writer.Write(_seq);
             writer.Write(_ack);
-            //writer.Write(_data);
 
             writer.Flush();
             byteBuffer = ms.ToArray();
 
             return byteBuffer;
         }
+        public byte[] EncodeFull(SNFMessage message)
+        {
+            byte[] byteBuffer;
 
+            int _seq = message.Seq;
+            int _ack = message.Ack;
+            byte[] _data = message.Data;
+            string _fileName = message.FileName;
 
+            MemoryStream ms = new MemoryStream();
+            BinaryWriter writer = new BinaryWriter(ms);
+
+            writer.Write(_seq);
+            writer.Write(_ack);
+            writer.Write(_data);
+            writer.Write(_fileName);
+            
+
+            writer.Flush();
+            byteBuffer = ms.ToArray();
+
+            return byteBuffer;
+        }
 
         public SNFMessage Decode(byte[] buffer)
         {
@@ -37,9 +58,23 @@ namespace SNFVocabulary
 
             int read_seq = reader.ReadInt32();
             int read_ack = reader.ReadInt32();
-            //byte[] read_data = reader.ReadBytes();
 
             SNFMessage decoded_message = new SNFMessage(read_seq, read_ack);
+            return decoded_message;
+
+        }
+
+        public SNFMessage DecodeFull(byte[] buffer)
+        {
+            MemoryStream ms = new MemoryStream(buffer);
+            BinaryReader reader = new BinaryReader(ms);
+
+            int read_seq = reader.ReadInt32();
+            int read_ack = reader.ReadInt32();
+            byte[] read_data = reader.ReadBytes(1024);
+            string read_fileName = reader.ReadString();
+
+            SNFMessage decoded_message = new SNFMessage(read_seq, read_ack, read_data, read_fileName);
             return decoded_message;
 
         }
