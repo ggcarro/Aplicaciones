@@ -6,7 +6,7 @@ using SNFVocabulary;
 
 namespace PL2
 {
-    class Client
+    class FileClient
     {
         private int N = 100;
         private readonly string ipServer = "127.0.0.1";
@@ -16,13 +16,17 @@ namespace PL2
         private SNFMessage sendMessage;
         private SNFMessage receiveMessage;
         private BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
-         
+        private long bytesToSend;
+        private int bytesSended;
+        private long fileLength;
+        private int maxBytes = 512000;
+
 
         public static void Main(string[] args)
         {
             // Creamos objeto clase cliente;
-            Client client = new Client();
-            
+            FileClient client = new FileClient();
+
             // Creamos socket UDP
             UdpClient udpClient = new UdpClient();
 
@@ -32,13 +36,19 @@ namespace PL2
             Console.WriteLine("Client Started");
 
 
+            // Cargamos el fichero
+            FileStream file = new FileStream(args[0], FileMode.Open);
+            client.fileLength = file.Length;
+            client.bytesToSend = file.Length;
+
+            Console.WriteLine("File Length: {0}", client.fileLength);
             
 
             // Enviamos el primer mensaje   
             int seq = 0;
             try
             {
-                client.send(seq, seq-1, udpClient);
+                client.send(seq, seq - 1, udpClient);
                 Console.WriteLine("Send: Seq {0}, Ack {1}", client.sendMessage.Seq, client.sendMessage.Ack);
 
             }
@@ -49,25 +59,25 @@ namespace PL2
                 Environment.Exit(0); // Finalizamos el programa
             }
 
-           
+
             int nTimeOut = 0;
             possibleStates state;
 
-            while(seq<client.N && nTimeOut<10)
+            while (client.bytesToSend!=0 && nTimeOut < 10)
             {
-                
+
                 //Recibo
-                state=client.receive(udpClient);
+                state = client.receive(udpClient);
 
                 // Si hay timeOut vuelvo a enviar
                 if (state == possibleStates.TimeOut)
                 {
                     nTimeOut++;
-                    client.send(seq, seq-1, udpClient);
+                    client.send(seq, seq - 1, udpClient);
                     Console.WriteLine("TimeOut {0} SS {1}, SA {2}", nTimeOut, client.sendMessage.Seq, client.sendMessage.Ack);
                 }
 
-                if(state == possibleStates.ReceiveOk)
+                if (state == possibleStates.ReceiveOk)
                 {
                     // Reseteamos TimeOut
                     nTimeOut = 0;
@@ -77,12 +87,28 @@ namespace PL2
                     {
                         // Aumentamos numero de seq
                         seq++;
+                        // Leemos del archivo y actualizmos variables;
+                        byte[] data = new byte[client.maxBytes];
+                        if (client.bytesToSend > client.maxBytes)
+                        {
+                            file.Read(data, 0, client.bytesSended + client.maxBytes);
+                            client.bytesSended += client.maxBytes;
+                            client.bytesToSend -= client.maxBytes;
+                        }
+                        else
+                        {
+                            file.Read(data, 0, (int) client.bytesToSend);
+                            client.bytesSended += client.maxBytes;
+                            client.bytesToSend = 0;
+                        }
+                        
+                        
 
                         // Generamos numero aleatorio para simular posible pérdida
                         Random rd = new Random();
-                        if (rd.Next(0, 10) > 2)
+                        if (rd.Next(0, 10) > -1)
                         {
-                            client.send(seq, seq - 1, udpClient);
+                            client.send(seq, seq - 1, udpClient, data);
                             Console.WriteLine("Send: SS {0}, AS {1}", client.sendMessage.Seq, client.sendMessage.Ack);
                         }
                         else
@@ -102,9 +128,9 @@ namespace PL2
 
             // Enviamos fin y no hace falta esperar a confirmación.
             client.send(-1, 0, udpClient);
-            
 
-            if(nTimeOut >= 10)
+
+            if (nTimeOut >= 10)
             {
                 Console.WriteLine("Maximum number of timeout attempts");
                 Console.WriteLine("Check the conexion with the server");
@@ -120,11 +146,21 @@ namespace PL2
 
         }
 
-        private void send(int seq, int ack, UdpClient udpClient)
+        private void send(int seq, int ack, UdpClient udpClient, byte[] data = null)
         {
-            sendMessage = new SNFMessage(seq, ack);
-            sendPacket = codec.Encode(sendMessage);
-            udpClient.Send(sendPacket, sendPacket.Length, ipServer, portServer);
+            if( seq==0 || seq == -1)
+            {
+                sendMessage = new SNFMessage(seq, ack);
+                sendPacket = codec.Encode(sendMessage);
+                udpClient.Send(sendPacket, sendPacket.Length, ipServer, portServer);
+            }
+            else
+            {
+                sendMessage = new SNFMessage(seq, ack, data);
+                sendPacket = codec.Encode(sendMessage);
+                udpClient.Send(sendPacket, sendPacket.Length, ipServer, portServer);
+            }
+            
         }
 
         private possibleStates receive(UdpClient udpClient)
@@ -154,14 +190,14 @@ namespace PL2
                 }
 
             }
-        
-            
+
+
         }
 
-        
+
         private bool checkMessage()
         {
-            if(sendMessage.Seq==receiveMessage.Seq && sendMessage.Ack + 1 == receiveMessage.Ack)
+            if (sendMessage.Seq == receiveMessage.Seq && sendMessage.Ack + 1 == receiveMessage.Ack)
             {
                 return true;
             }
