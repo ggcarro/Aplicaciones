@@ -59,7 +59,7 @@ namespace Client
             Console.WriteLine("Client started");
             int c=0;
             bool b = true;
-            while (seq!=0)
+            while (seq!=0 && nTimeOut<10)
             {
                 if (b == true)
                 {
@@ -68,7 +68,7 @@ namespace Client
                 
                 // Generamos numero aleatorio para simular pérdida
                 Random rd = new Random();
-                if (rd.Next(0, 100) > - 1 || seq==-1 || seq == 0)
+                if (rd.Next(0, 100) > 2 || seq==-1 || seq == 0)
                 {
                     
                     send();
@@ -84,6 +84,7 @@ namespace Client
                 if (state == states.TimeOut)
                 {
                     b = false;
+                    nTimeOut++;
                 }
                 if (state == states.Ok)
                 {
@@ -159,8 +160,6 @@ namespace Client
                 else
                 {
                     // Otro error
-                    Console.WriteLine("Server seems to be disconnected");
-                    Environment.Exit(0);
                     return states.Error;
                     
                 }
