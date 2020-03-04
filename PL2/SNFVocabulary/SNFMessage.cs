@@ -39,5 +39,6 @@ namespace SNFVocabulary
             _ack = new_ack;
             _data = new_data;
         }
+
     }
 }

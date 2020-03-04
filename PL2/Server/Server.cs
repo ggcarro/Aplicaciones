@@ -11,7 +11,7 @@ namespace ServerUDP
         {
             UdpClient client = null;
             SNFMessage receiveMsg;
-            int ack = 0;
+            int ack=0;
 
             try
             {
@@ -34,11 +34,11 @@ namespace ServerUDP
             {
                 try
                 {
+   
                    // Recibir
                     byte[] rcvBuffer = client.Receive(ref remoteIPEndPoint);
                     BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
-                    //ASCIIEchoMessageCodec codec = new ASCIIEchoMessageCodec();
-                    receiveMsg = codec.Decode(rcvBuffer); //
+                    receiveMsg = codec.Decode(rcvBuffer);
 
                     //Comprobacion de que es el mensaje esperado
                     if (ack == receiveMsg.Ack)
@@ -49,7 +49,7 @@ namespace ServerUDP
                         client.Send(sendBuffer, sendBuffer.Length, remoteIPEndPoint);
                     }
                     else
-                        Console.WriteLine("Paquete descartado");
+                        Console.WriteLine("Paquete descartado {0} {1} {2}", receiveMsg.Seq, receiveMsg.Ack, ack);
                     
              }
              catch (SocketException se)
