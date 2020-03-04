@@ -16,7 +16,7 @@ namespace Client
         int nTimeOut;
         readonly string ipServer = "192.168.222.42";
         readonly int portServer = 23456;
-        readonly string filePath = "C:/Users/UO258767/Desktop/Moto.mov";
+        readonly string filePath = "C:/Users/UO258767/Desktop/prueba.txt";
         string fileName;
 
         byte[] sendPacket;
@@ -42,12 +42,12 @@ namespace Client
             fileName = path[path.Length - 1];
             seq = 1;
             ack = 0;
-            data = new byte[8192];
+            data = new byte[8];
             nTimeOut = 0;
 
             
             // Asignamos TimeOut
-            udpClient.Client.ReceiveTimeout = 5000;
+            udpClient.Client.ReceiveTimeout = 500;
 
             Console.WriteLine("Everything OK");
             
@@ -68,7 +68,7 @@ namespace Client
                 
                 // Generamos numero aleatorio para simular pérdida
                 Random rd = new Random();
-                if (rd.Next(0, 100) > 2 || seq==-1 || seq == 0)
+                if (rd.Next(0, 100) > -1 || seq==-1 || seq == 0)
                 {
                     
                     send();
