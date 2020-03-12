@@ -4,19 +4,13 @@ using System.Text;
 
 namespace SFFVocabulary
 {
-    public class AckNewFile
+    public class AckNewFile : Packet
     {
-        private int _startTransmission = -10;
 
-        public int StartTransmission
+        public AckNewFile(int new_bodyLength, byte[] new_body, int new_type = 10) : base(new_bodyLength, new_body, new_type)
         {
-            get => _startTransmission;
-            set => _startTransmission = value;
+   
         }
 
-        public AckNewFile (int new_startTransmission)
-        {
-            _startTransmission = new_startTransmission;
-        }
     }
 }

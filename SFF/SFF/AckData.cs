@@ -4,16 +4,9 @@ using System.Text;
 
 namespace SFFVocabulary
 {
-    public class AckData
+    public class AckData : Packet
     {
-        private int _seq;
         private int _ack;
-
-        public int Seq
-        {
-            get => _seq;
-            set => _seq = value;
-        }
 
         public int Ack
         {
@@ -21,9 +14,9 @@ namespace SFFVocabulary
             set => _ack = value;
         }
 
-        public AckData (int new_seq, int new_ack)
+        public AckData (int new_bodyLength, byte[] new_body, int new_ack, int new_type = 20) : base(new_bodyLength, new_body, new_type)
+
         {
-            _seq = new_seq;
             _ack = new_ack;
         }
     }

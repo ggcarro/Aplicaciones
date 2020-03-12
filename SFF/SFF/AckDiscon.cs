@@ -4,19 +4,11 @@ using System.Text;
 
 namespace SFFVocabulary
 {
-    public class AckDiscon
+    public class AckDiscon : Packet
     {
-        private int _ackEndTransmission = -20;
-
-        public int AckEndTransmission
+        public AckDiscon(int new_bodyLength, byte[] new_body, int new_type = 30) : base(new_bodyLength, new_body, new_type)
         {
-            get => _ackEndTransmission;
-            set => _ackEndTransmission = value;
-        }
 
-        public AckDiscon(int new_ackEndTransmission)
-        {
-            _ackEndTransmission = new_ackEndTransmission;
         }
     }
 }

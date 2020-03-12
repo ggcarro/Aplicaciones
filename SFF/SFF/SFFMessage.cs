@@ -15,7 +15,7 @@ namespace SFFVocabulary
     public class Packet  //Será necesario añadir el constructor de la clase y propiedades de acceso a los campos
     {
         private PacketBodyType _type;
-        private int _bodyLenght;
+        private int _bodyLength;
         private byte[] _body;
    
         public PacketBodyType Type
@@ -24,10 +24,10 @@ namespace SFFVocabulary
             set => _type = value;
         }
 
-        public int BodyLenght
+        public int BodyLength
         {
-            get => _bodyLenght;
-            set => _bodyLenght = value;
+            get => _bodyLength;
+            set => _bodyLength = value;
             
         }
 
@@ -37,10 +37,10 @@ namespace SFFVocabulary
             set => _body = value;
         }
 
-        public Packet(int new_type, int new_bodyLenght, byte[] new_body)
+        public Packet(int new_bodyLength, byte[] new_body, int new_type)
         {
             _type = (PacketBodyType)new_type;
-            _bodyLenght = new_bodyLenght;
+            _bodyLength = new_bodyLength;
             _body = new_body;
         }
     }

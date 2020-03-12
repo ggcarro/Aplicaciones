@@ -10,7 +10,7 @@ namespace SFFVocabulary
         public override void WriteBinaryData(BinaryWriter writer, Packet message)
         {
             writer.Write((int)message.Type);
-            writer.Write(message.BodyLenght);
+            writer.Write(message.BodyLength);
             writer.Write(message.Body);
         }
 
@@ -22,7 +22,7 @@ namespace SFFVocabulary
             byte[] body = new byte[bodyLength];
             reader.Read(body, 0, bodyLength);
 
-            return new Packet(typeRaw, bodyLength, body);
+            return new Packet(bodyLength, body, typeRaw);
         }
     }
 }
