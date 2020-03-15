@@ -5,13 +5,7 @@ VisualStudioVersion = 15.0.28307.1000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFFVocabulary", "SFF\SFFVocabulary.csproj", "{2C34DA1F-5DE1-43F7-BA02-62FEB5EBA3D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{55183234-936F-4818-AE72-216711A90490}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{7B6254F7-8B3D-447B-93D3-EA15CA2B54AC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFFVocabulary_Test", "SFFVocabulary_Test\SFFVocabulary_Test.csproj", "{65B23BB6-7D82-43FB-93A5-64906D261808}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{2C17A139-3610-4321-B002-D4F968C054F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFFVocabulary_Test", "SFFVocabulary_Test\SFFVocabulary_Test.csproj", "{65B23BB6-7D82-43FB-93A5-64906D261808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,22 +17,10 @@ Global
 		{2C34DA1F-5DE1-43F7-BA02-62FEB5EBA3D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C34DA1F-5DE1-43F7-BA02-62FEB5EBA3D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C34DA1F-5DE1-43F7-BA02-62FEB5EBA3D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55183234-936F-4818-AE72-216711A90490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55183234-936F-4818-AE72-216711A90490}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55183234-936F-4818-AE72-216711A90490}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55183234-936F-4818-AE72-216711A90490}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B6254F7-8B3D-447B-93D3-EA15CA2B54AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B6254F7-8B3D-447B-93D3-EA15CA2B54AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B6254F7-8B3D-447B-93D3-EA15CA2B54AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B6254F7-8B3D-447B-93D3-EA15CA2B54AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65B23BB6-7D82-43FB-93A5-64906D261808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65B23BB6-7D82-43FB-93A5-64906D261808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65B23BB6-7D82-43FB-93A5-64906D261808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65B23BB6-7D82-43FB-93A5-64906D261808}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C17A139-3610-4321-B002-D4F968C054F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C17A139-3610-4321-B002-D4F968C054F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C17A139-3610-4321-B002-D4F968C054F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C17A139-3610-4321-B002-D4F968C054F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

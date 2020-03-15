@@ -7,16 +7,17 @@ namespace SFFVocabulary
 {
     class AckDiscontBinaryCodec : BinaryCodec<AckDiscon>
     {
+        PacketBinaryCodec codec;
         public override void WriteBinaryData(BinaryWriter writer, AckDiscon message)
         {
-            writer.Write((int)message.AckEndTransmission);
+            codec.WriteBinaryData(writer, message);
         }
 
         public override AckDiscon ReadBinaryData(BinaryReader reader)
         {
-            int ack = reader.ReadInt32();
+            Packet packet = codec.ReadBinaryData(reader);
 
-            return new AckDiscon(ack);
+            return new AckDiscon(packet.BodyLength, packet.Body);
         }
     }
 }

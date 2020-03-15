@@ -7,16 +7,17 @@ namespace SFFVocabulary
 {
     public class DisconBinaryCodec : BinaryCodec<Discon>
     {
+        PacketBinaryCodec codec;
         public override void WriteBinaryData(BinaryWriter writer, Discon message)
         {
-            writer.Write((int)message.EndTransmission);
+            codec.WriteBinaryData(writer, message);
         }
 
         public override Discon ReadBinaryData(BinaryReader reader)
         {
-            int endTransmission = reader.ReadInt32();
+            Packet packet = codec.ReadBinaryData(reader);
 
-            return new Discon(endTransmission);
+            return new Discon(packet.BodyLength, packet.Body);
         }
     }
 }

@@ -7,20 +7,19 @@ namespace SFFVocabulary
 {
     public class DataBinaryCodec : BinaryCodec<Data>
     {
+        PacketBinaryCodec codec;
         public override void WriteBinaryData(BinaryWriter writer, Data message)
         {
-            writer.Write((int)message.Seq);
-            writer.Write((int)message.Ack);
-            writer.Write((byte[])message.Info);
+            codec.WriteBinaryData(writer, message);
+            writer.Write(message.Seq);
         }
 
         public override Data ReadBinaryData(BinaryReader reader)
         {
-            int seq = reader.ReadInt32();
-            int ack = reader.ReadInt32();
-            byte[] info = reader.ReadBytes(8);
+            Packet packet = codec.ReadBinaryData(reader);
+            int new_seq = reader.ReadInt32();
 
-            return new Data(seq, ack, info);
+            return new Data(packet.BodyLength, packet.Body, new_seq);
         }
     }
 }

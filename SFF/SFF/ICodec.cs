@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 
 namespace SFFVocabulary {
-        public abstract class ICodec<T>
+    public abstract class ICodec<T>
     {
         public abstract byte[] Encode(T message);
         public abstract T Decode(Stream source);

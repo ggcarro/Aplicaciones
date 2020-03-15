@@ -16,8 +16,10 @@ namespace SFFVocabulary
 
         public override AckData ReadBinaryData(BinaryReader reader)
         {
+            Packet packet = codec.ReadBinaryData(reader);
+            int new_ack = reader.ReadInt32();
 
-            return new AckData(packet.BodyLength, new_body);
+            return new AckData(packet.BodyLength, packet.Body, new_ack);
         }
     }
 }

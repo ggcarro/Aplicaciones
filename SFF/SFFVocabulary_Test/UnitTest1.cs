@@ -8,8 +8,8 @@ namespace SFFVocabulary_Test
     {
         [TestMethod]
         public void TestMethod1()
-        {/*
-            byte[] info = new byte[123456];
+        {
+            byte[] info;
             Data data = new Data(1, 1, info);
 
             BinaryCodec<Data> codification_data = new DataBinaryCodec();
@@ -24,7 +24,7 @@ namespace SFFVocabulary_Test
             Data data_decoded = decodification_data.Decode(packet_decoded);
 
             CollectionAssert.AreEqual(info, data_decoded.Info);
-            */
+            
         }
     }
 }
