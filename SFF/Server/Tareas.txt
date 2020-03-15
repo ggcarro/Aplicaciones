@@ -1,0 +1,9 @@
+﻿COSAS A IMPLEMENTAR -->
+ -- Importante -- 
+ Estamos llamando Client Server cuando debería de ser Sender Receiver --> Estaría bien renombrar todo correctamente
+		1) Estructura Server -- Done
+		2) Clase Abstracta State (En SFFVocabulary) -- Done
+		3) Clase Abstracta ServerState (Hereda de State) -- Done
+		4) Estado Inicial (Hereda de ServerState)
+		5) Estado Escucha (Hereda de ServerState)
+		6) Estado Final (Hereda de ServerState)
