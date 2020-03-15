@@ -7,16 +7,15 @@ namespace SFFVocabulary
 {
     class AckDataBinaryCodec : BinaryCodec<AckData>
     {
-        //PacketBinaryCodec packet;
+        PacketBinaryCodec codec;
         public override void WriteBinaryData(BinaryWriter writer, AckData message)
         {
-            //packet.WriteBinaryData(writer, message);
-            writer.Write((int)message.Ack);
+            codec.WriteBinaryData(writer, message);
+            writer.Write(message.Ack);
         }
 
         public override AckData ReadBinaryData(BinaryReader reader)
         {
-            //Packet packet = PacketBinaryCodec.ReadBinaryData(packet);
 
             return new AckData(packet.BodyLength, new_body);
         }

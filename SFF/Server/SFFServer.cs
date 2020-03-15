@@ -7,15 +7,12 @@ using System.Text;
 using SFFVocabulary;
 
 namespace Server
-{/*
-    class SNFServer
+{
+    class SFFServer
     {
-        int ack;
-        int seq;
-
-        SFFMessage sendMessage;
-        SFFMessage receiveMessage;
-        BinarySNFMessageCodec codec = new BinarySNFMessageCodec();
+        Packet sendMessage;
+        Packet receiveMessage;
+        PacketBinaryCodec codec = new PacketBinaryCodec();
         IPEndPoint remoteIPEndPoint;
         UdpClient udpClient;
         FileStream fs;
@@ -23,11 +20,8 @@ namespace Server
         string pathFile;
         string dirWork = "C:\\Users\\UO258767\\Desktop\\Server\\";
 
-        public SNFServer()
+        public SFFServer()
         {
-            ack = 0;
-            seq = 1;
-
             try
             {
                 udpClient = new UdpClient(23456);
@@ -51,10 +45,10 @@ namespace Server
                 {
                     // Recibir
                     receive();
-                    Console.WriteLine("SR {0} AR {1}", receiveMessage.Seq, receiveMessage.Ack);
+                    Console.WriteLine("Type {0}", receiveMessage.Type);
 
-                    //Comprobacion de que es el mensaje esperado y envio
-                    check();
+                    PacketHandler handle;
+                    handle.HandlePacket(receiveMessage.Type); //Comprobar el tipo de mensaje y responder
 
                 }
                 catch (SocketException se)
@@ -68,12 +62,13 @@ namespace Server
         void receive()
         {
             byte[] rcvBuffer = udpClient.Receive(ref remoteIPEndPoint);
-            receiveMessage = codec.DecodeFull(rcvBuffer);
+            receiveMessage = codec.Decode(rcvBuffer);
         }
 
-        void send()
+
+        public void send(int length, byte[] body, int type)
         {
-            sendMessage = new SFFMessage(seq, ack);
+            sendMessage = new Packet(length, body, type);
             byte[] sendBuffer = codec.Encode(sendMessage);
             udpClient.Send(sendBuffer, sendBuffer.Length, remoteIPEndPoint);
         }
@@ -119,6 +114,5 @@ namespace Server
         }
 
     }
-    */
 }
 
