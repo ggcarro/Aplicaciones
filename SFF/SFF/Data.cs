@@ -4,19 +4,25 @@ using System.Text;
 
 namespace SFFVocabulary
 {
-    public class Data : Packet
+    public class Data
     {
         private int _seq;
+        private byte[] _information;
 
         public int Seq
         {
             get => _seq;
             set => _seq = value;
         }
-
-        public Data(int new_bodyLength, byte[] new_body, int new_seq, int new_type = 2) : base(new_bodyLength, new_body, new_type)
-        
+        public byte[] Information
         {
+            get => _information;
+            set => _information = value;
+        }
+
+        public Data(byte[] new_data, int new_seq)
+        {
+            _information = new_data;
             _seq = new_seq;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Server
+namespace Receiver
 {
     class Program
     {
@@ -9,8 +9,8 @@ namespace Server
         {
             try
             {
-                SFFServer server = new SFFServer(23456); //pasamos el puerto por el constructor
-                server.Run();
+                SFFReceiver receiver = new SFFReceiver(23456); //pasamos el puerto por el constructor
+                receiver.Run();
                 Console.WriteLine("");
                 Console.ReadKey(); 
             }

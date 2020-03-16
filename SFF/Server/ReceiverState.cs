@@ -4,19 +4,19 @@ using System.Net.Sockets;
 using SFFVocabulary;
 using System.IO;
 
-namespace Server
+namespace Receiver
 {  
-    abstract class ServerState : State
+    abstract class ReceiverState : State
     {
-        protected SFFServer _context;
-        protected ServerState(SFFServer context)
+        protected SFFReceiver _context;
+        protected ReceiverState(SFFReceiver context)
         {
             _context = context;
         }
 
         protected override Packet Receive()
-        { 
-            return _context.receive();
+        {
+            return _context.Receive();
         }
         protected override void OnUnknownPacket(KeyNotFoundException e) { }
         protected override void OnTimeOut() { }

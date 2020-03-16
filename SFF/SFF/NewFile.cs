@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SFFVocabulary
 {
-    public class NewFile : Packet
+    public class NewFile
     {
         private string __fileName;
 
@@ -14,7 +14,7 @@ namespace SFFVocabulary
             set => __fileName = value;
         }
 
-        public NewFile(int new_bodyLength, byte[] new_body, string new_fileName, int new_type = 1) : base(new_bodyLength, new_body, new_type)
+        public NewFile(string new_fileName)
         {
             __fileName = new_fileName;
         }

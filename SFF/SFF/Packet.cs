@@ -37,7 +37,7 @@ namespace SFFVocabulary
             set => _body = value;
         }
 
-        public Packet(int new_bodyLength, byte[] new_body, int new_type)
+        public Packet(int new_type, int new_bodyLength, byte[] new_body)
         {
             _type = (PacketBodyType)new_type;
             _bodyLength = new_bodyLength;
