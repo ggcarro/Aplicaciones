@@ -18,6 +18,8 @@ namespace Sender
         int minTimeOut = 500;
         int _fails = 0;
         int _maxFails = 10;
+        bool _continue;
+        long _bytesLeft;
         Packet _lastPacket;
         UdpClient _client;
         IPEndPoint _remoteIPEndPoint;
@@ -37,6 +39,8 @@ namespace Sender
             _remoteIPEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
             _codec = new PacketBinaryCodec();
             _filename = filename;
+            _bytesLeft = new FileInfo(_filename).Length;
+
 
         }
 
@@ -66,9 +70,31 @@ namespace Sender
         {
             return (_fails < _maxFails);
         }
+        public bool CheckSeq(Packet packet)
+        {
+            ICodec<AckData> dCodec = new AckDataBinaryCodec();
+            AckData ackData = dCodec.Decode(packet.Body);
+            if (ackData.Ack == _seq)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool ContinueTX()
+        {
+            return _continue;
+        }
         public void CreateFile()
         {
             _fileStream = new FileStream(_filename, FileMode.Open, FileAccess.Read);
+            
+        }
+        public Packet Discon()
+        {
+            return new Packet((int)PacketBodyType.Discon, 0, null);
         }
         public Packet FileNamePacket()
         {
@@ -99,13 +125,29 @@ namespace Sender
         public Packet ReadData()
         {
             //Ahora estoy leyendo siempre 512, hay que modificarlo para que si quedan menos lea solo los que queden
-            byte[] buffer = new byte[512];
+            int bytes=512;
+            if (_bytesLeft > 512)
+            {
+                _bytesLeft -= 512;
+                _continue = true;
+            }
+            else
+            {
+                bytes = (int) _bytesLeft;
+                _bytesLeft = 0;
+                _continue = false;
+            }
+            byte[] buffer = new byte[bytes];
             _fileStream.Read(buffer, 0, buffer.Length);
             Data data = new Data(buffer, _seq);
             ICodec<Data> _dCodec = new DataBinaryCodec();
             byte[] body = _dCodec.Encode(data);
             return new Packet((int)PacketBodyType.Data, body.Length, body);
 
+        }
+        public void ResetFails()
+        {
+            _fails = 0;
         }
         public void Send(Packet packet)
         {
