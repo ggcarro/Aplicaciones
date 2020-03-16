@@ -11,8 +11,14 @@ namespace Sender
     class SFFSender
     {
         int _receivePort;
+        int _seq;
         int _senderPort;
         int _lost = 0;
+        int _timeOut;
+        int minTimeOut = 500;
+        int _fails = 0;
+        int _maxFails = 10;
+        Packet _lastPacket;
         UdpClient _client;
         IPEndPoint _remoteIPEndPoint;
         PacketBinaryCodec _codec;
@@ -48,17 +54,62 @@ namespace Sender
             }
         }
 
+        public void AddFail()
+        {
+            _fails++;
+        }
+        public void ChangeState(SenderState senderState)
+        {
+            _state = senderState;
+        }
+        public bool CheckFails()
+        {
+            return (_fails < _maxFails);
+        }
         public void CreateFile()
         {
             _fileStream = new FileStream(_filename, FileMode.Open, FileAccess.Read);
+        }
+        public Packet FileNamePacket()
+        {
+            NewFile file = new NewFile(_filename);
+            ICodec<NewFile> fcodec = new NewFileBinaryCodec();
+            byte[] fBuffer = fcodec.Encode(file);
+            return new Packet((int)PacketBodyType.NewFile, fBuffer.Length, fBuffer);
+
+        }
+        public void Finish()
+        {
+            _fileStream.Close();
+            _client.Close();
+        }
+        public void IncreaseSeq()
+        {
+            _seq++;
+        }
+        public Packet LastPacket()
+        {
+            return _lastPacket;
         }
         public Packet Receive()
         {
             byte[] receiveBuffer = _client.Receive(ref _remoteIPEndPoint);
             return _codec.Decode(receiveBuffer);
         }
+        public Packet ReadData()
+        {
+            //Ahora estoy leyendo siempre 512, hay que modificarlo para que si quedan menos lea solo los que queden
+            byte[] buffer = new byte[512];
+            _fileStream.Read(buffer, 0, buffer.Length);
+            Data data = new Data(buffer, _seq);
+            ICodec<Data> _dCodec = new DataBinaryCodec();
+            byte[] body = _dCodec.Encode(data);
+            return new Packet((int)PacketBodyType.Data, body.Length, body);
+
+        }
         public void Send(Packet packet)
         {
+            _lastPacket = packet;
             try
             {
                 if (_random.Next(1, 100) > _lost)
@@ -75,6 +126,16 @@ namespace Sender
             {
                 Console.WriteLine("Exception: {0}", se);
             }
+        }
+        public void SetTimer()
+        {
+            _client.Client.ReceiveTimeout = _timeOut;
+            _timeOut = minTimeOut;
+        }
+        public void Timer()
+        {
+            _timeOut = _timeOut * 2;
+            _client.Client.ReceiveTimeout = _timeOut;
         }
     }
 }

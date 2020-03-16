@@ -5,9 +5,9 @@ using System.Net.Sockets;
 using System.Text;
 using SFFVocabulary;
 
-namespace Server
+namespace Sender
 {
-    class SenderState:State
+    abstract class SenderState:State
     {
         protected SFFSender _context;
 

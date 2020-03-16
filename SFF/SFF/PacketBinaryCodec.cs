@@ -22,7 +22,7 @@ namespace SFFVocabulary
             byte[] body = new byte[bodyLength];
             reader.Read(body, 0, bodyLength);
 
-            return new Packet(bodyLength, body, typeRaw);
+            return new Packet(typeRaw, bodyLength, body);
         }
     }
 }
