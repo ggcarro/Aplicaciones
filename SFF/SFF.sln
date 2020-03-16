@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFFVocabulary_Test", "SFFVo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Receiver", "Server\Receiver.csproj", "{89A94272-4609-4032-B70E-D94F22015383}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{122ED4D6-E488-4966-8CEB-EA8B3B28821D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sender", "Client\Sender.csproj", "{122ED4D6-E488-4966-8CEB-EA8B3B28821D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

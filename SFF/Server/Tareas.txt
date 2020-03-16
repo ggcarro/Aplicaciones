@@ -5,6 +5,8 @@
 		2) Estructura Server -- Done
 		3) Clase Abstracta State (En SFFVocabulary) -- Done
 		4) Clase Abstracta ServerState (Hereda de State) -- Done
-		5) Estado Inicial (Hereda de ServerState)
-		6) Estado Escucha (Hereda de ServerState)
-		7) Estado Final (Hereda de ServerState)
+		5) Estado Inicial (Hereda de ServerState) -- Done
+		6) Estado Pre-Escucha (Hereda de ServerState) -- Done
+		7) Estado Escucha (Hereda de ServerState) -- Done
+	
+	--> Quizás el estado de pre-escucha se podría eliminar.

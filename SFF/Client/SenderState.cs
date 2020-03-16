@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using SFFVocabulary;
 using System.IO;
+using System.Net.Sockets;
+using System.Text;
+using SFFVocabulary;
 
-namespace Receiver
-{  
-    abstract class ReceiverState : State
+namespace Server
+{
+    class SenderState:State
     {
-        protected SFFReceiver _context;
-        protected ReceiverState(SFFReceiver context)
+        protected SFFSender _context;
+
+        protected override Packet Receive()
+        { 
+            return _context.Receive();
+        }
+
+        protected SenderState(SFFSender context)
         {
             _context = context;
         }
-
-        protected override Packet Receive()
-        {
-            return _context.Receive();
-        }
         protected override void OnUnknownPacket(KeyNotFoundException e) { }
-        protected override void OnSocketClosed() { }
+        protected override void OnTimeOut() { }
         protected override void OnSocketException(SocketException se) { }
         protected override void OnCorruptPacket(EndOfStreamException ese) { }
         protected override void OnUnknownException(Exception e) { }
-
     }
 }
