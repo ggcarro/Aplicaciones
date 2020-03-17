@@ -12,7 +12,7 @@ namespace Receiver
         int _senderPort = 23456;
         int _receiverPort = 23457;
         int _seq;
-        const int _lost = 10;  
+        const int _lost = 0;  
         UdpClient _client;
         IPEndPoint _remoteIPEndPoint;
         ICodec<Packet> _codec;
@@ -76,6 +76,7 @@ namespace Receiver
             ICodec<NewFile> nfCodec = new NewFileBinaryCodec();
             NewFile newFile = nfCodec.Decode(packet.Body);
             string Path = "C:/Users/UO258767/Desktop/" + newFile.FileName;
+            Console.WriteLine("Filename: {0}", newFile.FileName);
             _fileStream = new FileStream(Path, FileMode.OpenOrCreate, FileAccess.Write);
             _seq = 1;  
         }
@@ -104,15 +105,15 @@ namespace Receiver
             Console.WriteLine("Send Packet -- Type: {0}", packet.Type);
             try
             {
-                if (_random.Next(1, 100) > _lost)
-                {
+                //if (_random.Next(1, 100) > _lost)
+                //{
                     byte[] sendBuffer = _codec.Encode(packet);
                     _client.Send(sendBuffer, sendBuffer.Length, _remoteIPEndPoint);
-                }
+                /*}
                 else
                 {
                     Console.WriteLine("Packet lost");
-                }
+                }*/
             }
             catch(SocketException se)
             {

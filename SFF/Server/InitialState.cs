@@ -22,8 +22,8 @@ namespace Receiver
             Console.WriteLine("Initial State");
             _context.CreateFile(receivePacket);
             Console.WriteLine("New connection established");
-            byte[] n = new byte[0];
-            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, n.Length, n);
+            byte[] bytes = Encoding.ASCII.GetBytes("AckNewFile");
+            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, bytes.Length, bytes);
             _context.Send(sendPacket);
             Console.WriteLine("Ack Send");
             _context.ChangeState(new PreListening(_context));
