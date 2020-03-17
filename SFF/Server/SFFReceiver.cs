@@ -9,7 +9,8 @@ namespace Receiver
 {
     class SFFReceiver
     {
-        int _port;
+        int _senderPort = 23456;
+        int _receiverPort = 23457;
         int _seq;
         const int _lost = 10;  
         UdpClient _client;
@@ -21,8 +22,7 @@ namespace Receiver
 
         public SFFReceiver(int port)
         {
-            _port = port;
-            _client = new UdpClient(_port);
+            _client = new UdpClient(23456);
             _remoteIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             _codec = new PacketBinaryCodec();
 
@@ -75,7 +75,8 @@ namespace Receiver
         {
             ICodec<NewFile> nfCodec = new NewFileBinaryCodec();
             NewFile newFile = nfCodec.Decode(packet.Body);
-            _fileStream = new FileStream(newFile.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+            string Path = "C:/Users/UO258767/Desktop/" + newFile.FileName;
+            _fileStream = new FileStream(Path, FileMode.OpenOrCreate, FileAccess.Write);
             _seq = 1;  
         }
 
@@ -93,11 +94,14 @@ namespace Receiver
         public Packet Receive()
         {
             byte[] receiveBuffer = _client.Receive(ref _remoteIPEndPoint);
-            return _codec.Decode(receiveBuffer);
+            Packet packet =_codec.Decode(receiveBuffer);
+            Console.WriteLine("Receive Packet -- Type: {0}", packet.Type);
+            return packet;
         }
 
         public void Send(Packet packet)
         {
+            Console.WriteLine("Send Packet -- Type: {0}", packet.Type);
             try
             {
                 if (_random.Next(1, 100) > _lost)

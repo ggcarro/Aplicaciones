@@ -18,7 +18,7 @@ namespace Receiver
         {
             return _context.Receive();
         }
-        protected override void OnUnknownPacket(KeyNotFoundException e) { }
+        protected override void OnUnknownPacket(Exception e) { }
         protected override void OnSocketClosed() { }
         protected override void OnSocketException(SocketException se) { }
         protected override void OnCorruptPacket(EndOfStreamException ese) { }

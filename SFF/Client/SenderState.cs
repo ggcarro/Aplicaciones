@@ -20,7 +20,7 @@ namespace Sender
         {
             _context = context;
         }
-        protected override void OnUnknownPacket(KeyNotFoundException e) { }
+        protected override void OnUnknownPacket(Exception e) { }
         protected override void OnTimeOut() { }
         protected override void OnSocketException(SocketException se) { }
         protected override void OnCorruptPacket(EndOfStreamException ese) { }

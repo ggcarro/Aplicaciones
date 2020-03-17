@@ -10,14 +10,13 @@ namespace Sender
 {
     class SFFSender
     {
-        int _receivePort;
         int _seq;
-        int _senderPort;
         int _lost = 0;
         int _timeOut;
         int minTimeOut = 500;
         int _fails = 0;
         int _maxFails = 10;
+        int _portReceiver = 23456;
         bool _continue;
         long _bytesLeft;
         Packet _lastPacket;
@@ -26,6 +25,7 @@ namespace Sender
         PacketBinaryCodec _codec;
         State _state;
         string _filename;
+        string _ipServer = "127.0.0.1";
         FileStream _fileStream;
         Random _random = new Random();
 
@@ -33,10 +33,7 @@ namespace Sender
 
         public SFFSender(string ip, int port, string filename)
         {
-            _receivePort = 23456;
-            _senderPort = 23455;
-            _client = new UdpClient(port);
-            _remoteIPEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            _client = new UdpClient();
             _codec = new PacketBinaryCodec();
             _filename = filename;
             _bytesLeft = new FileInfo(_filename).Length;
@@ -98,7 +95,9 @@ namespace Sender
         }
         public Packet FileNamePacket()
         {
-            NewFile file = new NewFile(_filename);
+            String[] path = _filename.Split('/');
+            String fileName = path[path.Length - 1];
+            NewFile file = new NewFile(fileName);
             ICodec<NewFile> fcodec = new NewFileBinaryCodec();
             byte[] fBuffer = fcodec.Encode(file);
             return new Packet((int)PacketBodyType.NewFile, fBuffer.Length, fBuffer);
@@ -119,12 +118,12 @@ namespace Sender
         }
         public Packet Receive()
         {
+            _remoteIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             byte[] receiveBuffer = _client.Receive(ref _remoteIPEndPoint);
             return _codec.Decode(receiveBuffer);
         }
         public Packet ReadData()
         {
-            //Ahora estoy leyendo siempre 512, hay que modificarlo para que si quedan menos lea solo los que queden
             int bytes=512;
             if (_bytesLeft > 512)
             {
@@ -151,13 +150,14 @@ namespace Sender
         }
         public void Send(Packet packet)
         {
+            Console.WriteLine("Send Packet -- Type: {0}", packet.Type);
             _lastPacket = packet;
             try
             {
                 if (_random.Next(1, 100) > _lost)
                 {
                     byte[] sendBuffer = _codec.Encode(packet);
-                    _client.Send(sendBuffer, sendBuffer.Length, _remoteIPEndPoint);
+                    _client.Send(sendBuffer, sendBuffer.Length, _ipServer, _portReceiver);
                 }
                 else
                 {

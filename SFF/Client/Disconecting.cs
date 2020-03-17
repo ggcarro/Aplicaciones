@@ -5,47 +5,18 @@ using System.Net.Sockets;
 using System.Text;
 using SFFVocabulary;
 
-namespace Sender
+namespace Sender 
 {
-    class Sending : SenderState
+    class Disconnecting : SenderState
     {
-        public Sending(SFFSender context) : base(context) {
-            RegisterHandler(PacketBodyType.AckData, OnAckData);
+        public Disconnecting(SFFSender context) : base(context) {
+            RegisterHandler(PacketBodyType.AckDiscon, OnAckDiscon);
         }
          
-        public void OnAckData(Packet receivepacket)
+        public void OnAckDiscon(Packet receivepacket) 
         {
-            Console.WriteLine("Sending");
-            if (_context.CheckSeq(receivepacket))
-            {
-                _context.IncreaseSeq();
-
-                if (_context.ContinueTX())
-                {
-                    Packet sendPacket = _context.ReadData();
-                    _context.Send(sendPacket);
-                    _context.SetTimer();
-                    _context.ResetFails();
-                    _context.ChangeState(this);
-                }
-                else
-                {
-                    Packet sendPacket = _context.Discon();
-                    _context.Send(sendPacket);
-                    _context.SetTimer();
-                    _context.ResetFails();
-                    _context.ChangeState(new Disconnecting(_context));
-                }
-                
-
-            }
-            else
-            {
-                Packet packet = _context.LastPacket();
-                _context.Send(packet);
-                _context.Timer();
-                _context.ChangeState(this);
-            }
+            _context.Finish();
+            _context.ChangeState(null);
 
         }
 

@@ -15,6 +15,7 @@ namespace Sender
         public InitialState(SFFSender context) : base(context) { }
         public override void HandleEvents()
         {
+            Console.WriteLine("Initial State");
             _context.CreateFile();
             Packet packet = _context.FileNamePacket();
             _context.Send(packet); 

@@ -8,7 +8,7 @@ namespace Sender
         { 
             try
             {
-                SFFSender sender = new SFFSender("127.0.0.1", 23456, "hola.c"); //pasamos el puerto por el constructor
+                SFFSender sender = new SFFSender("127.0.0.1", 23457, "C:/Users/UO258767/source/repos/Aplicaciones/SFF/Client/FaviconAV.png"); //pasamos el puerto por el constructor
                 sender.Run();
                 Console.WriteLine("Write something to END");
                 Console.ReadKey();

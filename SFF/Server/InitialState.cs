@@ -19,14 +19,16 @@ namespace Receiver
 
         protected void OnPacketNewFile(Packet receivePacket)
         {
+            Console.WriteLine("Initial State");
             _context.CreateFile(receivePacket);
             Console.WriteLine("New connection established");
-            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, 0, null);
+            byte[] n = new byte[0];
+            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, n.Length, n);
             _context.Send(sendPacket);
             Console.WriteLine("Ack Send");
             _context.ChangeState(new PreListening(_context));
         }
-        protected override void OnUnknownPacket(KeyNotFoundException e)
+        protected override void OnUnknownPacket(Exception e)
         {
             Console.WriteLine("Exception: {0}", e);
             _context.ChangeState(this); // ¿Esto es necesario? ¿Habría alguna forma de que saliera si no de este contexto?

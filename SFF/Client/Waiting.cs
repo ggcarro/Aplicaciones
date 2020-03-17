@@ -15,6 +15,7 @@ namespace Sender
          
         public void OnAckNewFile(Packet receivepacket)
         {
+            Console.WriteLine("Waiting State");
             _context.IncreaseSeq();
             Packet sendpacket = _context.ReadData();
             _context.Send(sendpacket);
@@ -39,7 +40,7 @@ namespace Sender
             }
 
         }
-        protected override void OnUnknownPacket(KeyNotFoundException e)
+        protected override void OnUnknownPacket(Exception e)
         {
             Console.WriteLine("Exception: {0}", e);
             _context.ChangeState(this);

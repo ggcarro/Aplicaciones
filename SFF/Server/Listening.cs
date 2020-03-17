@@ -20,9 +20,10 @@ namespace Receiver
         
         protected void OnPacketData(Packet receivePacket)
         {
+            Console.WriteLine("Listening State");
             if (_context.CheckSeq(receivePacket))
             {
-                //_context.WriteData(receivePacket);  --> Implementar
+                //_context.WriteData(receivePacket); -->Implementar
                 Packet sendPacket = _context.Ack();
                 _context.IncreaseSeq();
                 _context.Send(sendPacket);
@@ -48,7 +49,7 @@ namespace Receiver
 
         }
 
-        protected override void OnUnknownPacket(KeyNotFoundException e)
+        protected override void OnUnknownPacket(Exception e)
         {
             Console.WriteLine("Exception: {0}", e);
             _context.ChangeState(this); // ¿Esto es necesario? ¿Habría alguna forma de que saliera si no de este contexto?

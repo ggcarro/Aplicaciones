@@ -14,6 +14,7 @@ namespace Receiver
          */
          public PreListening (SFFReceiver context) : base (context)
         {
+            Console.WriteLine("PreListening State");
             RegisterHandler(PacketBodyType.NewFile, OnPacketNewFile);
             RegisterHandler(PacketBodyType.Data, OnPacketData);
             RegisterHandler(PacketBodyType.Discon, OnPacketDiscon);
@@ -58,7 +59,7 @@ namespace Receiver
 
         }
 
-        protected override void OnUnknownPacket(KeyNotFoundException e)
+        protected override void OnUnknownPacket(Exception e)
         {
             Console.WriteLine("Exception: {0}", e);
             _context.ChangeState(this); // ¿Esto es necesario? ¿Habría alguna forma de que saliera si no de este contexto?

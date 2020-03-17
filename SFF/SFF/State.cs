@@ -51,7 +51,7 @@ namespace SFFVocabulary
             }
         }
 
-        protected virtual void OnUnknownPacket(KeyNotFoundException e) { }
+        protected virtual void OnUnknownPacket(Exception e) { }
         protected virtual void OnTimeOut() { }
         protected virtual void OnSocketClosed() { }
         protected virtual void OnSocketException(SocketException se) { }
