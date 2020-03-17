@@ -41,7 +41,8 @@ namespace Receiver
         }
         protected void OnPacketDiscon(Packet receivePacket)
         {
-            Packet sendPacket = new Packet((int)PacketBodyType.AckDiscon, 0, null);
+            byte[] bytes = Encoding.ASCII.GetBytes("AckDiscon");
+            Packet sendPacket = new Packet((int)PacketBodyType.AckDiscon, bytes.Length, bytes);
             _context.Send(sendPacket);
             Console.WriteLine("Connection Finished");
             //_context.Finish();                  --> Implementar

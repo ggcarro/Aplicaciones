@@ -91,7 +91,8 @@ namespace Sender
         }
         public Packet Discon()
         {
-            return new Packet((int)PacketBodyType.Discon, 0, null);
+            byte[] bytes = Encoding.ASCII.GetBytes("Discon");
+            return new Packet((int)PacketBodyType.Discon, bytes.Length, bytes);
         }
         public Packet FileNamePacket()
         {
