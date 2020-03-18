@@ -27,6 +27,7 @@ namespace Sender
         string _filename;
         string _ipServer = "127.0.0.1";
         FileStream _fileStream;
+        FileStream _fS;
         Random _random = new Random();
 
 
@@ -37,6 +38,7 @@ namespace Sender
             _codec = new PacketBinaryCodec();
             _filename = filename;
             _bytesLeft = new FileInfo(_filename).Length;
+            _fS = new FileStream("C:/Users/UO258767/Desktop/b.txt", FileMode.OpenOrCreate, FileAccess.Write);
 
 
         }
@@ -107,6 +109,7 @@ namespace Sender
         public void Finish()
         {
             _fileStream.Close();
+            _fS.Close();
             _client.Close();
         }
         public void IncreaseSeq()
@@ -129,16 +132,21 @@ namespace Sender
             if (_bytesLeft > 512)
             {
                 _bytesLeft -= 512;
+                Console.WriteLine("Bytes left: {0}", _bytesLeft);
                 _continue = true;
             }
             else
             {
+                Console.WriteLine("Ultimo paquete");
                 bytes = (int) _bytesLeft;
+
+                Console.WriteLine("Bytes left: {0}", bytes);
                 _bytesLeft = 0;
                 _continue = false;
             }
             byte[] buffer = new byte[bytes];
             _fileStream.Read(buffer, 0, buffer.Length);
+            _fS.Write(buffer);
             Data data = new Data(buffer, _seq);
             ICodec<Data> _dCodec = new DataBinaryCodec();
             byte[] body = _dCodec.Encode(data);

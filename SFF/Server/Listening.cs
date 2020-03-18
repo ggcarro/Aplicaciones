@@ -23,7 +23,7 @@ namespace Receiver
             Console.WriteLine("Listening State");
             if (_context.CheckSeq(receivePacket))
             {
-                //_context.WriteData(receivePacket); -->Implementar
+                _context.Write(receivePacket);
                 Packet sendPacket = _context.Ack();
                 _context.IncreaseSeq();
                 _context.Send(sendPacket);

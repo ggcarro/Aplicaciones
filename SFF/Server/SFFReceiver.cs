@@ -75,9 +75,9 @@ namespace Receiver
         {
             ICodec<NewFile> nfCodec = new NewFileBinaryCodec();
             NewFile newFile = nfCodec.Decode(packet.Body);
-            string Path = "C:/Users/UO258767/Desktop/" + newFile.FileName;
+            string Path = "C:/Users/UO258767/Desktop/Server/" + newFile.FileName;
             Console.WriteLine("Filename: {0}", newFile.FileName);
-            _fileStream = new FileStream(Path, FileMode.OpenOrCreate, FileAccess.Write);
+            _fileStream = new FileStream("C:/Users/UO258767/Desktop/Server/a.txt", FileMode.OpenOrCreate, FileAccess.Write);
             _seq = 1;  
         }
 
@@ -125,7 +125,7 @@ namespace Receiver
         {
             ICodec<Data> dCodec = new DataBinaryCodec();
             Data data = dCodec.Decode(packet.Body);
-            _fileStream.Write(data.Information, 0, data.Information.Length);
+            _fileStream.Write(data.Information);
         }
     }
 }
