@@ -33,7 +33,7 @@ namespace Receiver
         {
             if (_context.CheckSeq(receivePacket))
             {
-                //_context.WriteData(receivePacket);  --> Implementar
+                _context.Write(receivePacket);
                 Packet sendPacket = _context.Ack();
                 _context.IncreaseSeq();
                 _context.Send(sendPacket);
@@ -54,7 +54,7 @@ namespace Receiver
             Packet sendPacket = new Packet((int)PacketBodyType.AckDiscon, 0, null);
             _context.Send(sendPacket);
             Console.WriteLine("Connection Finished");
-            //_context.Finish();                  --> Implementar
+            _context.Finish();
             _context.ChangeState(null);
 
         }

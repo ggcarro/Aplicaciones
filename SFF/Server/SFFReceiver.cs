@@ -9,10 +9,10 @@ namespace Receiver
 {
     class SFFReceiver
     {
-        int _senderPort = 23456;
-        int _receiverPort = 23457;
+        int _receiverPort;
         int _seq;
-        const int _lost = 0;  
+        const int _lost = 0;
+        long _bytes = 0;
         UdpClient _client;
         IPEndPoint _remoteIPEndPoint;
         ICodec<Packet> _codec;
@@ -22,7 +22,8 @@ namespace Receiver
 
         public SFFReceiver(int port)
         {
-            _client = new UdpClient(23456);
+            _receiverPort = port;
+            _client = new UdpClient(_receiverPort);
             _remoteIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             _codec = new PacketBinaryCodec();
 
@@ -75,9 +76,9 @@ namespace Receiver
         {
             ICodec<NewFile> nfCodec = new NewFileBinaryCodec();
             NewFile newFile = nfCodec.Decode(packet.Body);
-            string Path = "C:/Users/UO258767/Desktop/Server/" + newFile.FileName;
+            string Path = "C:/Users/UO258767/Desktop/Receiver/" + newFile.FileName;
             Console.WriteLine("Filename: {0}", newFile.FileName);
-            _fileStream = new FileStream("C:/Users/UO258767/Desktop/Server/a.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            _fileStream = new FileStream(Path, FileMode.OpenOrCreate, FileAccess.Write);
             _seq = 1;  
         }
 
@@ -125,6 +126,9 @@ namespace Receiver
         {
             ICodec<Data> dCodec = new DataBinaryCodec();
             Data data = dCodec.Decode(packet.Body);
+            Console.WriteLine("Seq: {0}", data.Seq);
+            _bytes += (long) data.Information.Length;
+            Console.WriteLine("Bytes: {0}", _bytes);
             _fileStream.Write(data.Information);
         }
     }

@@ -45,7 +45,7 @@ namespace Receiver
             Packet sendPacket = new Packet((int)PacketBodyType.AckDiscon, bytes.Length, bytes);
             _context.Send(sendPacket);
             Console.WriteLine("Connection Finished");
-            //_context.Finish();                  --> Implementar
+            _context.Finish();
             _context.ChangeState(null);
 
         }

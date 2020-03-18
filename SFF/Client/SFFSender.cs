@@ -16,7 +16,7 @@ namespace Sender
         int minTimeOut = 500;
         int _fails = 0;
         int _maxFails = 10;
-        int _portReceiver = 23456;
+        int _portReceiver;
         bool _continue;
         long _bytesLeft;
         Packet _lastPacket;
@@ -25,7 +25,7 @@ namespace Sender
         PacketBinaryCodec _codec;
         State _state;
         string _filename;
-        string _ipServer = "127.0.0.1";
+        string _ipServer;
         FileStream _fileStream;
         FileStream _fS;
         Random _random = new Random();
@@ -38,7 +38,10 @@ namespace Sender
             _codec = new PacketBinaryCodec();
             _filename = filename;
             _bytesLeft = new FileInfo(_filename).Length;
-            _fS = new FileStream("C:/Users/UO258767/Desktop/b.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            Console.WriteLine("Initial Bytes: {0}", _bytesLeft);
+            _ipServer = ip;
+            _portReceiver = port;
+
 
 
         }
@@ -89,7 +92,7 @@ namespace Sender
         public void CreateFile()
         {
             _fileStream = new FileStream(_filename, FileMode.Open, FileAccess.Read);
-            
+
         }
         public Packet Discon()
         {
@@ -103,7 +106,9 @@ namespace Sender
             NewFile file = new NewFile(fileName);
             ICodec<NewFile> fcodec = new NewFileBinaryCodec();
             byte[] fBuffer = fcodec.Encode(file);
+            _fS = new FileStream("C:/Users/UO258767/Desktop/Sender/" + fileName, FileMode.OpenOrCreate, FileAccess.Write);
             return new Packet((int)PacketBodyType.NewFile, fBuffer.Length, fBuffer);
+            
 
         }
         public void Finish()
@@ -138,15 +143,15 @@ namespace Sender
             else
             {
                 Console.WriteLine("Ultimo paquete");
-                bytes = (int) _bytesLeft;
-
-                Console.WriteLine("Bytes left: {0}", bytes);
-                _bytesLeft = 0;
+                bytes = (int)_bytesLeft;
+                _bytesLeft -= _bytesLeft;
+                Console.WriteLine("Bytes left: {0}", _bytesLeft);
                 _continue = false;
             }
             byte[] buffer = new byte[bytes];
             _fileStream.Read(buffer, 0, buffer.Length);
             _fS.Write(buffer);
+            Console.WriteLine("Seq: {0}", _seq);
             Data data = new Data(buffer, _seq);
             ICodec<Data> _dCodec = new DataBinaryCodec();
             byte[] body = _dCodec.Encode(data);
