@@ -10,12 +10,12 @@ namespace Sender
     class Sending : SenderState
     {
         public Sending(SFFSender context) : base(context) {
+            Console.WriteLine("Sending");
             RegisterHandler(PacketBodyType.AckData, OnAckData);
         }
          
         public void OnAckData(Packet receivepacket)
         {
-            Console.WriteLine("Sending");
             if (_context.CheckSeq(receivepacket))
             {
                 _context.IncreaseSeq();

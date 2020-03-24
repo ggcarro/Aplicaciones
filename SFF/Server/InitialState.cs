@@ -19,7 +19,7 @@ namespace Receiver
 
         protected void OnPacketNewFile(Packet receivePacket)
         {
-            Console.WriteLine("Initial State");
+            //Console.WriteLine("Initial State");
             _context.CreateFile(receivePacket);
             Console.WriteLine("New connection established");
             byte[] bytes = Encoding.ASCII.GetBytes("AckNewFile");

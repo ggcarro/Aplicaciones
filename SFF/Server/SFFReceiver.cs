@@ -62,6 +62,7 @@ namespace Receiver
         {
             ICodec<Data> dCodec = new DataBinaryCodec();
             Data data = dCodec.Decode(packet.Body);
+            Console.Write("Seq: {0}", data.Seq);
             if (data.Seq == _seq)
             {
                 return true;
@@ -106,15 +107,10 @@ namespace Receiver
             Console.WriteLine("Send Packet -- Type: {0}", packet.Type);
             try
             {
-                //if (_random.Next(1, 100) > _lost)
-                //{
-                    byte[] sendBuffer = _codec.Encode(packet);
-                    _client.Send(sendBuffer, sendBuffer.Length, _remoteIPEndPoint);
-                /*}
-                else
-                {
-                    Console.WriteLine("Packet lost");
-                }*/
+                Console.WriteLine("Seq: {0}", _seq);
+                byte[] sendBuffer = _codec.Encode(packet);
+                _client.Send(sendBuffer, sendBuffer.Length, _remoteIPEndPoint);
+               
             }
             catch(SocketException se)
             {
@@ -126,7 +122,6 @@ namespace Receiver
         {
             ICodec<Data> dCodec = new DataBinaryCodec();
             Data data = dCodec.Decode(packet.Body);
-            Console.WriteLine("Seq: {0}", data.Seq);
             _bytes += (long) data.Information.Length;
             Console.WriteLine("Bytes: {0}", _bytes);
             _fileStream.Write(data.Information);

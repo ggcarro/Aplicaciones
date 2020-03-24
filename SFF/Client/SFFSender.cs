@@ -11,7 +11,7 @@ namespace Sender
     class SFFSender
     {
         int _seq;
-        int _lost = 0;
+        int _lost = 20;
         int _timeOut;
         int minTimeOut = 500;
         int _fails = 0;
@@ -38,9 +38,10 @@ namespace Sender
             _codec = new PacketBinaryCodec();
             _filename = filename;
             _bytesLeft = new FileInfo(_filename).Length;
-            Console.WriteLine("Initial Bytes: {0}", _bytesLeft);
+            //Console.WriteLine("Initial Bytes: {0}", _bytesLeft);
             _ipServer = ip;
             _portReceiver = port;
+            _timeOut = minTimeOut;
 
 
 
@@ -70,7 +71,7 @@ namespace Sender
         }
         public bool CheckFails()
         {
-            return (_fails < _maxFails);
+            return (_fails > _maxFails);
         }
         public bool CheckSeq(Packet packet)
         {
@@ -102,7 +103,7 @@ namespace Sender
         public Packet FileNamePacket()
         {
             String[] path = _filename.Split('/');
-            String fileName = path[path.Length - 1];
+            string fileName = path[path.Length - 1];
             NewFile file = new NewFile(fileName);
             ICodec<NewFile> fcodec = new NewFileBinaryCodec();
             byte[] fBuffer = fcodec.Encode(file);
@@ -137,7 +138,7 @@ namespace Sender
             if (_bytesLeft > 512)
             {
                 _bytesLeft -= 512;
-                Console.WriteLine("Bytes left: {0}", _bytesLeft);
+                //Console.WriteLine("Bytes left: {0}", _bytesLeft);
                 _continue = true;
             }
             else
@@ -145,13 +146,13 @@ namespace Sender
                 Console.WriteLine("Ultimo paquete");
                 bytes = (int)_bytesLeft;
                 _bytesLeft -= _bytesLeft;
-                Console.WriteLine("Bytes left: {0}", _bytesLeft);
+                //Console.WriteLine("Bytes left: {0}", _bytesLeft);
                 _continue = false;
             }
             byte[] buffer = new byte[bytes];
             _fileStream.Read(buffer, 0, buffer.Length);
             _fS.Write(buffer);
-            Console.WriteLine("Seq: {0}", _seq);
+            //Console.WriteLine("Seq: {0}", _seq);
             Data data = new Data(buffer, _seq);
             ICodec<Data> _dCodec = new DataBinaryCodec();
             byte[] body = _dCodec.Encode(data);
@@ -164,18 +165,19 @@ namespace Sender
         }
         public void Send(Packet packet)
         {
-            Console.WriteLine("Send Packet -- Type: {0}", packet.Type);
             _lastPacket = packet;
             try
             {
-                if (_random.Next(1, 100) > _lost)
+                int rd = _random.Next(1, 100);
+                if (rd > _lost || packet.Type== PacketBodyType.NewFile)
                 {
                     byte[] sendBuffer = _codec.Encode(packet);
+                    Console.WriteLine("Send Packet -- Seq: {0}, Type: {1}", _seq, packet.Type);
                     _client.Send(sendBuffer, sendBuffer.Length, _ipServer, _portReceiver);
                 }
                 else
                 {
-                    Console.WriteLine("Packet lost");
+                    Console.WriteLine("Packet lost -- Seq: {0}", _seq);
                 }
             }
             catch (SocketException se)
@@ -191,6 +193,7 @@ namespace Sender
         public void Timer()
         {
             _timeOut = _timeOut * 2;
+            Console.WriteLine("TimeOut: {0}", _timeOut);
             _client.Client.ReceiveTimeout = _timeOut;
         }
     }

@@ -14,7 +14,7 @@ namespace Receiver
          */
          public PreListening (SFFReceiver context) : base (context)
         {
-            Console.WriteLine("PreListening State");
+            //Console.WriteLine("PreListening State");
             RegisterHandler(PacketBodyType.NewFile, OnPacketNewFile);
             RegisterHandler(PacketBodyType.Data, OnPacketData);
             RegisterHandler(PacketBodyType.Discon, OnPacketDiscon);
@@ -22,9 +22,9 @@ namespace Receiver
 
         protected void OnPacketNewFile(Packet receivePacket)
         {
-            _context.CreateFile(receivePacket);
             Console.WriteLine("New connection established");
-            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, 0, null);
+            byte[] bytes = Encoding.ASCII.GetBytes("AckNewFile");
+            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, bytes.Length, bytes);
             _context.Send(sendPacket);
             Console.WriteLine("Ack NewFile Send");
             _context.ChangeState(this);
@@ -37,14 +37,12 @@ namespace Receiver
                 Packet sendPacket = _context.Ack();
                 _context.IncreaseSeq();
                 _context.Send(sendPacket);
-                Console.WriteLine("Ack Data Send");
                 _context.ChangeState(new Listening(_context));
             }
             else
             {
-                Packet sendPacket = new Packet((int)PacketBodyType.AckData, 0, null);
-                _context.Send(sendPacket);
-                Console.WriteLine("Ack Data Send");
+                //Packet sendPacket = new Packet((int)PacketBodyType.AckData, 0, null);
+                //_context.Send(sendPacket);
                 _context.ChangeState(new Listening(_context));
             }
             

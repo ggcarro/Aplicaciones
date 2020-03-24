@@ -32,10 +32,11 @@ namespace Receiver
             }
             else
             {
-                Packet sendPacket = new Packet((int)PacketBodyType.AckData, 0, null);
-                _context.Send(sendPacket);
-                Console.WriteLine("Ack Data Send");
-                _context.ChangeState(new Listening(_context));
+
+                //Packet sendPacket = new Packet((int)PacketBodyType.AckData, 0, null);
+                //_context.Send(sendPacket);
+                Console.WriteLine("Wrong Seq");
+                _context.ChangeState(this);
             }
             
         }
