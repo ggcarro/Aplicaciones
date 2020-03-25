@@ -9,9 +9,6 @@ namespace Receiver
 {
     class Listening : ReceiverState
     {
-        /*  En el estado escucha  contemplamos la posibilidad de que llegue un paquete con Data
-         *  así como que llegue un paquete de desconexión.
-         */
          public Listening (SFFReceiver context) : base (context)
         {
             RegisterHandler(PacketBodyType.Data, OnPacketData);
@@ -32,9 +29,6 @@ namespace Receiver
             }
             else
             {
-
-                //Packet sendPacket = new Packet((int)PacketBodyType.AckData, 0, null);
-                //_context.Send(sendPacket);
                 Console.WriteLine("Wrong Seq");
                 _context.ChangeState(this);
             }
@@ -54,7 +48,7 @@ namespace Receiver
         protected override void OnUnknownPacket(Exception e)
         {
             Console.WriteLine("Exception: {0}", e);
-            _context.ChangeState(this); // ¿Esto es necesario? ¿Habría alguna forma de que saliera si no de este contexto?
+            _context.ChangeState(this);
         }
         protected override void OnSocketException(SocketException se)
         {

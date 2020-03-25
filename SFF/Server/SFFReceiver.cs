@@ -44,7 +44,7 @@ namespace Receiver
                 Console.WriteLine("Exception in server: {0}", e.Message);
             }
         }
-        // Se añadiran las funciones que haya que implementar... (Las estoy ordenando alfabéticamente)
+
         public Packet Ack()
         {
             AckData ackData = new AckData(_seq);

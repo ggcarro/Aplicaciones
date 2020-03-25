@@ -31,7 +31,7 @@ namespace Sender
             else{
                 Packet packet = _context.LastPacket();
                 _context.Send(packet);
-                _context.Timer();
+                _context.Timer(false);
                 _context.ChangeState(this);
             }
 

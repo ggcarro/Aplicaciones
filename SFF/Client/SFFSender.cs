@@ -27,7 +27,6 @@ namespace Sender
         string _filename;
         string _ipServer;
         FileStream _fileStream;
-        FileStream _fS;
         Random _random = new Random();
 
 
@@ -38,7 +37,6 @@ namespace Sender
             _codec = new PacketBinaryCodec();
             _filename = filename;
             _bytesLeft = new FileInfo(_filename).Length;
-            //Console.WriteLine("Initial Bytes: {0}", _bytesLeft);
             _ipServer = ip;
             _portReceiver = port;
             _timeOut = minTimeOut;
@@ -107,15 +105,12 @@ namespace Sender
             NewFile file = new NewFile(fileName);
             ICodec<NewFile> fcodec = new NewFileBinaryCodec();
             byte[] fBuffer = fcodec.Encode(file);
-            _fS = new FileStream("C:/Users/UO258767/Desktop/Sender/" + fileName, FileMode.OpenOrCreate, FileAccess.Write);
             return new Packet((int)PacketBodyType.NewFile, fBuffer.Length, fBuffer);
             
-
         }
         public void Finish()
         {
             _fileStream.Close();
-            _fS.Close();
             _client.Close();
         }
         public void IncreaseSeq()
@@ -138,7 +133,6 @@ namespace Sender
             if (_bytesLeft > 512)
             {
                 _bytesLeft -= 512;
-                //Console.WriteLine("Bytes left: {0}", _bytesLeft);
                 _continue = true;
             }
             else
@@ -146,13 +140,10 @@ namespace Sender
                 Console.WriteLine("Ultimo paquete");
                 bytes = (int)_bytesLeft;
                 _bytesLeft -= _bytesLeft;
-                //Console.WriteLine("Bytes left: {0}", _bytesLeft);
                 _continue = false;
             }
             byte[] buffer = new byte[bytes];
             _fileStream.Read(buffer, 0, buffer.Length);
-            _fS.Write(buffer);
-            //Console.WriteLine("Seq: {0}", _seq);
             Data data = new Data(buffer, _seq);
             ICodec<Data> _dCodec = new DataBinaryCodec();
             byte[] body = _dCodec.Encode(data);
@@ -187,12 +178,15 @@ namespace Sender
         }
         public void SetTimer()
         {
-            _client.Client.ReceiveTimeout = _timeOut;
             _timeOut = minTimeOut;
+            _client.Client.ReceiveTimeout = _timeOut;
         }
-        public void Timer()
+        public void Timer(bool increase=true)
         {
-            _timeOut = _timeOut * 2;
+            if (increase)
+            {
+                _timeOut = _timeOut * 2;
+            }
             Console.WriteLine("TimeOut: {0}", _timeOut);
             _client.Client.ReceiveTimeout = _timeOut;
         }
