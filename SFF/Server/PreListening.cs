@@ -37,6 +37,7 @@ namespace Receiver
             }
             else
             {
+                Console.WriteLine("Wrong Seq");
                 _context.ChangeState(new Listening(_context));
             }
             
