@@ -10,7 +10,7 @@ namespace SFFVocabulary_Test
         [TestMethod]
         public void TestMethod1()  // Paquete data
         {
-            byte[] info = { 4, 8, 12, 16, 23, 42};
+            byte[] info = { 4, 8, 12, 16, 23, 42 };
             int seq = 1;
             Data data = new Data(info, seq);
 

@@ -9,9 +9,6 @@ namespace Sender
 {
     class InitialState : SenderState
     {
-        /*  En el estado inicial solo contemplamos la posibilidad de que llegue un paquete de inicio 
-         *  de transferencia con el nombre del fichero y se aceptará la petición. Todo paquete distinto será ignorado
-         */
         public InitialState(SFFSender context) : base(context) { }
         public override void HandleEvents()
         {

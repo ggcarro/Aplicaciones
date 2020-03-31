@@ -9,12 +9,8 @@ namespace Receiver
 {
     class PreListening : ReceiverState
     {
-        /*  En el estado pre-escucha  contemplamos la posibilidad de que llegue un paquete de inicio (se puede haber perdido el ACK)
-         *  así como que llegue un paquete de datoso o uno de desconexión.
-         */
          public PreListening (SFFReceiver context) : base (context)
         {
-            Console.WriteLine("PreListening State");
             RegisterHandler(PacketBodyType.NewFile, OnPacketNewFile);
             RegisterHandler(PacketBodyType.Data, OnPacketData);
             RegisterHandler(PacketBodyType.Discon, OnPacketDiscon);
@@ -22,9 +18,9 @@ namespace Receiver
 
         protected void OnPacketNewFile(Packet receivePacket)
         {
-            _context.CreateFile(receivePacket);
             Console.WriteLine("New connection established");
-            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, 0, null);
+            byte[] bytes = Encoding.ASCII.GetBytes("AckNewFile");
+            Packet sendPacket = new Packet((int)PacketBodyType.AckNewFile, bytes.Length, bytes);
             _context.Send(sendPacket);
             Console.WriteLine("Ack NewFile Send");
             _context.ChangeState(this);
@@ -37,14 +33,11 @@ namespace Receiver
                 Packet sendPacket = _context.Ack();
                 _context.IncreaseSeq();
                 _context.Send(sendPacket);
-                Console.WriteLine("Ack Data Send");
                 _context.ChangeState(new Listening(_context));
             }
             else
             {
-                Packet sendPacket = new Packet((int)PacketBodyType.AckData, 0, null);
-                _context.Send(sendPacket);
-                Console.WriteLine("Ack Data Send");
+                Console.WriteLine("Wrong Seq");
                 _context.ChangeState(new Listening(_context));
             }
             
@@ -62,7 +55,7 @@ namespace Receiver
         protected override void OnUnknownPacket(Exception e)
         {
             Console.WriteLine("Exception: {0}", e);
-            _context.ChangeState(this); // ¿Esto es necesario? ¿Habría alguna forma de que saliera si no de este contexto?
+            _context.ChangeState(this);
         }
         protected override void OnSocketException(SocketException se)
         {

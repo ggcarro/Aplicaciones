@@ -10,14 +10,14 @@
 	Paquete NewFile 
     - - - - - - - - - - - - - - - - - - - - - - 
    |      |             |  - - - - - - - - - - |
-   |  1   | Body.Length | | filename="XXX.mov"||
+   |  1   | Body.Length | | filename="AA.avi" ||
    |      |             |  - - - - - - - - - - |
     - - - - - - - - - - - - - - - - - - - - - -
 	
 	Paquete AckNewFile 
     - - - - - - - - - - - - - - - - - - - - - - 
    |      |             |  - - - - - - - - - - |
-   |  10  | Body.Length | |   N   U   L   L   ||
+   |  10  | Body.Length | | string AckNewFile ||
    |      |             |  - - - - - - - - - - |
     - - - - - - - - - - - - - - - - - - - - - -
 	
@@ -38,14 +38,14 @@
 	Paquete Discon 
     - - - - - - - - - - - - - - - - - - - - - - 
    |      |             |  - - - - - - - - - - |
-   |  3   | Body.Length | |   N   U   L   L   ||
+   |  3   | Body.Length | |   string Discon   ||
    |      |             |  - - - - - - - - - - |
     - - - - - - - - - - - - - - - - - - - - - -
 	
 	Paquete AckDiscon 
     - - - - - - - - - - - - - - - - - - - - - - 
    |      |             |  - - - - - - - - - - |
-   |  30  | Body.Length | |   N   U   L   L   ||
+   |  30  | Body.Length | | string AckDiscon  ||
    |      |             |  - - - - - - - - - - |
     - - - - - - - - - - - - - - - - - - - - - -
 

@@ -10,12 +10,12 @@ namespace Sender
     class Waiting : SenderState
     {
         public Waiting(SFFSender context) : base(context) {
+            Console.WriteLine("Waiting State");
             RegisterHandler(PacketBodyType.AckNewFile, OnAckNewFile);
         }
          
         public void OnAckNewFile(Packet receivepacket)
         {
-            Console.WriteLine("Waiting State");
             _context.IncreaseSeq();
             Packet sendpacket = _context.ReadData();
             _context.Send(sendpacket);
