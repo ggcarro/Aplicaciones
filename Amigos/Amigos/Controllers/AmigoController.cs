@@ -25,6 +25,44 @@ namespace Amigos.Controllers
             return View(await _context.Amigos.ToListAsync());
         }
 
+
+
+        //Extra 1 
+        //Filtering is made from the three parameters formulary has
+        public async Task<IActionResult> Index(string maxDist, string lon, string lat)
+        {
+            var near = from m in _context.Amigos
+                       select m;
+
+            if (!String.IsNullOrEmpty(maxDist) && !String.IsNullOrEmpty(lon) && !String.IsNullOrEmpty(lat))
+            {
+                //The query is modified when maxDist > distance(parameters)
+                near = near.Where(s =>
+                        Convert.ToDouble(maxDist) > Distance(Convert.ToDouble(lon),
+                        Convert.ToDouble(lat), Convert.ToDouble(s.longi), Convert.ToDouble(s.lati)));
+            }
+
+            //Console
+            return View(await near.ToListAsync());
+        }
+
+        //Distance between two users
+        public static double Distance(double lon1, double lat1, double lon2, double lat2)
+        {
+            double rad(double x)
+            {
+                return x * Math.PI / 180;
+            }
+            //Haversine formula
+            var R = 6378.137;       //Earth radious (km)
+            var dLat = rad(lat2 - lat1);
+            var dLong = rad(lon2 - lon1);
+            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(rad(lat1)) * Math.Cos(rad(lat2)) * Math.Sin(dLong / 2) * Math.Sin(dLong / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var d = R * c;
+            return d;
+        }
+
         // GET: Amigo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
