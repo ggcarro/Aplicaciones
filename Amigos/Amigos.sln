@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.1000
+VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amigos", "Amigos\Amigos.csproj", "{F327A528-1C0E-4855-A1FD-0335D4B8A166}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amigos", "Amigos\Amigos.csproj", "{F76BF1F3-0905-49E8-8B3A-144144B8C946}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F327A528-1C0E-4855-A1FD-0335D4B8A166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F327A528-1C0E-4855-A1FD-0335D4B8A166}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F327A528-1C0E-4855-A1FD-0335D4B8A166}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F327A528-1C0E-4855-A1FD-0335D4B8A166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F76BF1F3-0905-49E8-8B3A-144144B8C946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F76BF1F3-0905-49E8-8B3A-144144B8C946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F76BF1F3-0905-49E8-8B3A-144144B8C946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F76BF1F3-0905-49E8-8B3A-144144B8C946}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E7DF85AB-AC95-48A6-A122-EB4765FC9CE1}
+		SolutionGuid = {8227E76F-2331-4DDC-BE95-2E8C31BE0A1B}
 	EndGlobalSection
 EndGlobal
