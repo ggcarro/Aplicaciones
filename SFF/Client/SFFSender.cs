@@ -11,7 +11,7 @@ namespace Sender
     class SFFSender
     {
         int _seq;
-        int _lost = 20;
+        int _lost = 50;
         int _timeOut;
         int minTimeOut = 500;
         int _fails = 0;

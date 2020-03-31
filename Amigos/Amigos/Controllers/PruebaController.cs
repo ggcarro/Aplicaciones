@@ -21,6 +21,13 @@ namespace Amigos.Controllers
             return View();
         }
 
+        public IActionResult Adios(string valor, int veces)
+        {
+            ViewBag.valor = valor;
+            ViewBag.veces = veces;
+            return View();
+        }
+
         public string hola(string valor, int veces)
         {
             string repeated = "";
