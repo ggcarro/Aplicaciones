@@ -29,7 +29,7 @@ namespace Amigos.Controllers
 
         //Extra 1 
         //Filtering is made from the three parameters formulary has
-        public async Task<IActionResult> Index(string maxDist, string lon, string lat)
+        public async Task<IActionResult> Filtro(string maxDist, string lon, string lat)
         {
             var near = from m in _context.Amigos
                        select m;

@@ -65,6 +65,12 @@ namespace Amigos
                    name: "Prueba",
                    template: "{controller}/{action}/{valor}/{veces}");
             });
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                   name: "Amigo",
+                   template: "{controller}/{action}/{maxDist}/{lon}/{lat}");
+            });
         }
     }
 }
