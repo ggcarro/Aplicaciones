@@ -120,6 +120,9 @@
   <data name="Amigos" xml:space="preserve">
     <value>Friend</value>
   </data>
+  <data name="AplicAmigos" xml:space="preserve">
+    <value>AppFriends</value>
+  </data>
   <data name="Inicio" xml:space="preserve">
     <value>Home</value>
   </data>
