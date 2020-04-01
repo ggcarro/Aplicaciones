@@ -19,10 +19,47 @@ namespace Amigos.Controllers
             _context = context;
         }
 
-        // GET: Amigo
+        /* GET: Amigo
         public async Task<IActionResult> Index()
         {
             return View(await _context.Amigos.ToListAsync());
+        }*/
+
+        //ampliacion 1 
+        //Se realiza el filtrado a partir de los tres parámetros que recoge el formulario 
+        public async Task<IActionResult> Index(string maxDistance, string longi, string lati)
+        {
+            var near = from m in _context.Amigos
+                       select m; //Se define una consulta
+
+            if (!String.IsNullOrEmpty(maxDistance) && !String.IsNullOrEmpty(longi) && !String.IsNullOrEmpty(lati)) //Si todos los campos del filtro se han rellenado
+            {
+                //Se modifica la consulta
+                near = near.Where(s =>
+                        Convert.ToDouble(maxDistance) > Distance(Convert.ToDouble(longi),
+                        Convert.ToDouble(lati), Convert.ToDouble(s.longi), Convert.ToDouble(s.lati)));
+                //Cuando maxDistance > Distancia(parametros)
+            }
+
+            //Se ejecuta la consulta
+            return View(await near.ToListAsync());
+        }
+
+        //Calcula la distancia (km) entre dos personas 
+        public static double Distance(double lon1, double lat1, double lon2, double lat2)
+        {
+            double rad(double x)
+            {
+                return x * Math.PI / 180;
+            }
+            //Fórmula del Haversine
+            var R = 6378.137;//Radio planeta Tierra en km
+            var dLat = rad(lat2 - lat1);
+            var dLong = rad(lon2 - lon1);
+            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(rad(lat1)) * Math.Cos(rad(lat2)) * Math.Sin(dLong / 2) * Math.Sin(dLong / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var d = R * c;
+            return d;
         }
 
         // GET: Amigo/Details/5
