@@ -19,42 +19,41 @@ namespace Amigos.Controllers
             _context = context;
         }
 
-        // GET: Amigo
+        /* GET: Amigo
         public async Task<IActionResult> Index()
         {
             return View(await _context.Amigos.ToListAsync());
-        }
+        }*/
 
-
-
-        //Extra 1 
-        //Filtering is made from the three parameters formulary has
-        public async Task<IActionResult> Index(string maxDist, string lon, string lat)
+        //ampliacion 1 
+        //Se realiza el filtrado a partir de los tres parámetros que recoge el formulario 
+        public async Task<IActionResult> Index(string maxDistance, string longi, string lati)
         {
             var near = from m in _context.Amigos
-                       select m;
+                       select m; //Se define una consulta
 
-            if (!String.IsNullOrEmpty(maxDist) && !String.IsNullOrEmpty(lon) && !String.IsNullOrEmpty(lat))
+            if (!String.IsNullOrEmpty(maxDistance) && !String.IsNullOrEmpty(longi) && !String.IsNullOrEmpty(lati)) //Si todos los campos del filtro se han rellenado
             {
-                //The query is modified when maxDist > distance(parameters)
+                //Se modifica la consulta
                 near = near.Where(s =>
-                        Convert.ToDouble(maxDist) > Distance(Convert.ToDouble(lon),
-                        Convert.ToDouble(lat), Convert.ToDouble(s.longi), Convert.ToDouble(s.lati)));
+                        Convert.ToDouble(maxDistance) > Distance(Convert.ToDouble(longi),
+                        Convert.ToDouble(lati), Convert.ToDouble(s.longi), Convert.ToDouble(s.lati)));
+                //Cuando maxDistance > Distancia(parametros)
             }
 
-            //Console
+            //Se ejecuta la consulta
             return View(await near.ToListAsync());
         }
 
-        //Distance between two users
+        //Calcula la distancia (km) entre dos personas 
         public static double Distance(double lon1, double lat1, double lon2, double lat2)
         {
             double rad(double x)
             {
                 return x * Math.PI / 180;
             }
-            //Haversine formula
-            var R = 6378.137;       //Earth radious (km)
+            //Fórmula del Haversine
+            var R = 6378.137;//Radio planeta Tierra en km
             var dLat = rad(lat2 - lat1);
             var dLong = rad(lon2 - lon1);
             var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(rad(lat1)) * Math.Cos(rad(lat2)) * Math.Sin(dLong / 2) * Math.Sin(dLong / 2);
