@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System.Runtime.Serialization;
+using System.ServiceModel;
 
 namespace MathService
 {
@@ -7,5 +8,26 @@ namespace MathService
     {
         [OperationContract]
         bool Prime(int value);
+    }
+
+    [DataContract]
+    public class Tuple
+    {
+        double[] _data;
+        string _name;
+
+        [DataMember]
+        public double[] Data
+        {
+            get { return _data; }
+            set { _data = value; }
+        }
+
+        [DataMember]
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
     }
 }

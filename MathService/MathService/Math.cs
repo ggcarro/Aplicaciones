@@ -23,5 +23,21 @@ namespace MathService
             }
             return true;
         }
+
+        public Tuple AddTuple(Tuple tuple)
+        {
+            double sum = 0;
+            for(int i = 0; i < tuple.Data.Length; i++)
+            {
+                sum += tuple.Data[i];
+            }
+
+            Tuple result = new Tuple();
+            result.Data = new double[1];
+            result.Data[0] = sum;
+            result.Name = "Suma  " + tuple.Name;
+            return result;
+            
+        }
     }
 }
