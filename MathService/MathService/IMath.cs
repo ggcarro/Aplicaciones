@@ -8,6 +8,9 @@ namespace MathService
     {
         [OperationContract]
         bool Prime(int value);
+
+        [OperationContract]
+        Tuple AddTuple(Tuple tuple);
     }
 
     [DataContract]
