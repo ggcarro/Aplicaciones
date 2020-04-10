@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MathService" />
   <xs:element name="Prime">
     <xs:complexType>
       <xs:sequence>
@@ -11,6 +12,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="PrimeResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddTuple">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MathService" minOccurs="0" name="tuple" nillable="true" type="q1:Tuple" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddTupleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MathService" minOccurs="0" name="AddTupleResult" nillable="true" type="q2:Tuple" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

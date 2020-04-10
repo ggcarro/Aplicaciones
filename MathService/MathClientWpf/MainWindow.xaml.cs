@@ -47,21 +47,20 @@ namespace MathClientWpf
         {
             string iName = TuplaNombre.Text;
             string iData = TuplaNumeros.Text;
-            string[] words = iName.Split(' ');
+            string[] words = iData.Split(' ');
             double[] data = new double[words.Length];
             for (int i=0; i<words.Length; i++)
             {
-                Double.TryParse(words[i], out data[i]);
+                data[i] = Double.Parse(words[i]);
             }
-
+            
             MathService.MathClient client = new MathService.MathClient();
             MathService.Tuple add = new MathService.Tuple();
             add.Name = iName;
             add.Data = data;
-            Tuple result = client.AddTuple(add);
-            
-            Resultado.Content = result;
-            
+            MathService.Tuple result = new MathService.Tuple();
+            result = client.AddTuple(add);
+            ResultadoTupla.Content = result.Name + ": " +Convert.ToString(result.Data[0]);
         }
     }
 }

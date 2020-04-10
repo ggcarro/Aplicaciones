@@ -8,10 +8,71 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace MathClientWpf.MathService {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Tuple", Namespace="http://schemas.datacontract.org/2004/07/MathService")]
+    [System.SerializableAttribute()]
+    public partial class Tuple : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double[] DataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double[] Data {
+            get {
+                return this.DataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataField, value) != true)) {
+                    this.DataField = value;
+                    this.RaisePropertyChanged("Data");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MathService.IMath")]
@@ -22,6 +83,12 @@ namespace MathClientWpf.MathService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMath/Prime", ReplyAction="http://tempuri.org/IMath/PrimeResponse")]
         System.Threading.Tasks.Task<bool> PrimeAsync(int value);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMath/AddTuple", ReplyAction="http://tempuri.org/IMath/AddTupleResponse")]
+        MathClientWpf.MathService.Tuple AddTuple(MathClientWpf.MathService.Tuple tuple);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMath/AddTuple", ReplyAction="http://tempuri.org/IMath/AddTupleResponse")]
+        System.Threading.Tasks.Task<MathClientWpf.MathService.Tuple> AddTupleAsync(MathClientWpf.MathService.Tuple tuple);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -58,10 +125,13 @@ namespace MathClientWpf.MathService {
         public System.Threading.Tasks.Task<bool> PrimeAsync(int value) {
             return base.Channel.PrimeAsync(value);
         }
-
-        internal Tuple AddTuple(Tuple add)
-        {
-            throw new NotImplementedException();
+        
+        public MathClientWpf.MathService.Tuple AddTuple(MathClientWpf.MathService.Tuple tuple) {
+            return base.Channel.AddTuple(tuple);
+        }
+        
+        public System.Threading.Tasks.Task<MathClientWpf.MathService.Tuple> AddTupleAsync(MathClientWpf.MathService.Tuple tuple) {
+            return base.Channel.AddTupleAsync(tuple);
         }
     }
 }

@@ -25,6 +25,8 @@
     <MetadataFile FileName="item.disco" MetadataType="Disco" ID="279897b3-4006-49b7-b6bd-5bf39929d32c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?disco" />
     <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="7edbb55e-31ea-4060-98d8-08e95de76a08" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd0" />
     <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="9d95c64c-4b3a-481d-ad21-56ba8726d76e" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="bbda5448-d2ec-44ae-95b0-26c9b335d5b1" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd2" />
+    <MetadataFile FileName="item21.xsd" MetadataType="Schema" ID="6ee573f2-2615-4a48-b57b-b027167abe66" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd3" />
     <MetadataFile FileName="Math.wsdl" MetadataType="Wsdl" ID="5ecb6167-94fb-4466-afd5-b84145b79874" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?wsdl" />
   </Metadata>
   <Extensions>
