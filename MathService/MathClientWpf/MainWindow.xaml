@@ -18,7 +18,7 @@
         <TextBox x:Name="TuplaNumeros" HorizontalAlignment="Left" Height="22" Margin="192,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Text="Numeros separados por espacio" AutomationProperties.Name="Valor"/>
         <TextBlock HorizontalAlignment="Left" Margin="97,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Nombre Tupla:"/>
         <TextBox x:Name="TuplaNombre" HorizontalAlignment="Left" Height="22" Margin="192,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Text="Nombre" AutomationProperties.Name="Valor"/>
-        <Button x:Name="BotonTupla" Content="Suma Tupla" HorizontalAlignment="Left" Margin="298,369,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
+        <Button x:Name="BotonTupla" Content="Suma Tupla" HorizontalAlignment="Left" Margin="298,369,0,0" VerticalAlignment="Top" Width="74" Click="ButtonTupla_Click"/>
         <TextBlock  HorizontalAlignment="Left" Margin="106,333,0,0" TextWrapping="Wrap" Text="Resultado" VerticalAlignment="Top"/>
         <Label x:Name="ResultadoTupla" Content="" HorizontalAlignment="Left" Margin="192,333,0,0" VerticalAlignment="Top"/>
 

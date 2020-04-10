@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathClientWpf", "MathClient
 		{8E558E1D-EDAA-40F2-B643-4A1AD4D68197} = {8E558E1D-EDAA-40F2-B643-4A1AD4D68197}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathServiceHost", "MathServiceHost\MathServiceHost.csproj", "{922AB551-9F03-44BF-BFAF-DDCD2801DF71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{BD0C179B-339F-4B03-B5B1-C164C5177A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD0C179B-339F-4B03-B5B1-C164C5177A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD0C179B-339F-4B03-B5B1-C164C5177A08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{922AB551-9F03-44BF-BFAF-DDCD2801DF71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{922AB551-9F03-44BF-BFAF-DDCD2801DF71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{922AB551-9F03-44BF-BFAF-DDCD2801DF71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{922AB551-9F03-44BF-BFAF-DDCD2801DF71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

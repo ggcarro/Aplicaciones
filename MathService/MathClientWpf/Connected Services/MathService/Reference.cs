@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace MathClientWpf.MathService {
     
     
@@ -55,6 +57,11 @@ namespace MathClientWpf.MathService {
         
         public System.Threading.Tasks.Task<bool> PrimeAsync(int value) {
             return base.Channel.PrimeAsync(value);
+        }
+
+        internal Tuple AddTuple(Tuple add)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -42,5 +42,26 @@ namespace MathClientWpf
                 Resultado.Content = "No es primo";
             }
         }
+
+        private void ButtonTupla_Click(object sender, RoutedEventArgs e)
+        {
+            string iName = TuplaNombre.Text;
+            string iData = TuplaNumeros.Text;
+            string[] words = iName.Split(' ');
+            double[] data = new double[words.Length];
+            for (int i=0; i<words.Length; i++)
+            {
+                Double.TryParse(words[i], out data[i]);
+            }
+
+            MathService.MathClient client = new MathService.MathClient();
+            MathService.Tuple add = new MathService.Tuple();
+            add.Name = iName;
+            add.Data = data;
+            Tuple result = client.AddTuple(add);
+            
+            Resultado.Content = result;
+            
+        }
     }
 }
