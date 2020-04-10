@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MathService
 {
-    class Math : IMath
+    public class Math : IMath
     {
         public bool Prime(int value)
         {
