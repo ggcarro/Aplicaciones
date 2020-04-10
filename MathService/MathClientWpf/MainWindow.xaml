@@ -1,0 +1,26 @@
+﻿<Window x:Class="MathClientWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MathClientWpf"
+        mc:Ignorable="d"
+        Title="MathClientWpf" Height="462" Width="456.5">
+    <Grid Margin="0,0,2,0">
+        <TextBlock HorizontalAlignment="Left" Margin="96,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Número:"/>
+        <TextBox x:Name="Valor" HorizontalAlignment="Left" Height="22" Margin="192,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Text="Valor" AutomationProperties.Name="Valor"/>
+        <TextBlock  HorizontalAlignment="Left" Margin="96,117,0,0" TextWrapping="Wrap" Text="Resultado" VerticalAlignment="Top"/>
+        <Label x:Name="Resultado" Content="" HorizontalAlignment="Left" Margin="192,112,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Boton" Content="Primo" HorizontalAlignment="Left" Margin="298,149,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="96,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Número"/><Run Text="s:"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="96,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Cálculo de número primo"/>
+        <TextBlock HorizontalAlignment="Left" Margin="96,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Suma de Tupla"/>
+        <TextBox x:Name="TuplaNumeros" HorizontalAlignment="Left" Height="22" Margin="192,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Text="Numeros separados por espacio" AutomationProperties.Name="Valor"/>
+        <TextBlock HorizontalAlignment="Left" Margin="97,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Nombre Tupla:"/>
+        <TextBox x:Name="TuplaNombre" HorizontalAlignment="Left" Height="22" Margin="192,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Text="Nombre" AutomationProperties.Name="Valor"/>
+        <Button x:Name="BotonTupla" Content="Suma Tupla" HorizontalAlignment="Left" Margin="298,369,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
+        <TextBlock  HorizontalAlignment="Left" Margin="106,333,0,0" TextWrapping="Wrap" Text="Resultado" VerticalAlignment="Top"/>
+        <Label x:Name="ResultadoTupla" Content="" HorizontalAlignment="Left" Margin="192,333,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
