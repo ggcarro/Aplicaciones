@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MathService
 {
     public class Math : IMath
@@ -38,6 +39,25 @@ namespace MathService
             result.Name = "Suma  " + tuple.Name;
             return result;
             
+        }
+
+        public double[] EqSys(double[][] A1, int N, double[] b)
+        {
+            double[,] A = new double[2, 2];
+            A[0, 0] = A1[0][0];
+            A[1, 1] = A1[0][1];
+            A[0, 0] = A1[1][0];
+            A[1, 1] = A1[1][1];
+
+            int i;
+            alglib.rmatrixsolvefast(A, N, ref b, out i);
+
+            if (i > 0)
+            {
+                return b;
+            }
+
+            else return new double[1] { 54.321 };
         }
     }
 }

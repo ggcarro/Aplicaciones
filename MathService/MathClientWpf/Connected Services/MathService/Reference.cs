@@ -89,6 +89,12 @@ namespace MathClientWpf.MathService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMath/AddTuple", ReplyAction="http://tempuri.org/IMath/AddTupleResponse")]
         System.Threading.Tasks.Task<MathClientWpf.MathService.Tuple> AddTupleAsync(MathClientWpf.MathService.Tuple tuple);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMath/EqSys", ReplyAction="http://tempuri.org/IMath/EqSysResponse")]
+        double[] EqSys(double[][] A1, int N, double[] b);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMath/EqSys", ReplyAction="http://tempuri.org/IMath/EqSysResponse")]
+        System.Threading.Tasks.Task<double[]> EqSysAsync(double[][] A1, int N, double[] b);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -132,6 +138,14 @@ namespace MathClientWpf.MathService {
         
         public System.Threading.Tasks.Task<MathClientWpf.MathService.Tuple> AddTupleAsync(MathClientWpf.MathService.Tuple tuple) {
             return base.Channel.AddTupleAsync(tuple);
+        }
+        
+        public double[] EqSys(double[][] A1, int N, double[] b) {
+            return base.Channel.EqSys(A1, N, b);
+        }
+        
+        public System.Threading.Tasks.Task<double[]> EqSysAsync(double[][] A1, int N, double[] b) {
+            return base.Channel.EqSysAsync(A1, N, b);
         }
     }
 }

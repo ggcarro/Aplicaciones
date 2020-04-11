@@ -11,6 +11,9 @@ namespace MathService
 
         [OperationContract]
         Tuple AddTuple(Tuple tuple);
+
+        [OperationContract]
+        double[] EqSys(double[][] A1, int N, double[] b);
     }
 
     [DataContract]

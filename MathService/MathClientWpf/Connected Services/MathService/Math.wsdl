@@ -20,6 +20,12 @@
   <wsdl:message name="IMath_AddTuple_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddTupleResponse" />
   </wsdl:message>
+  <wsdl:message name="IMath_EqSys_InputMessage">
+    <wsdl:part name="parameters" element="tns:EqSys" />
+  </wsdl:message>
+  <wsdl:message name="IMath_EqSys_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EqSysResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMath">
     <wsdl:operation name="Prime">
       <wsdl:input wsaw:Action="http://tempuri.org/IMath/Prime" message="tns:IMath_Prime_InputMessage" />
@@ -28,6 +34,10 @@
     <wsdl:operation name="AddTuple">
       <wsdl:input wsaw:Action="http://tempuri.org/IMath/AddTuple" message="tns:IMath_AddTuple_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMath/AddTupleResponse" message="tns:IMath_AddTuple_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EqSys">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMath/EqSys" message="tns:IMath_EqSys_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMath/EqSysResponse" message="tns:IMath_EqSys_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMath" type="tns:IMath">
@@ -43,6 +53,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddTuple">
       <soap:operation soapAction="http://tempuri.org/IMath/AddTuple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EqSys">
+      <soap:operation soapAction="http://tempuri.org/IMath/EqSys" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
