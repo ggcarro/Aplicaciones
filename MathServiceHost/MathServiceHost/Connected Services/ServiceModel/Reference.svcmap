@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5cc61e0a-7461-472b-a687-564f22a76452" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/MathService/Math/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="060fd51e-54b5-47a0-ad27-c1d8154c3f52" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="c8810b95-07cd-4377-8abc-13354666b06d" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd0" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="960bb480-edf7-42ba-8d76-9b345f9cfe0c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="66ae75d0-f0fd-47dc-a2ab-f72813d72870" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd2" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="38faa7a4-2c1c-4eb8-b671-af81e5456150" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?xsd=xsd3" />
+    <MetadataFile FileName="Math.wsdl" MetadataType="Wsdl" ID="253c11be-a12c-46d8-9945-ff8c81c3fa48" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathService/Math/?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
