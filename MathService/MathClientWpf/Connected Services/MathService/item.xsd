@@ -33,16 +33,17 @@
   <xs:element name="EqSys">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="A1" nillable="true" type="q3:ArrayOfArrayOfdouble" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="A1" nillable="true" type="q3:ArrayOfdouble" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="A2" nillable="true" type="q4:ArrayOfdouble" />
         <xs:element minOccurs="0" name="N" type="xs:int" />
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="b" nillable="true" type="q4:ArrayOfdouble" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="b" nillable="true" type="q5:ArrayOfdouble" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EqSysResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EqSysResult" nillable="true" type="q5:ArrayOfdouble" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EqSysResult" nillable="true" type="q6:ArrayOfdouble" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -41,23 +41,22 @@ namespace MathService
             
         }
 
-        public double[] EqSys(double[][] A1, int N, double[] b)
+        public double[] EqSys(double[] A1, double[] A2, int N, double[] B)
         {
             double[,] A = new double[2, 2];
-            A[0, 0] = A1[0][0];
-            A[1, 1] = A1[0][1];
-            A[0, 0] = A1[1][0];
-            A[1, 1] = A1[1][1];
-
+            A[0, 0] = A1[0];
+            A[0, 1] = A1[1];
+            A[1, 0] = A2[0];
+            A[1, 1] = A2[1];
+ 
             int i;
-            alglib.rmatrixsolvefast(A, N, ref b, out i);
-
+            alglib.rmatrixsolvefast(A, N, ref B, out i);
             if (i > 0)
             {
-                return b;
+                return B;
             }
 
             else return new double[1] { 54.321 };
         }
-    }
+    } 
 }

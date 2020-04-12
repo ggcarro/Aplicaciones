@@ -65,16 +65,20 @@ namespace MathClientWpf
 
         private void BotonEqLi_Click(object sender, RoutedEventArgs e)
         {
-            double[][] A = new double[1][];
-            A[0] = new double[1];
-            A[0][0] = Double.Parse(A00.Text);
-            A[0][1] = Double.Parse(A01.Text);
-            A[1][0] = Double.Parse(A10.Text);
-            A[1][1] = Double.Parse(A11.Text);
-            double[] B = new double[] { Double.Parse(B0.Text), Double.Parse(B1.Text)};
+            double[] A1 = new double[] { Double.Parse(A00.Text), Double.Parse(A01.Text) };
+            double[] A2 = new double[] { Double.Parse(A10.Text), Double.Parse(A11.Text) };
+            double[] B = new double[] { Double.Parse(B0.Text), Double.Parse(B1.Text) };
 
             MathService.MathClient client = new MathService.MathClient();
-            B = client.EqSys(A, 2, B);
+            B = client.EqSys(A1, A2, 2, B);
+            if (B[0] != 54.321)
+            {
+                ResultadoEqLi.Content = "X = " + Convert.ToString(B[0]) + "  Y = " + Convert.ToString(B[1]);
+            }
+            else
+            {
+                ResultadoEqLi.Content = "Imposible de resolver";
+            }
         }
     }
 }
