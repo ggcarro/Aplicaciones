@@ -10,7 +10,7 @@ namespace MathClientConsole
     {
         static void Main(string[] args)
         {
-            MathClient client = new MathClient("netTcpBinding_IMath");
+            MathClient client = new MathClient("NetTcpBinding_IMath");
 
             int x = 23;
 
