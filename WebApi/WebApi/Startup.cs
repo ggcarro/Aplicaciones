@@ -36,6 +36,7 @@ namespace WebApi
             }
 
             app.UseMvc();
+            app.UseStaticFiles();
         }
     }
 }
