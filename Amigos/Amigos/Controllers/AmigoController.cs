@@ -45,6 +45,26 @@ namespace Amigos.Controllers
             return View(await near.ToListAsync());
         }
 
+        public JsonResult json(int id)
+        {
+            JsonResult jsonFriend = new JsonResult("");
+            var amigos = from a in _context.Amigos select a;
+            List<Amigo> IDfriend = new List<Amigo>();
+
+            foreach (Amigo amigo in amigos)
+                IDfriend.Add(amigo);
+
+            for (int i = 0; i < IDfriend.Count; i++)
+            {
+                if (IDfriend[i].ID == id)
+                {
+                    jsonFriend = new JsonResult(IDfriend[i]);
+                }
+            }
+            return jsonFriend;
+        }
+
+
         //Calcula la distancia (km) entre dos personas 
         public static double Distance(double lon1, double lat1, double lon2, double lat2)
         {

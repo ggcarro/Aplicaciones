@@ -10,9 +10,9 @@ namespace MathClientConsole
     {
         static void Main(string[] args)
         {
-            MathClient client = new MathClient("NetTcpBinding_IMath");
+            MathClient client = new MathClient("BasicHttpBinding_IMath");
 
-            int x = 23;
+            int x = 997;
 
             if (client.Prime(x))
                 Console.WriteLine("{0} es primo", x);
