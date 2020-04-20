@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amigos", "Amigos\Amigos.csproj", "{F76BF1F3-0905-49E8-8B3A-144144B8C946}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amigos", "Amigos\Amigos.csproj", "{F76BF1F3-0905-49E8-8B3A-144144B8C946}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmigosClient", "AmigosClient\AmigosClient.csproj", "{D3A25ECE-CC27-4D19-ABF7-275600F91B5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F76BF1F3-0905-49E8-8B3A-144144B8C946}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F76BF1F3-0905-49E8-8B3A-144144B8C946}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F76BF1F3-0905-49E8-8B3A-144144B8C946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A25ECE-CC27-4D19-ABF7-275600F91B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A25ECE-CC27-4D19-ABF7-275600F91B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A25ECE-CC27-4D19-ABF7-275600F91B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A25ECE-CC27-4D19-ABF7-275600F91B5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
