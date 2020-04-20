@@ -6,284 +6,128 @@
 	},
 	"item": [
 		{
-			"name": "Test",
-			"item": [
-				{
-					"name": "Values",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/values",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"values"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Test Json",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/xml",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/test",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"test"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Test Json Id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/test/hola",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"test",
-								"hola"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n   \"i\": 123,\r\n   \"s\": \"rufino\",\r\n   \"d\": 0.14\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/test",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"test"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/test",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"test"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/test",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"test"
-							]
-						}
-					},
-					"response": []
+			"name": "Values",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/values",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"values"
+					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			},
+			"response": []
 		},
 		{
-			"name": "amigo",
-			"item": [
-				{
-					"name": "{amigo ID}",
-					"item": [
-						{
-							"name": "Get amigo detail",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/amigo/:amigoID",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"amigo",
-										":amigoID"
-									],
-									"variable": [
-										{
-											"key": "amigoID",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update amigo detal",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"ID\": 4,\n\t\"name\": \"Dolores Redondo\",\n\t\"lati\": 5,\n\t\"longi\": 48\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/amigo/:amigoID",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"amigo",
-										":amigoID"
-									],
-									"variable": [
-										{
-											"key": "amigoID",
-											"value": "4"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete amigo",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/amigo/:amigoID",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"amigo",
-										":amigoID"
-									],
-									"variable": [
-										{
-											"key": "amigoID",
-											"value": "5"
-										}
-									]
-								}
-							},
-							"response": []
-						}
+			"name": "Test Json",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/test",
+					"host": [
+						"{{baseUrl}}"
 					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Get list of amigos",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/amigo/",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"amigo",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create amigo",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"carlos\",\n\t\"lati\": 5,\n\t\"longi\": 43\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/amigo",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"amigo"
-							]
-						}
-					},
-					"response": []
+					"path": [
+						"test"
+					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Json Id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/test/hola",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"test",
+						"hola"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"i\": 123,\r\n   \"s\": \"rufino\",\r\n   \"d\": 3.14\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/test",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/test",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/test",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
