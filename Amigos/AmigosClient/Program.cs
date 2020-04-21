@@ -8,9 +8,14 @@ namespace AmigosClient
     class Program
     {
         static HttpClient client = new HttpClient();
-
+        
         static void Main(string[] args)
         {
+            string na;
+            string lo;
+            string la;
+            int id;
+
             //Configuración del cliente
             client.BaseAddress = new Uri("http://localhost:5000/");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -24,12 +29,38 @@ namespace AmigosClient
                     "\n Si lo que deseas es añadir un amigo para que te haga compañia en la cuarentena intoduce 2" +
                     "\n En caso de querer editar a algun amigo introduce 3" +
                     "\n Si lo que deseas es eliminar a algun amigo por pesado introduce 4" +
-                    "\n Y si solo quieres terminar con esto y jugar a la play introduce cualquier otro numero");
+                    "\n Y si solo quieres terminar con esto y jugar a la play introduce cualquier otro caracter \n");
                 value = Console.ReadLine();
+                Console.WriteLine("");
                 switch (value)
                 {
                     case "1":
                         ListAmigos();
+                        break;
+                    case "2":
+                        Console.WriteLine("Introduce el nombre de tu amigo:");
+                        na = Console.ReadLine();
+                        Console.WriteLine("Introduce la longitud de tu amigo:");
+                        lo = Console.ReadLine();
+                        Console.WriteLine("Introduce la latitud de tu amigo:");
+                        la = Console.ReadLine();
+                        NewAmigo(na, lo, la);
+                        break;
+                    case "3":
+                        Console.WriteLine("Introduce el ID de tu amigo que quieres modificar:");
+                        id = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Introduce el nuevo nombre de tu amigo:");
+                        na = Console.ReadLine();
+                        Console.WriteLine("Introduce la nueva longitud de tu amigo:");
+                        lo = Console.ReadLine();
+                        Console.WriteLine("Introduce la nueva latitud de tu amigo:");
+                        la = Console.ReadLine();
+                        ModifyAmigo(id, na, lo, la);
+                        break;
+                    case "4":
+                        Console.WriteLine("Introduce el ID de tu amigo que quieres modificar:");
+                        id = Convert.ToInt32(Console.ReadLine());
+                        DeleteAmigo(id);
                         break;
                     default:
                         value="0";
@@ -43,16 +74,16 @@ namespace AmigosClient
         {
             Console.WriteLine("A M I G O S");
             HttpResponseMessage response = client.GetAsync("api/amigo").Result;
-            Console.WriteLine("Status Code: {0}", response.StatusCode);
             if (response.IsSuccessStatusCode)
             {
                 Amigo[] amigos = response.Content.ReadAsAsync<Amigo[]>().Result;
+                Console.WriteLine("[Nombre] -- [ID] -- [Longitud] -- [Latitud]");
                 foreach (Amigo amigo in amigos)
-                    Console.WriteLine("{0}: {1}", amigo.name, amigo.ID);
+                    Console.WriteLine("{0}  --  {1}  --  {2}  --  {3}", amigo.name, amigo.ID, amigo.longi, amigo.lati);
             }
             else
             {
-                Console.WriteLine("Hubo un problema al crear el amigo");
+                Console.WriteLine("Hubo un problema al listar los amigos");
             }
         }
 
@@ -81,8 +112,9 @@ namespace AmigosClient
             amigo.name = name;
             amigo.longi = longi;
             amigo.lati = lati;
-
-            HttpResponseMessage response = client.PostAsJsonAsync("api/amigo"+id, amigo).Result;
+            string url = "api/amigo/" + id;
+            HttpResponseMessage response = client.PutAsJsonAsync(url, amigo).Result;
+            Console.WriteLine(response.ToString());
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine("Amigo modificado correctamente");
