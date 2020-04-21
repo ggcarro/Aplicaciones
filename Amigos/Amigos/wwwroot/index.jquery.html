@@ -3,11 +3,26 @@
 <head>
     <meta charset="utf-8" />
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <title>Teleamigos</title>
 </head>
 <body>
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="index.jquery.html">Cliente JavaScript Teleamigos</a>
+        <div class="navbar navbar-light" style="background-color: #e3fded;">
+            <span class="navbar-text
+              text-body">
+                Amigos:
+            </span>
+            <span id="numAmigos" class="text-warning">
+            </span>
+        </div>
+    </nav>
     <div>
-        <h2>Amigos:</h2>
+        <h3>Amigos:</h3>
         <ul id="amigos" />
     </div>
 
@@ -29,10 +44,69 @@
                 var listItem = document.createElement('li');
                 listItem.innerHTML = listData[i].name + ": " + listData[i].id;
                 listElement.appendChild(listItem);
+
+                var numAmigos = listData.length;
+
+                $("#numamigos").text(numAmigos);
             }
         }
 
         Load();
-    </script>
+
+    function AddFriend() {
+        var uri = "http://localhost:5000/api/amigo";
+        var _name = document.getElementById("name").value;
+        var _longi = document.getElementById("longi").value;
+        var _lati = document.getElementById("lati").value;
+
+        var data = {name: _name, longi: _longi, lati: _lati }
+
+        fetch(uri, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+    }
+        }).then(function (response) {Load(); })
+            .catch(error => console.error('No se pudo añadir el amigo:', error))
+            .then(response => console.log('Amigo añadido correctamente:', response));
+    }
+
+    function ModifyFriend() {
+        var uri = "http://localhost:5000/api/amigo";
+        var _id = document.getElementById("ID").value;
+        var _name = document.getElementById("name").value;
+        var _longi = document.getElementById("longi").value;
+        var _lati = document.getElementById("lati").value;
+
+        var data = {ID: idJS, name: _name, longi: _longi, lati: _latiJS }
+        var url = uri + "/" + idJS;
+
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(data),
+            headers: {
+               'Content-Type': 'application/json'
+    }
+        }).then(function (response) {Load(); })
+            .catch(error => console.error('No se pudo modificar el amigo:', error))
+            .then(response => console.log('Amigo añadido correctamente:', response));
+    }
+
+    function DeleteFriend() {
+        var uri = "http://localhost:5000/api/amigo";
+        var data = (document.getElementById("ID")).value;
+        var url = uri + "/" + data;
+
+        fetch(url, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+    }
+            }).then(function (response) {Load(); })
+            .catch(error => console.error('No se puedo eliminar el amigo... los amigos de verdad se quedan:', error))
+            .then(response => console.log('Amigo eliminado correctamente... te vas a quedar sin amigos si sigues asi:', response));
+    }
+</script>
 </body>
 </html>

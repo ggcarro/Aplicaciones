@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+//using Amigos.wwwroot.lib.signalr.Hub;     // NO DEBERÍA FALLAR ESTO!!!!!!!!!!!!!!!!!!!!!!!1
 
 namespace Amigos
 {
@@ -36,6 +37,7 @@ namespace Amigos
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
 
             services.AddDbContext<AmigoDBContext>(options => options.UseSqlite("Data Source=Amigos.db"));
 
@@ -80,6 +82,15 @@ namespace Amigos
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseRequestLocalization(options);
+
+
+            /*
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");     //CORREGIR!!!!!!!!!!!!!!!!!!!!
+            });
+            */
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
