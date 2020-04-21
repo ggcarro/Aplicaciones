@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <title>Teleamigos</title>
+</head>
+<body>
+    <div>
+        <h2>Amigos:</h2>
+        <ul id="amigos" />
+    </div>
+
+    <script>
+        async function Load() {
+            var uri = "http://localhost:5000/api/amigo";
+
+
+            const response = await fetch(uri);
+            const listData = await response.json();
+
+            var listContainer = document.getElementById("amigos");
+
+            var listElement = document.createElement('ul');
+            listContainer.appendChild(listElement);
+
+            for (let i = 0; i < listData.length; i++) {
+
+                var listItem = document.createElement('li');
+                listItem.innerHTML = listData[i].name + ": " + listData[i].id;
+                listElement.appendChild(listItem);
+            }
+        }
+
+        Load();
+    </script>
+</body>
+</html>
