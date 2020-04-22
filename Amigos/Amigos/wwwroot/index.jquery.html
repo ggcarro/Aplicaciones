@@ -17,13 +17,41 @@
               text-body">
                 Amigos:
             </span>
-            <span id="numAmigos" class="text-warning">
+            <span id="numeroAmigos" class="text-warning">
             </span>
         </div>
     </nav>
-    <div>
-        <h3>Amigos:</h3>
-        <ul id="amigos" />
+    <div class="center-block">
+        <div class="container">
+            <div class="row">
+                <h3>Amigos:</h3>
+                <ul id="amigos" />
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h2>Añade un nuevo amigo:</h2>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="name" />
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Longitud</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="longi" />
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Latitud</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="lati" />
+                    </div>
+                    <button type="submit" class="btn btn-success" id="add" onclick="AddFriend()">Agregar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -45,9 +73,9 @@
                 listItem.innerHTML = listData[i].name + ": " + listData[i].id;
                 listElement.appendChild(listItem);
 
-                var numAmigos = listData.length;
+                var numeroAmigos = listData.length;
 
-                $("#numamigos").text(numAmigos);
+                $("#numeroAmigos").text(numeroAmigos);
             }
         }
 
