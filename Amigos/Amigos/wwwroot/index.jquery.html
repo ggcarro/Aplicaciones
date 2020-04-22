@@ -29,7 +29,7 @@
                 </div>
             </div>
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <h2>Añade un nuevo amigo:</h2>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
@@ -51,7 +51,7 @@
                 </div>
                 <button type="submit" class="btn btn-success" id="add" onclick="AddFriend()">Agregar</button>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <h2>Elimina a un amigo:</h2>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
@@ -60,6 +60,34 @@
                     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="ID" />
                 </div>
                 <button type="submit" class="btn btn-danger" id="delete" onclick="DeleteFriend()">Eliminar</button>
+            </div>
+            <div class="col-sm-3">
+                <h2>Edita un nuevo amigo:</h2>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Id</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="IdEd" />
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="nameEd" />
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Longitud</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="longiEd" />
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Latitud</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="latiEd" />
+                </div>
+                <button type="submit" class="btn btn-success" id="add" onclick="ModifyFriend()">Editar</button>
             </div>
         </div>
         </div>
@@ -112,13 +140,13 @@
 
     function ModifyFriend() {
         var uri = "http://localhost:5000/api/amigo";
-        var _id = document.getElementById("ID").value;
-        var _name = document.getElementById("name").value;
-        var _longi = document.getElementById("longi").value;
-        var _lati = document.getElementById("lati").value;
+        var _id = document.getElementById("IdEd").value;
+        var _name = document.getElementById("nameEd").value;
+        var _longi = document.getElementById("longiEd").value;
+        var _lati = document.getElementById("latiEd").value;
 
-        var data = {ID: idJS, name: _name, longi: _longi, lati: _latiJS }
-        var url = uri + "/" + idJS;
+        var data = {ID: _id, name: _name, longi: _longi, lati: _lati }
+        var url = uri + "/" + _id;
 
         fetch(url, {
             method: "PUT",
