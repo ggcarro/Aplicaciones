@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-//using Amigos.wwwroot.lib.signalr.Hub;     // NO DEBERÍA FALLAR ESTO!!!!!!!!!!!!!!!!!!!!!!!1
+//using Amigos.wwwroot.lib.signalr.Hub;
 
 namespace Amigos
 {
