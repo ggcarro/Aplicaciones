@@ -74,8 +74,67 @@
             Run(editor.getSession().getValue());
             editor.focus();
         }
+
+        function Save() {
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/clouds");
+            editor.getSession().setMode("ace/mode/lua");
+            Run(editor.getSession().getValue());
+
+            var serviceBase = 'http://localhost:5010/api/progeto/save';
+
+            program = {};
+            program.code = source;
+
+            try {
+                const response = await fetch(serviceBase, {
+                    method: "post",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(program)
+                });
+
+                const data = await response.json();
+
+                $('#result').html(data.output);
+                $('#svg').html(data.svg);
+                $('#temp').html("Time:" + data.time + " ms");
+
+
+            } catch (error) {
+                alert(error);
+            }
+            svgPanZoom('#drawing');
+        }
     </script>
+    <script>
+        var fileInput = document.getElementById('fileInput');
+        var text;
+        fileInput.addEventListener('change', function(e) {
+            var file = fileInput.files[0];
+            var textType = /text.*/;
     
+            if (file.type.match(textType)) {
+                var reader = new FileReader();
+        
+                reader.onload = function(e) {
+                    var content = reader.result;
+                    text = text + content;
+                }
+        
+                reader.readAsText(file);	
+            } else {
+                alert("File not supported!")
+            }
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/clouds");
+            editor.getSession().setMode("ace/mode/lua");
+            editor.getSession().setValue(text);
+            editor.focus()
+        });
+    </script>
 
 </head>
 <style type="text/css">
@@ -88,6 +147,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Progeto</a>
         <button class="btn btn-outline-info my-2 my-sm-0" onclick="Button()">Run</button>
+        <button class="btn btn-outline-info my-2 my-sm-0" onclick="Save()">Save</button>
     </nav>
 
     <!--Main Container-->
@@ -103,7 +163,7 @@
             </div>
         </div>
         <div class="row">
-            
+            <input type="file" id=fileInput"/>
         </div>
     </div>
     
