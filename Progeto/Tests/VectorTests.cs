@@ -37,7 +37,7 @@ namespace Tests
 
         }
 
-        
+
         [TestMethod]
         public void VectorPerpendicular()
         {
@@ -50,10 +50,10 @@ namespace Tests
         [TestMethod]
         public void VectorDotProduct()
         {
-            Vector _vector1 = new Vector(1,3);
+            Vector _vector1 = new Vector(1, 3);
             Vector _vector2 = new Vector(2, 4);
-            double product = Vector.DotProduct (_vector1, _vector2);
-            double result = 2+12;
+            double product = Vector.DotProduct(_vector1, _vector2);
+            double result = 2 + 12;
             Assert.AreEqual<double>(result, product);
 
         }
@@ -70,3 +70,4 @@ namespace Tests
 
     }
 }
+

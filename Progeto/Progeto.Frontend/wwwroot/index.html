@@ -2,13 +2,29 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Progeto</title>
+
+    <!-- JQuery -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+
+    <!-- Ace -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js"></script>
+
+    <!-- SVG PAN ZOOM -->
+    <!-- <script src="https://github.com/ariutta/svg-pan-zoom/blob/master/src/svg-pan-zoom.js"></script> -->
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- ACE Editor-->
+    <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+   
+    <!-- LUA Functions -->
     <script>
 
         function SetupEditor() {
-            var editor = ace.edit("source");
+            var editor = ace.edit("editor");
             editor.setTheme("ace/theme/clouds");
             editor.getSession().setMode("ace/mode/lua");
 
@@ -26,7 +42,7 @@
             var serviceBase = 'http://localhost:5010/api/progeto';
 
             program = {};
-            program.source = source;
+            program.code = source;
 
             try {
                 const response = await fetch(serviceBase, {
@@ -40,48 +56,56 @@
 
                 const data = await response.json();
 
-                $('#result').html(data.result);
+                $('#result').html(data.output);
                 $('#svg').html(data.svg);
+                $('#temp').html("Time:" + data.time + " ms");
+
 
             } catch (error) {
                 alert(error);
             }
             svgPanZoom('#drawing');
         }
+
+        function Button() {
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/clouds");
+            editor.getSession().setMode("ace/mode/lua");
+            Run(editor.getSession().getValue());
+            editor.focus();
+        }
     </script>
-    <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
-    </script>
+    
 
 </head>
 <style type="text/css">
-    .border{border:solid 10px; border-color: black; padding:10px;}
-    .c1{min-width: 49%; padding: 50px;}
+    .border{border:solid 10px; border-color: black; padding:10px; width:100%}
+    .c1{min-width: 49%; padding: 50px; height: 80vh;}
 </style>
+
 <body onload="SetupEditor()">
     <!--Navbar-->
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Progeto</a>
-        <button class="btn btn-outline-info my-2 my-sm-0">Run</button>
+        <button class="btn btn-outline-info my-2 my-sm-0" onclick="Button()">Run</button>
     </nav>
 
     <!--Main Container-->
-    <main>
+    <div class="containter">
         <div class="row">
             <div class="col-md-1 c1">
-                <div class="row border" id="editor"></div>
-                <textarea readonly class="row border" id="result"></textarea>
+                <div class="row border" style="height:40vh" id="editor"></div>
+                <textarea readonly class="row border" style="height:40vh" id="result"></textarea>
+                <div id="temp"></div>
             </div>
             <div class="col-md-1 c1" style="padding:50px">
-                <div class="row border" id="svg">
-                    <h1>Hola 3</h1>
-                </div>
+                <div class="row border" style="height:80vh" id="svg"></div>
             </div>
         </div>
-    </main>
+        <div class="row">
+            
+        </div>
+    </div>
     
 </body>
 

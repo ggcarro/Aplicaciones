@@ -27,12 +27,13 @@ namespace Progeto.Frontend
                .AllowAnyHeader()
                .AllowCredentials());
 
-            app.UseStaticFiles();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.Run(async (context) =>
             {
