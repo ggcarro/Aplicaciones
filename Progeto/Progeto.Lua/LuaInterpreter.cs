@@ -13,6 +13,7 @@ namespace Progeto.Lua
         double _width; // Grosor por defecto
         StringBuilder _output;
 
+        // Constructor
         public LuaInterpreter()
         {
             _primitives = new List<DrawingPrimitive>();
@@ -21,6 +22,7 @@ namespace Progeto.Lua
             _output = new StringBuilder();
         }
 
+        // Inicializa intérprete y registra funciones y clases
         private NLua.Lua CreateInterpreter()
         {
             NLua.Lua lua = new NLua.Lua();
