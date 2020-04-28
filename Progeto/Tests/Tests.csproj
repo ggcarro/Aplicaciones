@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Progeto.Geometry\Progeto.Geometry.csproj" />
+    <ProjectReference Include="..\Progeto.Lua\Progeto.Lua.csproj" />
   </ItemGroup>
 
 </Project>
