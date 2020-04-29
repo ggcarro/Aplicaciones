@@ -4,23 +4,25 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-    <Folder Include="Data-App\" />
-  </ItemGroup>
-
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'ProgetoApi' ">
+    <StartAction>Project</StartAction>
+    <ApplicationURL>http://localhost:5010</ApplicationURL>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App">
       <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
       <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.14" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Progeto.Lua\Progeto.Lua.csproj" />
+    <ProjectReference Include="..\..\Progeto\Progeto.Lua\Progeto.Lua.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
   </ItemGroup>
-
 </Project>

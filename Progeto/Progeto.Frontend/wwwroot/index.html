@@ -11,8 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js"></script>
 
     <!-- SVG PAN ZOOM -->
-    <!-- <script src="https://github.com/ariutta/svg-pan-zoom/blob/master/src/svg-pan-zoom.js"></script> -->
-
+    
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -36,6 +35,7 @@
                 }
             });
             editor.focus();
+            Load();
         }
 
         async function Run(source) {
@@ -60,11 +60,18 @@
                 $('#svg').html(data.svg);
                 $('#temp').html("Time:" + data.time + " ms");
 
+                var d = document.getElementById("d");
+                var file = new Blob([source], { type: 'text/plain' });
+                d.href = URL.createObjectURL(file);
+                d.download = "code.txt";
+
 
             } catch (error) {
                 alert(error);
             }
-            svgPanZoom('#drawing');
+
+           
+            
         }
 
         function Button() {
@@ -75,65 +82,87 @@
             editor.focus();
         }
 
-        function Save() {
+        async function Save() {
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/clouds");
             editor.getSession().setMode("ace/mode/lua");
-            Run(editor.getSession().getValue());
 
-            var serviceBase = 'http://localhost:5010/api/progeto/save';
-
-            program = {};
-            program.code = source;
-
-            try {
-                const response = await fetch(serviceBase, {
-                    method: "post",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(program)
-                });
-
-                const data = await response.json();
-
-                $('#result').html(data.output);
-                $('#svg').html(data.svg);
-                $('#temp').html("Time:" + data.time + " ms");
-
-
-            } catch (error) {
-                alert(error);
+            if (document.getElementById("fName").value == "" || editor.getSession().getValue() == "") {
+                alert("Debes introducir un nombre para el fichero y algo de código")
             }
-            svgPanZoom('#drawing');
-        }
-    </script>
-    <script>
-        var fileInput = document.getElementById('fileInput');
-        var text;
-        fileInput.addEventListener('change', function(e) {
-            var file = fileInput.files[0];
-            var textType = /text.*/;
-    
-            if (file.type.match(textType)) {
-                var reader = new FileReader();
-        
-                reader.onload = function(e) {
-                    var content = reader.result;
-                    text = text + content;
+            else {
+                
+                var serviceBase = 'http://localhost:5010/api/progefiles';
+
+                program = {};
+                program.code = editor.getSession().getValue();
+                program.path = "noPath";
+                program.filename = document.getElementById("fName").value;
+                try {
+                    const response = await fetch(serviceBase, {
+                        method: "post",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(program)
+                    });
+
+                    const data = await response.json();
+
+                    var listContainer = document.getElementById("files");
+                    var a = document.createElement('a');
+                    a.setAttribute("href", "#");
+                    a.setAttribute("style", "color:white; margin-left:5px;");
+                    a.setAttribute("onclick", "GetFile(" + data.id + ")")
+                    a.innerHTML = data.filename;
+                    listContainer.appendChild(a);
+
+                    Run(data.code);
+
+                } catch (error) {
+                    alert(error);
                 }
-        
-                reader.readAsText(file);	
-            } else {
-                alert("File not supported!")
+                editor.focus;
             }
+            
+        }
+
+
+        async function Load() {
+            var uri = "http://localhost:5010/api/progefiles";
+
+
+            const response = await fetch(uri);
+            const listData = await response.json();
+            document.getElementById("files").innerHTML = "";
+            var listContainer = document.getElementById("files");
+            
+            for (let i = 0; i < listData.length; i++) {
+                var a = document.createElement('a');
+                a.setAttribute("href", "#");
+                a.setAttribute("style", "color:white; margin-left:5px;");
+                a.setAttribute("onclick", "GetFile(" + listData[i].id +")")
+                a.innerHTML = listData[i].filename;
+                listContainer.appendChild(a);
+            }
+        }
+
+        async function GetFile(id) {
+            var uri = "http://localhost:5010/api/progefiles/"+id;
+            const response = await fetch(uri);
+
+            var data = await response.json();
+
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/clouds");
             editor.getSession().setMode("ace/mode/lua");
-            editor.getSession().setValue(text);
-            editor.focus()
-        });
+            editor.getSession().setValue(data.code);
+            Run(editor.getSession().getValue());
+            editor.focus();
+        }
+        
+        
     </script>
 
 </head>
@@ -146,24 +175,30 @@
     <!--Navbar-->
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Progeto</a>
-        <button class="btn btn-outline-info my-2 my-sm-0" onclick="Button()">Run</button>
-        <button class="btn btn-outline-info my-2 my-sm-0" onclick="Save()">Save</button>
+        <button class="btn btn-info" onclick="Button()">Run</button>
+        <button class="btn btn-info" onclick="Save()">Save</button>
+        <a class="btn btn-info" style="color:white" id="d">Download</a>
+    </nav>
+    <nav class="navbar navbar-light" style="background-color: #17a2b8;">
+        <h5 style="color:white">Files</h5>
+        <div id="files" style="color:white"></div>
+    </nav>
+    <nav class="navbar navbar-light" style="background-color: #59C4D5;;">
+        <h6 style="color:white">File name</h6>
+        <input type="text" class="form-control" style="width:30%," aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="fName" />
     </nav>
 
     <!--Main Container-->
     <div class="containter">
         <div class="row">
             <div class="col-md-1 c1">
-                <div class="row border" style="height:40vh" id="editor"></div>
-                <textarea readonly class="row border" style="height:40vh" id="result"></textarea>
+                <div class="row border" style="height:30vh" id="editor"></div>
+                <textarea readonly class="row border" style="height:30vh" id="result"></textarea>
                 <div id="temp"></div>
             </div>
-            <div class="col-md-1 c1" style="padding:50px">
-                <div class="row border" style="height:80vh" id="svg"></div>
+            <div class="col-md-1 c1" style="padding:60px">
+                <div class="row border" style="height:50vh" id="svg"></div>
             </div>
-        </div>
-        <div class="row">
-            <input type="file" id=fileInput"/>
         </div>
     </div>
     

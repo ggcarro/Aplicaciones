@@ -42,6 +42,12 @@ namespace ProgetoApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors(builder => builder
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,8 +63,14 @@ namespace ProgetoApi
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "Progefiles",
+                    template: "{controller=Progefiles}/{action=Index}/{id?}");
+            });
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "Progreto",
+                    template: "{controller=Progeto}/{action}");
             });
         }
     }

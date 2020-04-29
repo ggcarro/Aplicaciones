@@ -11,29 +11,20 @@ using System.IO;
 
 namespace Progeto.API.Controllers
 {
-    [Route("api/save")]
+    [Route("api/progeto")]
     [ApiController]
-    public class SaveController : ControllerBase
+    public class ProgetoController : ControllerBase
     {
         LuaInterpreter interpreter = new LuaInterpreter();
 
         [HttpPost]
-        public Answer Save([FromBody] ProgetoModel program)
+        public Answer Post([FromBody] ProgetoModel program)
         {
             // Iniciamos temporizador 
             Stopwatch temp = new Stopwatch();
             temp.Start();
             string[] intResult = interpreter.RunProgram(program.code).ToArray();
             temp.Stop();
-            string path = "/Users/gonzalo/Desktop/Server/file0.txt";
-            int i = 1;
-            while (System.IO.File.Exists(path))
-            {
-                path= "/Users/gonzalo/Desktop/Server/file"+i+".txt";
-                i++;
-            }
-            System.IO.File.WriteAllText(path, program.code);
-
             return new Answer(intResult[0], intResult[1], temp.Elapsed.TotalMilliseconds.ToString());
         }
     }
