@@ -9,11 +9,10 @@ namespace Progeto.Lua
     public class LuaInterpreter
     {
         List<DrawingPrimitive> _primitives; // Almacén de la lista de primitivas
-        System.Drawing.Color _color; // Color por defecto
+        Color _color; // Color por defecto
         double _width; // Grosor por defecto
         StringBuilder _output;
 
-        // Constructor
         public LuaInterpreter()
         {
             _primitives = new List<DrawingPrimitive>();
@@ -22,7 +21,6 @@ namespace Progeto.Lua
             _output = new StringBuilder();
         }
 
-        // Inicializa intérprete y registra funciones y clases
         private NLua.Lua CreateInterpreter()
         {
             NLua.Lua lua = new NLua.Lua();
@@ -33,15 +31,15 @@ namespace Progeto.Lua
             lua.RegisterFunction("color", this, GetType().GetMethod("SetColor"));
 
             lua.DoString(@"
-                luanet.load_assembly('Progeto.Geometry')
+      luanet.load_assembly('Progeto.Geometry')
 
-                Segment = luanet.import_type('Progeto.Geometry.Segment')
-                Point = luanet.import_type('Progeto.Geometry.Point')
-                Circle = luanet.import_type('Progeto.Geometry.Circle')
-                Line = luanet.import_type('Progeto.Geometry.Line')
-                Circle = luanet.import_type('Progeto.Geometry.Circle')
-                Vector = luanet.import_type('Progeto.Geometry.Vector')
-                ", "Init");
+      Segment = luanet.import_type('Progeto.Geometry.Segment')
+      Point = luanet.import_type('Progeto.Geometry.Point')
+      Circle = luanet.import_type('Progeto.Geometry.Circle')
+      Line = luanet.import_type('Progeto.Geometry.Line')
+      Circle = luanet.import_type('Progeto.Geometry.Circle')
+      Vector = luanet.import_type('Progeto.Geometry.Vector')
+   ", "Init");
 
             return lua;
         }
