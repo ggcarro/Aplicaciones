@@ -1,0 +1,39 @@
+﻿@model ProgetoApi.Models.Progefile
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Progefile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.code)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.code)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.path)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.path)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.filename)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.filename)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
