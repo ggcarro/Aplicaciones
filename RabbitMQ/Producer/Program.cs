@@ -14,14 +14,32 @@ namespace Producer
             {
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare("ColaAT", false, false, false, null);
+                    bool durable = true;
+                    channel.QueueDeclare("ColaTareas", durable, false, false, null);
+                    var properties = channel.CreateBasicProperties();
+                    properties.Persistent = true;
 
-                    string message = DateTime.Now.ToString() + " - Mensaje de prueba";
-                    byte[] body = Encoding.UTF8.GetBytes(message);
+                    Random random = new Random();
 
-                    channel.BasicPublish("", "ColaAT", null, body);
+                    for(int i =0;i<9; i++)
+                    {
+                        int numRandom = 1;
+                        string message = numRandom.ToString();
+                        byte[] body = Encoding.UTF8.GetBytes(message);
 
-                    Console.WriteLine("Enviado el mensaje: {0}", message);
+                        channel.BasicPublish("", "ColaTareas", properties, body);
+                        Console.WriteLine("Enviado el numero: {0}", numRandom);
+
+                    }
+
+                    int num = 10;
+                    string mess = num.ToString();
+                    byte[] bo = Encoding.UTF8.GetBytes(mess);
+
+                    channel.BasicPublish("", "ColaTareas", null, bo);
+
+
+                    Console.WriteLine("Enviado el numero: {0}", num);
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -15,18 +16,21 @@ namespace Consumer
             {
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare("ColaAT", false, false, false, null);
+                    bool durable = true;
+                    channel.QueueDeclare("ColaTareas", durable, false, false, null);
 
                     var consumer = new EventingBasicConsumer(channel);
                     consumer.Received += (model, ea) =>
                     {
                         var body = ea.Body;
                         var message = Encoding.UTF8.GetString(body.ToArray());
-                        Console.WriteLine("Recibido {0}", message);
+                        int num = Int32.Parse(message);
+                        Console.WriteLine("Recibido {0}", num);
+                        Thread.Sleep(num*1000);
+                        channel.BasicAck(ea.DeliveryTag, false);
                     };
-                    channel.BasicConsume(queue: "ColaAT",
-                                      autoAck: true,
-                                      consumer: consumer);
+                    channel.BasicQos(0, 1, false);
+                    channel.BasicConsume("ColaTareas", false, consumer);
                     Console.WriteLine("Press enter to exit");
                     Console.ReadLine();
 
