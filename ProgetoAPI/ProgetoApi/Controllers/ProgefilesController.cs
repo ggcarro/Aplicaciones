@@ -65,25 +65,8 @@ namespace ProgetoApi.Controllers
             return View(progefile);
         }
 
-        // GET: Progefiles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var progefile = await _context.Files.FindAsync(id);
-            if (progefile == null)
-            {
-                return NotFound();
-            }
-            return View(progefile);
-        }
-
+        
         // POST: Progefiles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,code,path,filename")] Progefile progefile)

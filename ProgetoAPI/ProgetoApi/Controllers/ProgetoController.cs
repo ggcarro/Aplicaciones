@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Progeto.Lua;
 using Progeto.API.Models;
+using System.IO;
 
 namespace Progeto.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/progeto")]
     [ApiController]
     public class ProgetoController : ControllerBase
     {
@@ -27,4 +28,5 @@ namespace Progeto.API.Controllers
             return new Answer(intResult[0], intResult[1], temp.Elapsed.TotalMilliseconds.ToString());
         }
     }
+
 }
