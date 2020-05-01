@@ -53,7 +53,7 @@ namespace ImageWorker
 
                         channel.BasicPublish(EXCHANGE, ROUTING_KEY, properties, bodySend);
 
-                        Console.WriteLine("Imagen enviada a ImageWorkQueue");
+                        Console.WriteLine("Imagen procesada y enviada a ImageViewer");
 
                     };
                     channel.BasicConsume(

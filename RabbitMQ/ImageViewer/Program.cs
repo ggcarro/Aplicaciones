@@ -37,10 +37,14 @@ namespace ImageViewer
                     var consumer = new EventingBasicConsumer(channel);
                     consumer.Received += (model, ea) =>
                     {
+                        
                         var body = ea.Body;
-
+                        var route = ea.RoutingKey;
                         Image image = iCodec.Decode(body.ToArray());
-                        if (ea.RoutingKey == "Image.Raw") { 
+
+                        Console.WriteLine("RoutingKey: {0}", route);
+
+                        if (route == "Image.Raw") { 
                             Console.WriteLine("Image Raw: {0} - {1}", image.Num, image.Text);
                         }
                         else

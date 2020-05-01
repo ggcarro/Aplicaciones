@@ -8,7 +8,7 @@ namespace ImageProducer
     class Program
     {
         const string IP = "10.115.1.81";
-        const string ROUTING_KEY = "Image.Raw";
+        const string BINDING_KEY = "Image.Raw";
         const string EXCHANGE = "Image";
 
         static void Main(string[] args)
@@ -41,10 +41,11 @@ namespace ImageProducer
                         byte[] body = iCodec.Encode(image);
 
                         // Se publica el mensaje
-                        channel.BasicPublish(EXCHANGE, ROUTING_KEY, properties, body);
+                        channel.BasicPublish(EXCHANGE, BINDING_KEY, properties, body);
+
+                        Console.WriteLine("Text: {0}, Num: {1}, BindingKey: {2}", text, num, BINDING_KEY);
                     }
 
-                    Console.WriteLine("Enviado el numero: {0}", num);
                 }
             }
         }

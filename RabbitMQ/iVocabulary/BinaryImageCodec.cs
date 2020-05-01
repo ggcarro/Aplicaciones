@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace iVocabulary
 {
@@ -8,28 +9,32 @@ namespace iVocabulary
         public byte[] Encode(Image image)
         {
             byte[] buffer;
-            MemoryStream ms = new MemoryStream();
-            BinaryWriter wr = new BinaryWriter(ms);
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                writer.Write(image.Text);
+                writer.Write(image.Num);
 
-            wr.Write(image.Text);
-            wr.Write(image.Num);
+                writer.Flush();
 
-            wr.Flush();
-
-            buffer = ms.ToArray();
+                buffer = stream.ToArray();
+            }
 
             return buffer;
 
         }
         public Image Decode(byte[] buffer)
         {
-            MemoryStream ms = new MemoryStream();
-            BinaryReader br = new BinaryReader(ms);
+            Image image = new Image("", -1);
+            using (MemoryStream stream = new MemoryStream(buffer))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                string te = reader.ReadString();
+                int num = reader.ReadInt32();
 
-            string text = br.ReadString();
-            int num = br.ReadInt32();
-
-            Image image = new Image(text, num);
+                image = new Image(te, num);
+            }
+            
             return image;
 
         }
