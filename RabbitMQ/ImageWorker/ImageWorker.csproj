@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="RabbitMQ.Client" Version="6.0.0" />
+    <PackageReference Include="DlibDotNet" Version="19.18.0.20200429" />
+    <PackageReference Include="DlibDotNet-WithCUDA" Version="19.17.0.20190429" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iVocabulary\iVocabulary.csproj" />
