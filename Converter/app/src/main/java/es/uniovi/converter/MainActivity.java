@@ -2,28 +2,43 @@ package es.uniovi.converter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    double mEuroToDollar;
-    EditText mEditTextEuros;
-    EditText mEditTextDollars;
+    double mConvertion;
+    String[] mValues;
+    EditText mEditTextUSD;
+    EditText mEditTextCurrencie;
+    Spinner array_spinnerInput;
 
     String UPDATE_URL = "http://apilayer.net/api/live?access_key=df9805d128149d5d4ff0944c52161147&";
 
@@ -34,21 +49,68 @@ public class MainActivity extends AppCompatActivity {
 
         new UpdateRateTask().execute(UPDATE_URL);
 
+
+        BufferedReader br = null;
+        try {
+            AssetManager am = getBaseContext().getAssets();
+            InputStream is = am.open("currencies.csv");
+            br = new BufferedReader(new InputStreamReader(is));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String line;
+
+        List<String> list = new ArrayList<String>();
+
+        try {
+            while((line=br.readLine()) != null){
+                String[] value = line.split(",");
+                String[] notc = value[1].split("\"");
+                list.add(notc[1]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        array_spinnerInput = (Spinner)findViewById(R.id.InputSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        array_spinnerInput.setAdapter(adapter);
+
+
+
         //mEuroToDollar = 1.34;
 
-        mEditTextEuros = (EditText) findViewById(R.id.editTextEuros);
-        mEditTextDollars = (EditText) findViewById(R.id.editTextDollars);
+        mEditTextUSD = (EditText) findViewById(R.id.editTextUSD);
+        mEditTextCurrencie = (EditText) findViewById(R.id.editTextCurrencie);
 
 
     }
 
-    public void onClickToEuros(View view){
+    public void onClickToUSD(View view){
+        String spinnerText = array_spinnerInput.getSelectedItem().toString();
+        mConvertion=0.0;
+        for(int i=0; i<mValues.length; i++){
+            String[] currencie = mValues[i].split(":");
+            currencie[0]=currencie[0].substring(4);
+            currencie[0]=currencie[0].substring(0,currencie[0].length()-1);
+            if(currencie[0].equals(spinnerText)){
+                mConvertion= Double.parseDouble(currencie[1]);
+            }
 
-        convert(mEditTextEuros,mEditTextDollars,mEuroToDollar);
+        }
+        if(mConvertion==0.0){
+            Toast.makeText(getApplicationContext(), "Conversión no disponible",
+                    Toast.LENGTH_SHORT).show();
+        }
+        convert(mEditTextUSD,mEditTextCurrencie,mConvertion);
     }
 
-    public void onClickToDollars(View view){
-        convert(mEditTextDollars,mEditTextEuros,1/mEuroToDollar);
+    public void onClickToCurrencie(View view){
+        convert(mEditTextCurrencie,mEditTextUSD,1/mConvertion);
     }
 
     void convert(EditText editTextSource, EditText editTextDestination,
@@ -87,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if(result != null)
-                mEuroToDollar = Double.parseDouble(result);
+                mConvertion = Double.parseDouble(result);
             else{
-                mEuroToDollar = -16.06;
+                mConvertion = -16.06;
             }
 
         }
@@ -121,7 +183,13 @@ public class MainActivity extends AppCompatActivity {
         private double parseDataFromNetwork(String data) throws JSONException {
             JSONObject object = new JSONObject(data);
             JSONObject rates = object.getJSONObject("quotes");
-            double usd = rates.getDouble("USDEUR");
+            String rateString = rates.toString();
+            rateString = rateString.substring(1);
+            rateString=rateString.substring(0, rateString.length()-1);
+
+            mValues = rateString.split(",");
+
+            double usd = 1.0;
 
 
             return usd;
