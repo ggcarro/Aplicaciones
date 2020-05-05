@@ -6,11 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OpenCvSharp4.runtime.uwp" Version="4.3.0.20200421" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.3.0.20200421" />
     <PackageReference Include="RabbitMQ.Client" Version="6.0.0" />
-    <PackageReference Include="DlibDotNet" Version="19.18.0.20200429" />
-    <PackageReference Include="DlibDotNet-WithCUDA" Version="19.17.0.20190429" />
-    <PackageReference Include="DlibDotNet.MKL" Version="19.18.0.20200429" />
-    <PackageReference Include="DlibDotNet.Extensions" Version="19.18.0.20200428" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iVocabulary\iVocabulary.csproj" />

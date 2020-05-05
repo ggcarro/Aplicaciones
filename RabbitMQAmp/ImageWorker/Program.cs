@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using iVocabulary;
 using System.Threading;
+using System.IO;
 
 namespace ImageWorker
 {
@@ -48,7 +49,9 @@ namespace ImageWorker
                         Image image = iCodec.Decode(body.ToArray());
 
                         // ESPACIO RESERVADO PARA EL PROCESAMIENTO - SIMULAMOS CON UN THREAD SLEEP (1s - 10s)
-                        image.Filename = "FA_" + image.Filename;
+                        
+                        FaceDetec face = new FaceDetec();
+                        image = face.Detec(image);
                         
                         byte[] bodySend = iCodec.Encode(image);
 
@@ -68,5 +71,9 @@ namespace ImageWorker
                 }
             }
         }
+
+        
     }
+
+    
 }
