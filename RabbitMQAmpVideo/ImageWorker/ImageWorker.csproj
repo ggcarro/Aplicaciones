@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenCvSharp4.runtime.uwp" Version="4.3.0.20200421" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.3.0.20200421" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iVocabulary\iVocabulary.csproj" />
+  </ItemGroup>
+</Project>
