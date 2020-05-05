@@ -4,6 +4,7 @@ using System.Threading;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using iVocabulary;
+using System.IO;
 
 namespace ImageViewer
 {
@@ -51,6 +52,7 @@ namespace ImageViewer
                         {
                             // Implementar Escritura Fichero
                             Console.WriteLine("Imagen Final -- filename: {0}", image.Filename);
+                            File.WriteAllBytes("/Users/gonzalo/Desktop/Face/" + image.Filename, image.Data);
                         }
                     };
                     channel.BasicConsume(

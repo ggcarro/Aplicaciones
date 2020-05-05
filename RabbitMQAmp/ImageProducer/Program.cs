@@ -28,7 +28,7 @@ namespace ImageProducer
 
                     BinaryImageCodec iCodec = new BinaryImageCodec();
 
-                    string text = "/Users/gonzalo/Desktop/face.png";
+                    string text = "/Users/gonzalo/Desktop/input.jpg";
 
                     Image image = new Image(text);
                     byte[] body = iCodec.Encode(image);
