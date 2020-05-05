@@ -45,11 +45,12 @@ namespace ImageViewer
                         Console.WriteLine("RoutingKey: {0}", route);
 
                         if (route == "Image.Raw") { 
-                            Console.WriteLine("Image Raw: {0} - {1}", image.Num, image.Text);
+                            Console.WriteLine("Image Raw -- filename: {0} ", image.Filename);
                         }
                         else
                         {
-                            Console.WriteLine("Imagen Final: {0} - {1}", image.Num, image.Text);
+                            // Implementar Escritura Fichero
+                            Console.WriteLine("Imagen Final -- filename: {0}", image.Filename);
                         }
                     };
                     channel.BasicConsume(

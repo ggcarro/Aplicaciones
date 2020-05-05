@@ -2,9 +2,6 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using iVocabulary;
-using DlibDotNet;
-using DlibDotNet.Extensions;
-using Dlib = DlibDotNet.Dlib;
 using System.Threading;
 
 namespace ImageWorker
@@ -16,7 +13,6 @@ namespace ImageWorker
         const string EXCHANGE = "Image";
         const string ROUTING_KEY = "Image.Result";
         const string QUEUENAME = "iWorker";
-        private const string imagePath = "./input.jpg";
 
 
         static void Main(string[] args)
@@ -52,28 +48,7 @@ namespace ImageWorker
                         Image image = iCodec.Decode(body.ToArray());
 
                         // ESPACIO RESERVADO PARA EL PROCESAMIENTO - SIMULAMOS CON UN THREAD SLEEP (1s - 10s)
-                        Random random = new Random();
-                        Thread.Sleep(1000 * random.Next(1, 10));
-
-                        /*
-                        using (var fd = Dlib.GetFrontalFaceDetector())
-                        {
-                            Console.WriteLine("Worker 2");
-
-                            // Cargamos imagen
-                            var img = Dlib.LoadImage<RgbPixel>(imagePath);
-
-                            // Buscamos todas las caras de la imagen
-                            var faces = fd.Operator(img);
-                            foreach (var face in faces)
-                            {
-                                // Dibujar un rectangulo para cada cara
-                                Dlib.DrawRectangle(img, face, color: new RgbPixel(0, 255, 255), thickness: 4);
-                            }
-
-                            Dlib.SaveJpeg(img, "output.jpg");
-                        }
-                        */
+                        image.Filename = "FA_" + image.Filename;
                         
                         byte[] bodySend = iCodec.Encode(image);
 

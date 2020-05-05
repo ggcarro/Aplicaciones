@@ -1,29 +1,43 @@
 ﻿using System;
+using System.IO;
+
 namespace iVocabulary
 {
     public class Image
     {
         
-        string _text;
-        int _num;
+        string _filename;
+        byte[] _data;
 
-        public string Text
+        public string Filename
         {
-            get { return _text; }
-            set { _text = value; }
+            get { return _filename; }
+            set { _filename = value; }
         }
 
-        public int Num
+
+        public byte[] Data
         {
-            get { return _num; }
-            set { _num = value; }
+            get { return _data; }
+            set { _data = value; }
         }
 
-        public Image(string text, int num)
+        public Image(string name, byte[] data)
         {
-            _text = text;
-            _num = num;
+            _filename = name;
+            _data = data;
         }
-        
+
+        public Image()
+        {
+
+        }
+
+        public Image(string path) // FALTA IMPLEMENTAR COMPROBACIÓN DE QUE EXISTE
+        {
+            String[] pa = path.Split("/");
+            _filename = pa[pa.Length-1];
+            _data = File.ReadAllBytes(path);
+        }
     }
 }

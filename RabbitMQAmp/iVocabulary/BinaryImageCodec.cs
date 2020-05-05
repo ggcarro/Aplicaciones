@@ -12,8 +12,9 @@ namespace iVocabulary
             using (MemoryStream stream = new MemoryStream())
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
-                writer.Write(image.Text);
-                writer.Write(image.Num);
+                writer.Write(image.Filename);
+                writer.Write(image.Data.Length);
+                writer.Write(image.Data);
 
                 writer.Flush();
 
@@ -25,14 +26,16 @@ namespace iVocabulary
         }
         public Image Decode(byte[] buffer)
         {
-            Image image = new Image("", -1);
+            Image image = new Image();
             using (MemoryStream stream = new MemoryStream(buffer))
             using (BinaryReader reader = new BinaryReader(stream))
             {
-                string te = reader.ReadString();
-                int num = reader.ReadInt32();
+                string filename = reader.ReadString();
+                int  dataLength = reader.ReadInt32();
+                byte[] data = reader.ReadBytes(dataLength);
 
-                image = new Image(te, num);
+
+                image = new Image(filename, data);
             }
             
             return image;

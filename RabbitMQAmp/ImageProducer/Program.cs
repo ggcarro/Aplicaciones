@@ -26,25 +26,17 @@ namespace ImageProducer
                     // Se declara un intercambiador de tipo topic denominado "Alertas"
                     channel.ExchangeDeclare(EXCHANGE, "topic");
 
-                    int num = 0;
                     BinaryImageCodec iCodec = new BinaryImageCodec();
 
-                    while (true)
-                    {
-                        Console.WriteLine("Introduce un mensaje");
-                        Console.WriteLine("q para finalizar");
-                        string text = Console.ReadLine();
-                        if(text == "q") { break; }
-                        num++;
+                    string text = "/Users/gonzalo/Desktop/face.png";
 
-                        Image image = new Image(text, num);
-                        byte[] body = iCodec.Encode(image);
+                    Image image = new Image(text);
+                    byte[] body = iCodec.Encode(image);
 
-                        // Se publica el mensaje
-                        channel.BasicPublish(EXCHANGE, BINDING_KEY, properties, body);
+                    // Se publica el mensaje
+                    channel.BasicPublish(EXCHANGE, BINDING_KEY, properties, body);
 
-                        Console.WriteLine("Text: {0}, Num: {1}, BindingKey: {2}", text, num, BINDING_KEY);
-                    }
+                    Console.WriteLine("Enviada");
 
                 }
             }
