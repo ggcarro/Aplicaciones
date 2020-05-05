@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProducer", "ImageProducer\ImageProducer.csproj", "{4BD4D41E-63DA-46E8-A5C1-6CE5A9539613}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessor", "ImageProcessor\ImageProcessor.csproj", "{B9E0CDDC-725B-4AC6-B931-2DCC9C76A9F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageViewer", "ImageViewer\ImageViewer.csproj", "{4E71552C-0FF4-4E31-B7B8-E0EEBB073660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageWorker", "ImageWorker\ImageWorker.csproj", "{E1F06A63-ED5C-45A5-AE22-FF98254015DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iVocabulary", "iVocabulary\iVocabulary.csproj", "{F2F5D225-42E7-4143-AD1F-995E45778FC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iVocabulary.Test", "iVocabulary.Test\iVocabulary.Test.csproj", "{DAE2BA31-D009-4C1E-A809-4E6B1D84E80A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BD4D41E-63DA-46E8-A5C1-6CE5A9539613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD4D41E-63DA-46E8-A5C1-6CE5A9539613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD4D41E-63DA-46E8-A5C1-6CE5A9539613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD4D41E-63DA-46E8-A5C1-6CE5A9539613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9E0CDDC-725B-4AC6-B931-2DCC9C76A9F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E0CDDC-725B-4AC6-B931-2DCC9C76A9F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9E0CDDC-725B-4AC6-B931-2DCC9C76A9F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9E0CDDC-725B-4AC6-B931-2DCC9C76A9F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E71552C-0FF4-4E31-B7B8-E0EEBB073660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E71552C-0FF4-4E31-B7B8-E0EEBB073660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E71552C-0FF4-4E31-B7B8-E0EEBB073660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E71552C-0FF4-4E31-B7B8-E0EEBB073660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F06A63-ED5C-45A5-AE22-FF98254015DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F06A63-ED5C-45A5-AE22-FF98254015DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F06A63-ED5C-45A5-AE22-FF98254015DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F06A63-ED5C-45A5-AE22-FF98254015DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2F5D225-42E7-4143-AD1F-995E45778FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2F5D225-42E7-4143-AD1F-995E45778FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2F5D225-42E7-4143-AD1F-995E45778FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2F5D225-42E7-4143-AD1F-995E45778FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE2BA31-D009-4C1E-A809-4E6B1D84E80A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE2BA31-D009-4C1E-A809-4E6B1D84E80A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE2BA31-D009-4C1E-A809-4E6B1D84E80A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE2BA31-D009-4C1E-A809-4E6B1D84E80A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBABADFA-3A60-40C6-8C84-30BFDE9D7BF1}
+	EndGlobalSection
+EndGlobal

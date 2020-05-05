@@ -6,17 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"
+            android:layout_height="wrap_content"></LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
 
             <EditText
-                android:id="@+id/editTextEuros"
+                android:id="@+id/editTextUSD"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="2"
@@ -26,13 +32,24 @@
 
             </EditText>
 
-            <Button
-                android:id="@+id/buttonEuros"
+            <TextView
+                android:id="@+id/USD"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:text="USD"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/buttonUSD"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:onClick="onClickToEuros"
-                android:text="@string/button_to_euros" />
+                android:onClick="onClickToUSD"
+                app:srcCompat="@android:drawable/arrow_down_float" />
+
+
 
         </LinearLayout>
 
@@ -41,19 +58,27 @@
             android:layout_height="wrap_content" >
 
             <EditText
-                android:id="@+id/editTextDollars"
+                android:id="@+id/editTextCurrencie"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="2"
                 android:inputType="number" />
 
-            <Button
-                android:id="@+id/buttonDollars"
+            <Spinner
+                android:id="@+id/InputSpinner"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2" />
+
+            <ImageButton
+                android:id="@+id/buttonCurrencie"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:onClick="onClickToDollars"
-                android:text="@string/button_to_dollars" />
+                android:onClick="onClickToCurrencie"
+                app:srcCompat="@android:drawable/arrow_up_float" />
+
+
 
         </LinearLayout>
 
