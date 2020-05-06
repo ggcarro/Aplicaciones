@@ -7,29 +7,33 @@ namespace iVocabulary
     public class Image
     {
 
-        Mat _mat; 
-        
+        Mat _mat;
+        int _seq;
 
-        public Image(Mat mat)
+
+        public Mat Mat
+        {
+            get { return _mat; }
+            set { _mat = value; }
+
+        }
+
+        public int Seq
+        {
+            get { return _seq; }
+            set { _seq = value; }
+
+        }
+        public Image(Mat mat, int seq)
         {
             _mat = mat;
+            _seq = seq;
         }
 
         public Image()
         {
-
+            _seq = -5;
         }
 
-        public Image(string path) // FALTA IMPLEMENTAR COMPROBACIÓN DE QUE EXISTE
-        {
-            String[] pa = path.Split("/");
-        }
-
-        public Mat MatData
-        {
-            get{ return _mat; }
-            set{ _mat = value; }
-            
-        }
     }
 }

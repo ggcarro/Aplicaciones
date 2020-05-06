@@ -9,7 +9,7 @@ namespace ImageProcessor
 {
     class Program
     {
-        const string IP = "192.168.2.6";
+        const string IP = "10.115.1.169";
         const string BINDING_KEY = "Image.Raw";
         const string EXCHANGE = "Image";
         const string ROUTING_KEY = "ImageWorkQueue";
@@ -17,6 +17,8 @@ namespace ImageProcessor
 
         static void Main(string[] args)
         {
+            Console.WriteLine("iProcessor");
+
             // Definimos IP y creamos conexión
             var factory = new ConnectionFactory() { HostName = IP };
             using (var connection = factory.CreateConnection())
@@ -43,13 +45,13 @@ namespace ImageProcessor
                     {
                         var body = ea.Body;
 
-                        Image image = iCodec.Decode(body.ToArray());
+                        //Image image = iCodec.Decode(body.ToArray());
 
-                        byte[] bodySend = iCodec.Encode(image);
+                        //byte[] bodySend = iCodec.Encode(image);
 
-                        channel.BasicPublish(EXCHANGE, ROUTING_KEY, properties, bodySend);
+                        channel.BasicPublish(EXCHANGE, ROUTING_KEY, properties, body);
 
-                        Console.WriteLine("Imagen enviada a ImageWorkQueue");
+                        Console.WriteLine("Frame enviado a ImageWorkQueue");
 
                     };
                     channel.BasicConsume(

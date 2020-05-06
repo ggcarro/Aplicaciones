@@ -12,13 +12,15 @@ namespace ImageViewer
 {
     class Program
     {
-        const string IP = "192.168.2.6";
+        const string IP = "10.115.1.169";
         const string BINDING_KEY = "Image.*";
         const string EXCHANGE = "Image";
         const string QUEUENAME = "iViewer";
 
         static void Main(string[] args)
         {
+            Console.WriteLine("iViewer");
+
             // Definimos IP y creamos conexión
             var factory = new ConnectionFactory() { HostName = IP };
             using (var connection = factory.CreateConnection())
@@ -55,7 +57,7 @@ namespace ImageViewer
                         else
                         {
                             Console.WriteLine("Imagen Final");
-                            window.ShowImage(image.MatData);
+                            window.ShowImage(image.Mat);
                         }
                     };
                         channel.BasicConsume(

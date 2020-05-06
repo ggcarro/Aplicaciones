@@ -10,10 +10,20 @@ namespace iVocabulary
         public byte[] Encode(Image image)
         {
             byte[] buffer;
-            
-            MemoryStream stream = image.MatData.ToMemoryStream();
-            buffer = stream.ToArray();
-            
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                image.Mat.ImWrite("temp.jpg");
+                byte[] data = File.ReadAllBytes("temp.jpg");
+                writer.Write(data.Length);
+                writer.Write(data);
+                writer.Write(image.Seq);
+
+                writer.Flush();
+
+                buffer = stream.ToArray();
+            }
+
             return buffer;
 
         }
@@ -25,9 +35,10 @@ namespace iVocabulary
             {
                 int  dataLength = reader.ReadInt32();
                 byte[] data = reader.ReadBytes(dataLength);
-                Mat mat = Cv2.ImDecode(data, ImreadModes.Color);
-
-                image = new Image(mat);
+                File.WriteAllBytes("temp2.jpg",data);
+                int seq = reader.ReadInt32();
+                Mat mat = new Mat("temp2.jpg");
+                image = new Image(mat, seq);
             }
             
             return image;

@@ -18,7 +18,7 @@ namespace ImageWorker
         public Image Detec(Image image)
         {
             
-            var srcImage = image.MatData;
+            var srcImage = image.Mat;
 
             var grayImage = new Mat();
             Cv2.CvtColor(srcImage, grayImage, ColorConversionCodes.BGRA2GRAY);
@@ -51,7 +51,7 @@ namespace ImageWorker
                 count++;
             }
 
-            image.MatData = srcImage;
+            image.Mat = srcImage;
             srcImage.Dispose();
             return image;
         }
