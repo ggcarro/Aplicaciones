@@ -9,7 +9,7 @@ namespace ImageViewer
 {
     class Program
     {
-        const string IP = "10.115.1.81";
+        const string IP = "10.115.1.81";    //IP servidor rabbitMQ
         const string BINDING_KEY = "Image.*";
         const string EXCHANGE = "Image";
         const string QUEUENAME = "iViewer";
