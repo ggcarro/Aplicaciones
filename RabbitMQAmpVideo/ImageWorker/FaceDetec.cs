@@ -17,11 +17,8 @@ namespace ImageWorker
 
         public Image Detec(Image image)
         {
-            string type = (image.Filename).Split(".")[1];
-            File.WriteAllBytes("temp." + type, image.Data);
-
-
-            var srcImage = new Mat("temp."+type);
+            
+            var srcImage = image.MatData;
 
             var grayImage = new Mat();
             Cv2.CvtColor(srcImage, grayImage, ColorConversionCodes.BGRA2GRAY);
@@ -54,11 +51,8 @@ namespace ImageWorker
                 count++;
             }
 
-            Cv2.ImWrite("FaceDetec." + type, srcImage);
-
+            image.MatData = srcImage;
             srcImage.Dispose();
-            image.Data = File.ReadAllBytes("FaceDetec." + type);
-            image.Filename = "FA_" + image.Filename;
             return image;
         }
     }

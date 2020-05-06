@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using OpenCvSharp;
 
 namespace iVocabulary
 {
@@ -9,18 +10,10 @@ namespace iVocabulary
         public byte[] Encode(Image image)
         {
             byte[] buffer;
-            using (MemoryStream stream = new MemoryStream())
-            using (BinaryWriter writer = new BinaryWriter(stream))
-            {
-                writer.Write(image.Filename);
-                writer.Write(image.Data.Length);
-                writer.Write(image.Data);
-
-                writer.Flush();
-
-                buffer = stream.ToArray();
-            }
-
+            
+            MemoryStream stream = image.MatData.ToMemoryStream();
+            buffer = stream.ToArray();
+            
             return buffer;
 
         }
@@ -30,12 +23,11 @@ namespace iVocabulary
             using (MemoryStream stream = new MemoryStream(buffer))
             using (BinaryReader reader = new BinaryReader(stream))
             {
-                string filename = reader.ReadString();
                 int  dataLength = reader.ReadInt32();
                 byte[] data = reader.ReadBytes(dataLength);
+                Mat mat = Cv2.ImDecode(data, ImreadModes.Color);
 
-
-                image = new Image(filename, data);
+                image = new Image(mat);
             }
             
             return image;

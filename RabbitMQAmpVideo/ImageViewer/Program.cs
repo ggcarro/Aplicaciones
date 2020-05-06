@@ -5,12 +5,14 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using iVocabulary;
 using System.IO;
+using OpenCvSharp;
+
 
 namespace ImageViewer
 {
     class Program
     {
-        const string IP = "10.115.1.81";
+        const string IP = "192.168.2.6";
         const string BINDING_KEY = "Image.*";
         const string EXCHANGE = "Image";
         const string QUEUENAME = "iViewer";
@@ -21,6 +23,7 @@ namespace ImageViewer
             var factory = new ConnectionFactory() { HostName = IP };
             using (var connection = factory.CreateConnection())
             {
+                using (Window window = new Window("capture"))
                 using (var channel = connection.CreateModel())
                 {
 
@@ -38,30 +41,31 @@ namespace ImageViewer
                     var consumer = new EventingBasicConsumer(channel);
                     consumer.Received += (model, ea) =>
                     {
-                        
+
                         var body = ea.Body;
                         var route = ea.RoutingKey;
                         Image image = iCodec.Decode(body.ToArray());
 
                         Console.WriteLine("RoutingKey: {0}", route);
 
-                        if (route == "Image.Raw") { 
-                            Console.WriteLine("Image Raw -- filename: {0} ", image.Filename);
+                        if (route == "Image.Raw")
+                        {
+                            Console.WriteLine("Image Raw");
                         }
                         else
                         {
-                            // Implementar Escritura Fichero
-                            Console.WriteLine("Imagen Final -- filename: {0}", image.Filename);
-                            File.WriteAllBytes("/Users/gonzalo/Desktop/Face/" + image.Filename, image.Data);
+                            Console.WriteLine("Imagen Final");
+                            window.ShowImage(image.MatData);
                         }
                     };
-                    channel.BasicConsume(
-                    queue: QUEUENAME,
-                    autoAck: true,
-                    consumer: consumer);
+                        channel.BasicConsume(
+                        queue: QUEUENAME,
+                        autoAck: true,
+                        consumer: consumer);
 
-                    Console.WriteLine("Press enter to exit");
-                    Console.ReadLine();
+                        Console.WriteLine("Press enter to exit");
+                        Console.ReadLine();
+                    
 
                 }
             }

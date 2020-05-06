@@ -9,7 +9,7 @@ namespace ImageWorker
 {
     class Program
     {
-        const string IP = "10.115.1.81";
+        const string IP = "192.168.2.6";
         const string BINDING_KEY = "ImageWorkQueue";
         const string EXCHANGE = "Image";
         const string ROUTING_KEY = "Image.Result";
@@ -28,7 +28,7 @@ namespace ImageWorker
                     var properties = channel.CreateBasicProperties();
                     properties.Persistent = true;
 
-                    // Se declara un intercambiador de tipo topic denominado "Alertas"
+                    // Se declara un intercambiador de tipo topic denominado "Image"
                     channel.ExchangeDeclare(EXCHANGE, "topic");
 
                     // Se crea la cola temporal

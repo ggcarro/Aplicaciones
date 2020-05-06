@@ -2,12 +2,13 @@
 using System.Text;
 using RabbitMQ.Client;
 using iVocabulary;
+using OpenCvSharp;
 
 namespace ImageProducer
 {
     class Program
     {
-        const string IP = "10.115.1.81";
+        const string IP = "192.168.2.6";
         const string BINDING_KEY = "Image.Raw";
         const string EXCHANGE = "Image";
 
@@ -28,15 +29,30 @@ namespace ImageProducer
 
                     BinaryImageCodec iCodec = new BinaryImageCodec();
 
-                    string text = "/Users/gonzalo/Desktop/input.jpg";
+                    VideoCapture capture = new VideoCapture(0);
 
-                    Image image = new Image(text);
-                    byte[] body = iCodec.Encode(image);
+                    int sleepTime = (int)Math.Round(500 / capture.Fps);  //Captura cada xtiempo
 
-                    // Se publica el mensaje
-                    channel.BasicPublish(EXCHANGE, BINDING_KEY, properties, body);
+                    using (Window window = new Window("capture"))
+                    using (Mat image = new Mat()) // Frame image buffer
+                    {
+                        // When the movie playback reaches end, Mat.data becomes NULL.
+                        while (true)
+                        {
+                            capture.Read(image); // same as cvQueryFrame
+                            if (image.Empty())
+                                break;
 
-                    Console.WriteLine("Enviada");
+                            Image _image = new Image(image);
+
+                            byte[] body = iCodec.Encode(_image);
+
+                            // Se publica el mensaje
+                            channel.BasicPublish(EXCHANGE, BINDING_KEY, properties, body);
+
+                            Console.WriteLine("Enviada");
+                        }
+                    }
 
                 }
             }
