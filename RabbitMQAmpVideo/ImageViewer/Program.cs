@@ -53,11 +53,17 @@ namespace ImageViewer
                         if (route == "Image.Raw")
                         {
                             Console.WriteLine("Image Raw");
+
+                            using (Mat mat = image.Mat)
+                            {
+                                window.ShowImage(mat);
+                                Cv2.WaitKey(1000);
+                                Console.WriteLine("Video ejecutado");
+                            }
                         }
                         else
                         {
                             Console.WriteLine("Imagen Final");
-                            window.ShowImage(image.Mat);
                         }
                     };
                         channel.BasicConsume(

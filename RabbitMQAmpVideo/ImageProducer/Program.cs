@@ -36,17 +36,17 @@ namespace ImageProducer
 
                     int sleepTime = (int)Math.Round(500 / capture.Fps);  //Captura cada xtiempo
 
-                    using (Window window = new Window("capture"))
                     using (Mat mat = new Mat()) // Frame image buffer
                     {
                         // When the movie playback reaches end, Mat.data becomes NULL.
                         while (true)
                         {
+                            seq++;
                             capture.Read(mat); // same as cvQueryFrame
                             if (mat.Empty())
                                 break;
 
-                            Image image = new Image(mat, seq);
+                            Image image = new Image(mat, seq, sleepTime);
 
                             byte[] body = iCodec.Encode(image);
 

@@ -1,21 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProducer", "ImageProducer\ImageProducer.csproj", "{4BD4D41E-63DA-46E8-A5C1-6CE5A9539613}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageProducer", "ImageProducer\ImageProducer.csproj", "{4BD4D41E-63DA-46E8-A5C1-6CE5A9539613}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessor", "ImageProcessor\ImageProcessor.csproj", "{B9E0CDDC-725B-4AC6-B931-2DCC9C76A9F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageProcessor", "ImageProcessor\ImageProcessor.csproj", "{B9E0CDDC-725B-4AC6-B931-2DCC9C76A9F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageViewer", "ImageViewer\ImageViewer.csproj", "{4E71552C-0FF4-4E31-B7B8-E0EEBB073660}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageViewer", "ImageViewer\ImageViewer.csproj", "{4E71552C-0FF4-4E31-B7B8-E0EEBB073660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageWorker", "ImageWorker\ImageWorker.csproj", "{E1F06A63-ED5C-45A5-AE22-FF98254015DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageWorker", "ImageWorker\ImageWorker.csproj", "{E1F06A63-ED5C-45A5-AE22-FF98254015DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iVocabulary", "iVocabulary\iVocabulary.csproj", "{F2F5D225-42E7-4143-AD1F-995E45778FC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iVocabulary", "iVocabulary\iVocabulary.csproj", "{F2F5D225-42E7-4143-AD1F-995E45778FC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iVocabulary.Test", "iVocabulary.Test\iVocabulary.Test.csproj", "{DAE2BA31-D009-4C1E-A809-4E6B1D84E80A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iVocabulary.Test", "iVocabulary.Test\iVocabulary.Test.csproj", "{DAE2BA31-D009-4C1E-A809-4E6B1D84E80A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Video", "Video\Video.csproj", "{C2A903F2-7ACF-485C-AC06-030D618EAA48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Video", "Video\Video.csproj", "{C2A903F2-7ACF-485C-AC06-030D618EAA48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foto", "Foto\Foto.csproj", "{256AC576-5F4E-4BB0-AE8F-2F67DE926041}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{C2A903F2-7ACF-485C-AC06-030D618EAA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2A903F2-7ACF-485C-AC06-030D618EAA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2A903F2-7ACF-485C-AC06-030D618EAA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{256AC576-5F4E-4BB0-AE8F-2F67DE926041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{256AC576-5F4E-4BB0-AE8F-2F67DE926041}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{256AC576-5F4E-4BB0-AE8F-2F67DE926041}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{256AC576-5F4E-4BB0-AE8F-2F67DE926041}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

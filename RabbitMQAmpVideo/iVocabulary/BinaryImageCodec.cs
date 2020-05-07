@@ -18,6 +18,7 @@ namespace iVocabulary
                 writer.Write(data.Length);
                 writer.Write(data);
                 writer.Write(image.Seq);
+                writer.Write(image.SleepTime);
 
                 writer.Flush();
 
@@ -35,10 +36,11 @@ namespace iVocabulary
             {
                 int  dataLength = reader.ReadInt32();
                 byte[] data = reader.ReadBytes(dataLength);
-                File.WriteAllBytes("temp2.jpg",data);
                 int seq = reader.ReadInt32();
+                int sleepTime = reader.ReadInt32();
+                File.WriteAllBytes("temp2.jpg", data);
                 Mat mat = new Mat("temp2.jpg");
-                image = new Image(mat, seq);
+                image = new Image(mat, seq, sleepTime);
             }
             
             return image;
