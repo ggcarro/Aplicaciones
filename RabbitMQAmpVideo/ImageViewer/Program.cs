@@ -12,7 +12,7 @@ namespace ImageViewer
 {
     class Program
     {
-        const string IP = "10.115.1.169";
+        const string IP = "127.0.0.1";
         const string BINDING_KEY = "Image.*";
         const string EXCHANGE = "Image";
         const string QUEUENAME = "iViewer";
@@ -25,7 +25,6 @@ namespace ImageViewer
             var factory = new ConnectionFactory() { HostName = IP };
             using (var connection = factory.CreateConnection())
             {
-                using (Window window = new Window("capture"))
                 using (var channel = connection.CreateModel())
                 {
 
@@ -52,18 +51,18 @@ namespace ImageViewer
 
                         if (route == "Image.Raw")
                         {
-                            Console.WriteLine("Image Raw");
+                            Console.WriteLine("Image Raw: {0}", image.Seq);
 
-                            using (Mat mat = image.Mat)
-                            {
-                                window.ShowImage(mat);
-                                Cv2.WaitKey(1000);
-                                Console.WriteLine("Video ejecutado");
-                            }
                         }
                         else
                         {
                             Console.WriteLine("Imagen Final");
+                            using (Window window = new Window("capture"))
+                            using (Mat mat = image.Mat)
+                            {
+                                window.ShowImage(mat);
+                                Cv2.WaitKey(1);
+                            }
                         }
                     };
                         channel.BasicConsume(

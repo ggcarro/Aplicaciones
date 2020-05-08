@@ -9,7 +9,7 @@ namespace ImageWorker
 {
     class Program
     {
-        const string IP = "10.115.1.169";
+        const string IP = "127.0.0.1";
         const string BINDING_KEY = "ImageWorkQueue";
         const string EXCHANGE = "Image";
         const string ROUTING_KEY = "Image.Result";
@@ -53,9 +53,9 @@ namespace ImageWorker
                         // ESPACIO RESERVADO PARA EL PROCESAMIENTO - SIMULAMOS CON UN THREAD SLEEP (1s - 10s)
                         
                         FaceDetec face = new FaceDetec();
-                        Image imageOut = face.Detec(image);
+                        image.Mat = face.Detec(image.Mat);
                         
-                        byte[] bodySend = iCodec.Encode(imageOut);
+                        byte[] bodySend = iCodec.Encode(image);
 
                         channel.BasicPublish(EXCHANGE, ROUTING_KEY, properties, bodySend);
 

@@ -15,10 +15,10 @@ namespace ImageWorker
 
         }
 
-        public Image Detec(Image image)
+        public Mat Detec(Mat image)
         {
-            
-            var srcImage = image.Mat;
+
+            var srcImage = image;
 
             var grayImage = new Mat();
             Cv2.CvtColor(srcImage, grayImage, ColorConversionCodes.BGRA2GRAY);
@@ -42,18 +42,13 @@ namespace ImageWorker
             foreach (var faceRect in faces)
             {
                 var detectedFaceImage = new Mat(srcImage, faceRect);
-                //Cv2.ImShow(string.Format("Face {0}", count), detectedFaceImage);
-                //Cv2.WaitKey(1); // do events
-
                 var color = Scalar.FromRgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
                 Cv2.Rectangle(srcImage, faceRect, color, 3);
                 
                 count++;
             }
 
-            image.Mat = srcImage;
-            srcImage.Dispose();
-            return image;
+            return srcImage;
         }
     }
 }

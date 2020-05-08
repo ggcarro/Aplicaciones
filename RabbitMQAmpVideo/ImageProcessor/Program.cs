@@ -9,7 +9,7 @@ namespace ImageProcessor
 {
     class Program
     {
-        const string IP = "10.115.1.169";
+        const string IP = "127.0.0.1";
         const string BINDING_KEY = "Image.Raw";
         const string EXCHANGE = "Image";
         const string ROUTING_KEY = "ImageWorkQueue";

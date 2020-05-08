@@ -7,7 +7,7 @@ namespace ImageProducer
 {
     class Program
     {
-        const string IP = "10.115.1.81";
+        const string IP = "127.0.0.1";
         const string BINDING_KEY = "Image.Raw";
         const string EXCHANGE = "Image";
 

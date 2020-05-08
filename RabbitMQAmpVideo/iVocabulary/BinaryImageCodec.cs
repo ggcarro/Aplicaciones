@@ -13,8 +13,8 @@ namespace iVocabulary
             using (MemoryStream stream = new MemoryStream())
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
-                image.Mat.ImWrite("temp.jpg");
-                byte[] data = File.ReadAllBytes("temp.jpg");
+                //image.Mat.ImWrite("temp.jpg");
+                byte[] data = image.Mat.ToBytes();
                 writer.Write(data.Length);
                 writer.Write(data);
                 writer.Write(image.Seq);
@@ -38,8 +38,8 @@ namespace iVocabulary
                 byte[] data = reader.ReadBytes(dataLength);
                 int seq = reader.ReadInt32();
                 int sleepTime = reader.ReadInt32();
-                File.WriteAllBytes("temp2.jpg", data);
-                Mat mat = new Mat("temp2.jpg");
+                //File.WriteAllBytes("temp2.jpg", data);
+                Mat mat = Mat.ImDecode(data);
                 image = new Image(mat, seq, sleepTime);
             }
             

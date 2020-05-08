@@ -8,7 +8,7 @@ namespace Video
         static void Main(string[] args)
         {
             // Opens MP4 file (ffmpeg is probably needed)
-            VideoCapture capture = new VideoCapture(0);
+            VideoCapture capture = new VideoCapture(1);
 
             int sleepTime = (int)Math.Round(500 / capture.Fps);  //Captura cada xtiempo
 

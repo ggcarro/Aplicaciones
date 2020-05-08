@@ -8,7 +8,7 @@ namespace ImageProducer
 {
     class Program
     {
-        const string IP = "10.115.1.169";
+        const string IP = "127.0.0.1";
         const string BINDING_KEY = "Image.Raw";
         const string EXCHANGE = "Image";
 
@@ -32,8 +32,8 @@ namespace ImageProducer
                     BinaryImageCodec iCodec = new BinaryImageCodec();
                     int seq = 0;
 
-                    VideoCapture capture = new VideoCapture(0);
-
+                    VideoCapture capture = new VideoCapture(@"C:\Users\gonzalo\Desktop\Rozalen.mp4");
+                    
                     int sleepTime = (int)Math.Round(500 / capture.Fps);  //Captura cada xtiempo
 
                     using (Mat mat = new Mat()) // Frame image buffer
@@ -43,6 +43,7 @@ namespace ImageProducer
                         {
                             seq++;
                             capture.Read(mat); // same as cvQueryFrame
+
                             if (mat.Empty())
                                 break;
 
