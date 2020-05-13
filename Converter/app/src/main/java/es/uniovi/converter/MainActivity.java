@@ -5,23 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.*;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +23,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,11 +34,13 @@ public class MainActivity extends AppCompatActivity {
     EditText mEditTextCurrencie;
     Spinner array_spinnerInput;
     Spinner array_spinnerUSD;
-
     String UPDATE_URL = "http://apilayer.net/api/live?access_key=df9805d128149d5d4ff0944c52161147&";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int cont = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -165,8 +160,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (NumberFormatException nfe) {
             return;
         }
-        double NumberDestination1 = NumberSource * ConversionFactor1;
-        double NumberDestination = NumberDestination1 * ConversionFactor2;
+        double NumberDestination = NumberSource * 1/ConversionFactor1 * ConversionFactor2;
 
         String StringDestination = Double.toString(NumberDestination);
 
@@ -178,13 +172,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     public class UpdateRateTask extends
             AsyncTask<String, Void, String> {
+        int cont = 0;
 
         @Override
         protected String doInBackground(String... urls) {
             try {
-                return String.valueOf(getCurrencyRateUsdRate(urls[0]));
+                return String.valueOf(getCurrencyRateUsdRate(urls[0], cont));
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -225,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
             return total.toString();
         }
 
-        private double parseDataFromNetwork(String data) throws JSONException {
+        private double parseDataFromNetwork(String data, int cont) throws JSONException {
             JSONObject object = new JSONObject(data);
             JSONObject rates = object.getJSONObject("quotes");
             String rateString = rates.toString();
@@ -235,14 +232,78 @@ public class MainActivity extends AppCompatActivity {
 
             mValues = rateString.split(",");
 
+            if (cont == 0){
+
+                FileWriter fichero = null;
+                PrintWriter pw = null;
+                try
+                {
+                    fichero = new FileWriter("conversiones.txt");
+                    pw = new PrintWriter(fichero);
+                    pw.println(data);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (null != fichero)
+                            fichero.close();
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+                }
+            }
+
             double usd = 1.0;
             return usd;
         }
 
-        private double getCurrencyRateUsdRate(String url) throws IOException, JSONException {
-            return parseDataFromNetwork(readStream(openUrl(url)));
+        private double getCurrencyRateUsdRate(String url, int cont) throws IOException, JSONException {
+            cont++;
+            if (cont > 10) {
+                return parseDatafromFile();
+            } else {
+                cont = 0;
+                return parseDataFromNetwork(readStream(openUrl(url)), cont);
+            }
         }
     }
+
+        private double parseDatafromFile() throws JSONException {
+
+            BufferedReader br = null;
+            try {
+                AssetManager am = getBaseContext().getAssets();
+                InputStream is = am.open("conversions.txt");
+                br = new BufferedReader(new InputStreamReader(is));
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String data;
+
+            try {
+                while ((data = br.readLine()) != null) {
+                    JSONObject object = new JSONObject(data);
+                    JSONObject rates = object.getJSONObject("quotes");
+                    String rateString = rates.toString();
+                    //La cadena JSON viene con llaves que debemos eliminar
+                    rateString = rateString.substring(1);
+                    rateString = rateString.substring(0, rateString.length() - 1);
+
+                    mValues = rateString.split(",");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            double usd = 1.0;
+            return usd;
+        }
+
+
 }
 
 
