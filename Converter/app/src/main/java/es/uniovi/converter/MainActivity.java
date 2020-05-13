@@ -35,10 +35,12 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
 
     double mConvertion;
+    double mConvertionUSD;
     String[] mValues;
     EditText mEditTextUSD;
     EditText mEditTextCurrencie;
     Spinner array_spinnerInput;
+    Spinner array_spinnerUSD;
 
     String UPDATE_URL = "http://apilayer.net/api/live?access_key=df9805d128149d5d4ff0944c52161147&";
 
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         new UpdateRateTask().execute(UPDATE_URL);
 
-
+        //Abrimos archivo currencie para obtener codigo ISO paises
         BufferedReader br = null;
         try {
             AssetManager am = getBaseContext().getAssets();
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> list = new ArrayList<String>();
 
+        //Leemos currencies.csv a lista formato bien
         try {
             while((line=br.readLine()) != null){
                 String[] value = line.split(",");
@@ -76,17 +79,17 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        array_spinnerInput = (Spinner)findViewById(R.id.InputSpinner);
+        //Añadimos contenido lista al spinner
+        array_spinnerUSD = (Spinner)findViewById(R.id.USDSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        array_spinnerUSD.setAdapter(adapter);
+        array_spinnerInput = (Spinner)findViewById(R.id.InputSpinner);
         array_spinnerInput.setAdapter(adapter);
 
 
-
-        //mEuroToDollar = 1.34;
-
+        //Vinculamos variables
         mEditTextUSD = (EditText) findViewById(R.id.editTextUSD);
         mEditTextCurrencie = (EditText) findViewById(R.id.editTextCurrencie);
-
 
     }
 
@@ -100,21 +103,59 @@ public class MainActivity extends AppCompatActivity {
             if(currencie[0].equals(spinnerText)){
                 mConvertion= Double.parseDouble(currencie[1]);
             }
-
         }
-        if(mConvertion==0.0){
+
+        String spinnerTextUSD = array_spinnerUSD.getSelectedItem().toString();
+        mConvertionUSD=0.0;
+        for(int i=0; i<mValues.length; i++){
+            String[] currencie = mValues[i].split(":");
+            currencie[0]=currencie[0].substring(4);
+            currencie[0]=currencie[0].substring(0,currencie[0].length()-1);
+            if(currencie[0].equals(spinnerTextUSD)){
+                mConvertionUSD= Double.parseDouble(currencie[1]);
+            }
+        }
+
+        if(mConvertion==0.0 || mConvertionUSD==0){
             Toast.makeText(getApplicationContext(), "Conversión no disponible",
                     Toast.LENGTH_SHORT).show();
         }
-        convert(mEditTextUSD,mEditTextCurrencie,mConvertion);
+
+        convert(mEditTextUSD,mEditTextCurrencie,mConvertion, mConvertionUSD);
     }
 
     public void onClickToCurrencie(View view){
-        convert(mEditTextCurrencie,mEditTextUSD,1/mConvertion);
+        String spinnerText = array_spinnerInput.getSelectedItem().toString();
+        mConvertion=0.0;
+        for(int i=0; i<mValues.length; i++){
+            String[] currencie = mValues[i].split(":");
+            currencie[0]=currencie[0].substring(4);
+            currencie[0]=currencie[0].substring(0,currencie[0].length()-1);
+            if(currencie[0].equals(spinnerText)){
+                mConvertion= Double.parseDouble(currencie[1]);
+            }
+
+        }
+        String spinnerTextUSD = array_spinnerUSD.getSelectedItem().toString();
+        mConvertionUSD=0.0;
+        for(int i=0; i<mValues.length; i++){
+            String[] currencie = mValues[i].split(":");
+            currencie[0]=currencie[0].substring(4);
+            currencie[0]=currencie[0].substring(0,currencie[0].length()-1);
+            if(currencie[0].equals(spinnerTextUSD)){
+                mConvertionUSD= Double.parseDouble(currencie[1]);
+            }
+        }
+
+        if(mConvertion==0.0 || mConvertionUSD==0){
+            Toast.makeText(getApplicationContext(), "Conversión no disponible",
+                    Toast.LENGTH_SHORT).show();
+        }
+        convert(mEditTextCurrencie,mEditTextUSD,1/mConvertion, 1/mConvertionUSD);
     }
 
     void convert(EditText editTextSource, EditText editTextDestination,
-                 double ConversionFactor) {
+                 double ConversionFactor1, double ConversionFactor2) {
 
         String StringSource = editTextSource.getText().toString();
 
@@ -124,17 +165,21 @@ public class MainActivity extends AppCompatActivity {
         } catch (NumberFormatException nfe) {
             return;
         }
-        double NumberDestination = NumberSource * ConversionFactor;
+        double NumberDestination1 = NumberSource * ConversionFactor1;
+        double NumberDestination = NumberDestination1 * ConversionFactor2;
 
         String StringDestination = Double.toString(NumberDestination);
 
         editTextDestination.setText(StringDestination);
     }
 
+
+
+
+
+
     public class UpdateRateTask extends
             AsyncTask<String, Void, String> {
-
-
 
         @Override
         protected String doInBackground(String... urls) {
@@ -184,14 +229,13 @@ public class MainActivity extends AppCompatActivity {
             JSONObject object = new JSONObject(data);
             JSONObject rates = object.getJSONObject("quotes");
             String rateString = rates.toString();
+                //La cadena JSON viene con llaves que debemos eliminar
             rateString = rateString.substring(1);
             rateString=rateString.substring(0, rateString.length()-1);
 
             mValues = rateString.split(",");
 
             double usd = 1.0;
-
-
             return usd;
         }
 
