@@ -9,14 +9,9 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"></LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
@@ -32,14 +27,12 @@
 
             </EditText>
 
-            <TextView
-                android:id="@+id/USD"
+            <Spinner
+                android:id="@+id/USDSpinner"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="2"
-                android:text="USD"
-                android:textAlignment="center"
-                android:textSize="18sp" />
+                android:layout_weight="2" />
+
 
             <ImageButton
                 android:id="@+id/buttonUSD"
@@ -48,8 +41,6 @@
                 android:layout_weight="1"
                 android:onClick="onClickToUSD"
                 app:srcCompat="@android:drawable/arrow_down_float" />
-
-
 
         </LinearLayout>
 
