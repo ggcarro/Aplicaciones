@@ -8,9 +8,9 @@ namespace Video
         static void Main(string[] args)
         {
             // Opens MP4 file (ffmpeg is probably needed)
-            VideoCapture capture = new VideoCapture(1);
+            VideoCapture capture = new VideoCapture(@"C:\Users\gonzalo\Desktop\Rozalen.mp4");
 
-            int sleepTime = (int)Math.Round(500 / capture.Fps);  //Captura cada xtiempo
+            //int sleepTime = (int)Math.Round(500 / capture.Fps);  //Captura cada xtiempo
 
             using (Window window = new Window("capture"))
             using (Mat image = new Mat()) // Frame image buffer
@@ -55,7 +55,7 @@ namespace Video
                     //srcImage.Dispose();
 
                     window.ShowImage(image);
-                    Cv2.WaitKey(sleepTime);
+                    Cv2.WaitKey(1);
                     Console.WriteLine("Video ejecutado");
                 }
             } 

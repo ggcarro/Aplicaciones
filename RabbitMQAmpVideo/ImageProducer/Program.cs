@@ -32,7 +32,7 @@ namespace ImageProducer
                     BinaryImageCodec iCodec = new BinaryImageCodec();
                     int seq = 0;
 
-                    VideoCapture capture = new VideoCapture(@"C:\Users\gonzalo\Desktop\Rozalen.mp4");
+                    VideoCapture capture = new VideoCapture(1);
                     
                     int sleepTime = (int)Math.Round(500 / capture.Fps);  //Captura cada xtiempo
 

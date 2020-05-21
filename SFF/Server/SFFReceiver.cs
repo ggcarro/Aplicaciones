@@ -77,7 +77,7 @@ namespace Receiver
         {
             ICodec<NewFile> nfCodec = new NewFileBinaryCodec();
             NewFile newFile = nfCodec.Decode(packet.Body);
-            string Path = "C:/Users/UO258767/Desktop/Receiver/" + newFile.FileName;
+            string Path = "C:/Users/gonzalo/Desktop/Receiver/" + newFile.FileName;
             Console.WriteLine("Filename: {0}", newFile.FileName);
             _fileStream = new FileStream(Path, FileMode.OpenOrCreate, FileAccess.Write);
             _seq = 1;  
